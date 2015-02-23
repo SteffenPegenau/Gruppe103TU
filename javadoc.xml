@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="lib/lzma.jar:lib/lwjgl-2.9.1/lwjgl.jar:lib/jogg-0.0.7.jar:lib/jorbis-0.0.15.jar:/home/steffen/Downloads/Sync/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar:lib/slick.jar:lib/TWL.jar:lib/xpp3-1.1.4c.jar:lib/lwjgl_util_applet.jar:/home/steffen/Downloads/Sync/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar:lib/eea2.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="de.tu_darmstadt.gdi1.gorillas.ui.states,de.tu_darmstadt.gdi1.dropofwater,de.tu_darmstadt.gdi1.gorillas.test.setup,de.tu_darmstadt.gdi1.gorillas.ui.widgets.valueadjuster,de.tu_darmstadt.gdi1.gorillas.test.adapter,de.matthiasmann.twl.slick,de.tu_darmstadt.gdi1.gorillas.test.students.testcases,de.tu_darmstadt.gdi1.gorillas.test.students.suites,de.tu_darmstadt.gdi1.gorillas.main" source="1.8" sourcepath="assets:src:theme" splitindex="true" use="true" version="true">
+            <link href="http://docs.oracle.com/javase/8/docs/api/"/>
+            <link href="http://hamcrest.org/JavaHamcrest/javadoc/1.3/"/>
+            <link href="http://junit-team.github.io/junit/javadoc/latest/"/>
+        </javadoc>
+    </target>
+</project>
