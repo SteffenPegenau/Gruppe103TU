@@ -27,7 +27,6 @@ public class ParameterInputTest {
 	public void finish() {
 		adapter.restoreGameData();
 	}
-	
 
 	@Test
 	public void testVelocityDigitOnly() {
