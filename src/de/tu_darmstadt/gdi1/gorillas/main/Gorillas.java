@@ -18,7 +18,7 @@ import eea.engine.entity.StateBasedEntityManager;
  */
 
 public class Gorillas extends TWLStateBasedGame {
-
+	
 	// Each state is represented by an integer value
 	public static final int MAINMENUSTATE = 0;
 	public static final int GAMESETUPSTATE = 1;
