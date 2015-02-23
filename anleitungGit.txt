@@ -1,0 +1,6 @@
+cd Verzeichnis_des_projektes
+git status
+git add . 
+git commit -m "kommentar"
+git push
+git pull
