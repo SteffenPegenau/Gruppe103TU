@@ -16,6 +16,7 @@ import eea.engine.entity.StateBasedEntityManager;
  * @author Peter Kloeckner, Sebastian Fach
  * @version 1.0
  */
+
 public class Gorillas extends TWLStateBasedGame {
 
 	// Each state is represented by an integer value
