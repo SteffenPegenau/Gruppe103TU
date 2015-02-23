@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package de.tu_darmstadt.gdi1.gorillas.test.students.testcases;
 
 import static org.junit.Assert.assertEquals;
@@ -95,3 +96,102 @@ public class NameInputTest {
 		assertEquals(notEqual, adapter.getPlayer2Error());
 	}
 }
+=======
+package de.tu_darmstadt.gdi1.gorillas.test.students.testcases;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import de.tu_darmstadt.gdi1.gorillas.test.adapter.GorillasTestAdapterMinimal;
+import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
+
+public class NameInputTest {
+
+	GorillasTestAdapterMinimal adapter;
+
+	@Before
+	public void setUp() {
+		adapter = new GorillasTestAdapterMinimal();
+		adapter.initializeGame();
+		adapter.handleKeyPressN();
+		adapter.rememberGameData();
+	}
+
+	@After
+	public void finish() {
+		adapter.stopGame();
+		adapter.restoreGameData();
+	}
+
+	@Test
+	public void testCorrectNameInput() {
+
+		adapter.setPlayerNames("TestPlayer1", "TestPlayer2");
+		adapter.startGameButtonPressed();
+
+		adapter.runGame(0);
+		assertTrue(adapter.getStateBasedGame().getCurrentStateID() == TestGorillas.GAMEPLAYSTATE);
+	}
+
+	@Test
+	public void testFalseNameInput() {
+
+		adapter.setPlayerNames("", "TestPlayer2");
+
+		adapter.startGameButtonPressed();
+		adapter.runGame(0);
+
+		assertFalse(adapter.getStateBasedGame().getCurrentStateID() == TestGorillas.GAMEPLAYSTATE);
+
+		adapter.setPlayerNames("", "");
+
+		adapter.startGameButtonPressed();
+		adapter.runGame(0);
+
+		assertFalse(adapter.getStateBasedGame().getCurrentStateID() == TestGorillas.GAMEPLAYSTATE);
+
+		adapter.setPlayerNames("TestPlayer", "TestPlayer");
+
+		adapter.startGameButtonPressed();
+		adapter.runGame(0);
+
+		assertFalse(adapter.getStateBasedGame().getCurrentStateID() == TestGorillas.GAMEPLAYSTATE);
+	}
+
+	@Test
+	public void testErrorMessages() {
+
+		String notEmpty = adapter.getEmptyError();
+		String notEqual = adapter.getEqualError();
+
+		adapter.setPlayerNames("TestPlayer1", "");
+
+		adapter.startGameButtonPressed();
+		adapter.runGame(0);
+
+		assertEquals("", adapter.getPlayer1Error());
+		assertEquals(notEmpty, adapter.getPlayer2Error());
+
+		adapter.setPlayerNames("", "");
+
+		adapter.startGameButtonPressed();
+		adapter.runGame(0);
+
+		assertEquals(notEmpty, adapter.getPlayer1Error());
+		assertEquals(notEmpty, adapter.getPlayer2Error());
+
+		adapter.setPlayerNames("TestPlayer", "TestPlayer");
+
+		adapter.startGameButtonPressed();
+		adapter.runGame(0);
+
+		assertEquals(notEqual, adapter.getPlayer1Error());
+		assertEquals(notEqual, adapter.getPlayer2Error());
+	}
+}
+>>>>>>> 7f21ad53f21070392f5e9970a5505351eb72a6bf
