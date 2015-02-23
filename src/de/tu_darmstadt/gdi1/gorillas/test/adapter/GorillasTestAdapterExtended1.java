@@ -55,6 +55,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @param frameHeight
 	 *            the height of the frame/screen of the gorillas game
 	 */
+	
+	
 	public void createRandomMap(int frameWidth, int frameHeight,
 			int gorillaWidth, int gorillaHeight) {
 
@@ -89,6 +91,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * {@link #createCustomMap(int,int,int,ArrayList,Vector2f,Vector2f)}
 	 * should be set as current map in the game, if the game is in GamePlayState
 	 */
+	
+	
 	public void startCurrrentMap() {
 		// TODO: Implement
 	}
