@@ -35,7 +35,7 @@ public class ParameterInputTest {
 		adapter.fillVelocityInput('b');
 		adapter.fillVelocityInput('c');
 		adapter.fillVelocityInput(' ');
-		adapter.fillVelocityInput('Ã¶');
+		adapter.fillVelocityInput('ö');
 		adapter.fillVelocityInput('.');
 
 		assertEquals(-1, adapter.getVelocityInput());
@@ -48,7 +48,7 @@ public class ParameterInputTest {
 		adapter.fillAngleInput('b');
 		adapter.fillAngleInput('c');
 		adapter.fillAngleInput(' ');
-		adapter.fillAngleInput('Ã¶');
+		adapter.fillAngleInput('ö');
 		adapter.fillAngleInput('.');
 
 		assertEquals(-1, adapter.getAngleInput());
