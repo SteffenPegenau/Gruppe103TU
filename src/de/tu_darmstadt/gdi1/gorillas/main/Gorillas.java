@@ -16,6 +16,7 @@ import eea.engine.entity.StateBasedEntityManager;
  * @author Peter Kloeckner, Sebastian Fach
  * @version 1.0
  */
+
 public class Gorillas extends TWLStateBasedGame {
 
 	// Each state is represented by an integer value
@@ -43,7 +44,7 @@ public class Gorillas extends TWLStateBasedGame {
 	}
 
 	public static void main(String[] args) throws SlickException {
-		// sinnloser kommentar
+
 		// Set the native library path (depending on the operating system)
 		// @formatter:off
 		if (System.getProperty("os.name").toLowerCase().contains("windows")) {
