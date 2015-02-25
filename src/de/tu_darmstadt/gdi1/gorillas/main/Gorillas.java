@@ -1,5 +1,6 @@
 package de.tu_darmstadt.gdi1.gorillas.main;
 
+import java.io.IOException;
 import java.net.URL;
 
 import org.newdawn.slick.AppGameContainer;
@@ -43,8 +44,8 @@ public class Gorillas extends TWLStateBasedGame {
 		debug = debuging;
 	}
 
-	public static void main(String[] args) throws SlickException {
-
+	public static void main(String[] args) throws SlickException, IOException {
+		PlayerList.save();
 		// Set the native library path (depending on the operating system)
 		// @formatter:off
 		if (System.getProperty("os.name").toLowerCase().contains("windows")) {
