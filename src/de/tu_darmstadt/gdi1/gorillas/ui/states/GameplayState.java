@@ -1,4 +1,4 @@
-package de.tu_darmstadt.gdi1.gorillas.main;
+package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -20,6 +20,7 @@ import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.DestructibleImageEntity;
 import eea.engine.entity.Entity;
@@ -46,8 +47,9 @@ public class GameplayState extends BasicTWLGameState {
 	EditField velocityInputR;
 	private Button throwButtonL;
 	private Button throwButtonR;
-
-	// Methode um eine Zufallszahl zu berechnen zwischen Minum und Maximum
+    
+    
+	// Methode um eine Zufallszahl zu berechnen zwischen Minimum und Maximum
 	public int randomInt(int max, int min) {
 
 		Random rand = new Random();
@@ -88,20 +90,37 @@ public class GameplayState extends BasicTWLGameState {
 		// der Skyline 500
 		// TODO zufallsgenerierte Map
 		// erstelle ein Bild (100 | 500)
-		BufferedImage image = new BufferedImage(100, 500,
+		BufferedImage image = new BufferedImage(800, 500,
 				BufferedImage.TYPE_INT_ARGB);
-		BufferedImage image2 = new BufferedImage(100, 500, BufferedImage.TYPE_INT_ARGB);
-		// mit Graphics2D lässt sich das Bild bemalen
+	// mit Graphics2D lässt sich das Bild bemalen
 		Graphics2D graphic = image.createGraphics();
-		Graphics2D graphic2 = image2.createGraphics();
-		// folgende Zeile ermöglicht das Ausradieren
+	// folgende Zeile ermöglicht das Ausradieren
 		graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-		graphic2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-		// bemale das vollständige Bild rot
-		graphic.setColor(new Color(255, 0, 0));
-		graphic2.setColor(new Color(0, 255, 0));
-		graphic.fillRect(0, 0, 100, 500);
-		graphic2.fillRect(0, 0, 100, 500);
+	//	graphic2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+	//	graphic3.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+	// bemale das vollständige Bild rot
+		
+		
+		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
+		graphic.fillRect(0, 0, 100, (int)(500*Math.random()));
+		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
+		graphic.fillRect(100, 0, 100, (int)(500*Math.random()));
+		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
+		graphic.fillRect(200, 0, 100, (int)(500*Math.random()));
+		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
+		graphic.fillRect(300, 0, 100, (int)(500*Math.random()));
+		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
+		graphic.fillRect(400, 0, 100, (int)(500*Math.random()));
+		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
+		graphic.fillRect(500, 0, 100, (int)(500*Math.random()));
+		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
+		graphic.fillRect(600, 0, 100, (int)(500*Math.random()));
+		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
+		graphic.fillRect(700, 0, 100, (int)(500*Math.random()));
+		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
+		
+		
+	
 		
 		// TODO Fenster ausradieren alle paar Pixel
 		// Alle Paar Pixel eine andere Farbe setzen (vgl. GamplayState Zeile
@@ -254,14 +273,14 @@ public class GameplayState extends BasicTWLGameState {
 		angleLabelL.setPosition(xOffsetL, yOffsetL);
 		angleInputL.setPosition(xOffsetL + angleLabelL.getWidth() + gap,
 				yOffsetL);
-		velocityLabelL.setPosition(xOffsetL, yOffsetL + angleLabelL.getHeight()
+		velocityLabelL.setPosition(xOffsetL -13, yOffsetL + angleLabelL.getHeight()
 				+ gap);
-		velocityInputL.setPosition(xOffsetL + velocityLabelL.getWidth() + gap,
+		velocityInputL.setPosition(xOffsetL + velocityLabelL.getWidth() -14 + gap,
 				yOffsetL + angleLabelL.getHeight() + gap);
-		throwButtonL.setPosition(xOffsetL + velocityLabelL.getWidth() + gap, yOffsetL
-				+ angleLabelR.getHeight() + gap + velocityLabelL.getHeight() + gap);
+		throwButtonL.setPosition(xOffsetL -13 + velocityLabelL.getWidth() + gap, yOffsetL
+				+ angleLabelR.getHeight() + 25 + gap + velocityLabelL.getHeight() + gap);
 
-		//TODO Plazierung der Eingabefelder + throw Button präziser anpassen
+		//TODO Plazierung der Eingabefelder + throw Button präziser anpassen -- Fertig durch Ausprobieren..ist das ok?
 		int xOffsetR = 700 - xOffsetL;
 		int yOffsetR = yOffsetL;
 
@@ -271,16 +290,16 @@ public class GameplayState extends BasicTWLGameState {
 		angleInputR.setSize(angleInputL.getWidth(), angleInputL.getHeight());
 		velocityInputR.setSize(velocityInputL.getWidth(),
 				velocityInputL.getHeight());
-		throwButtonR.setSize(throwButtonL.getWidth(), throwButtonR.getHeight());
+		throwButtonR.setSize(throwButtonL.getWidth(), throwButtonL.getHeight());
 
-		angleLabelR.setPosition(xOffsetR, yOffsetR);
-		angleInputR.setPosition(xOffsetR + angleLabelR.getWidth() + gap,
+		angleLabelR.setPosition(xOffsetR + 14, yOffsetR);
+		angleInputR.setPosition(xOffsetR + angleLabelR.getWidth() + 14 + gap,
 				yOffsetR);
 		velocityLabelR.setPosition(xOffsetR, yOffsetR + angleLabelR.getHeight()
 				+ gap);
 		velocityInputR.setPosition(xOffsetR + velocityLabelR.getWidth() + gap,
 				yOffsetR + velocityLabelR.getHeight() + gap);
-		throwButtonR.setPosition(xOffsetR, yOffsetL);
+		throwButtonR.setPosition(xOffsetR + 62 , yOffsetL + 55);
 
 	}
 

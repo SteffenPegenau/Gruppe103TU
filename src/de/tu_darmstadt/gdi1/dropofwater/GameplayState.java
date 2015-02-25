@@ -92,7 +92,7 @@ public class GameplayState extends BasicTWLGameState {
 		graphic.fillRect(0, 0, 500, 200);
 		// radiere in der Mitte wieder ein Rechteck aus
 		graphic.setColor(new Color(255, 255, 255, 0));
-		graphic.fillRect(100, 50, 300, 100);
+		//graphic.fillRect(50, 100, 300, 100);
 
 		// erstelle eine DestructibleImageEntity mit dem gerade gemalten Bild
 		// als Image, das durch das Zerst�rungs-Pattern destruction.png zerstört
