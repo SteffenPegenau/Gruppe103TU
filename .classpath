@@ -18,9 +18,6 @@
 	<classpathentry kind="lib" path="lib/jorbis-0.0.15.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/xpp3-1.1.4c.jar"/>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="translator.jar"/>
-=======
->>>>>>> eda005f5b97122a05f1bebed12297ce79de2edd6
 	<classpathentry kind="output" path="bin"/>
 </classpath>
