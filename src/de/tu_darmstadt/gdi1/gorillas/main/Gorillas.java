@@ -83,12 +83,14 @@ public class Gorillas extends TWLStateBasedGame {
 			throws SlickException {
 
 		// Add states to the StateBasedGame
-		this.addState(new MainMenuState(MAINMENUSTATE));
+		//this.addState(new MainMenuState(MAINMENUSTATE));
 		// TODO: Add the other states...
+		this.addState(new GameplayState(GAMEPLAYSTATE));
 
 		// Add states to the StateBasedEntityManager
-		StateBasedEntityManager.getInstance().addState(MAINMENUSTATE);
+		//StateBasedEntityManager.getInstance().addState(MAINMENUSTATE);
 		// TODO: Add the other states...
+		StateBasedEntityManager.getInstance().addState(GAMEPLAYSTATE);
 	}
 
 	@Override
