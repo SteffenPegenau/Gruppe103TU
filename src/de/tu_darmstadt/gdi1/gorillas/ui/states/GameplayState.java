@@ -47,8 +47,7 @@ public class GameplayState extends BasicTWLGameState {
 	EditField velocityInputR;
 	private Button throwButtonL;
 	private Button throwButtonR;
-    
-    
+
 	// Methode um eine Zufallszahl zu berechnen zwischen Minimum und Maximum
 	public int randomInt(int max, int min) {
 
@@ -92,36 +91,41 @@ public class GameplayState extends BasicTWLGameState {
 		// erstelle ein Bild (100 | 500)
 		BufferedImage image = new BufferedImage(800, 500,
 				BufferedImage.TYPE_INT_ARGB);
-	// mit Graphics2D lässt sich das Bild bemalen
+		// mit Graphics2D lässt sich das Bild bemalen
 		Graphics2D graphic = image.createGraphics();
-	// folgende Zeile ermöglicht das Ausradieren
+		// folgende Zeile ermöglicht das Ausradieren
 		graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-	//	graphic2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-	//	graphic3.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-	// bemale das vollständige Bild rot
-		
-		
-		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
-		graphic.fillRect(0, 0, 100, (int)(500*Math.random()));
-		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
-		graphic.fillRect(100, 0, 100, (int)(500*Math.random()));
-		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
-		graphic.fillRect(200, 0, 100, (int)(500*Math.random()));
-		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
-		graphic.fillRect(300, 0, 100, (int)(500*Math.random()));
-		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
-		graphic.fillRect(400, 0, 100, (int)(500*Math.random()));
-		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
-		graphic.fillRect(500, 0, 100, (int)(500*Math.random()));
-		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
-		graphic.fillRect(600, 0, 100, (int)(500*Math.random()));
-		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
-		graphic.fillRect(700, 0, 100, (int)(500*Math.random()));
-		graphic.setColor(new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
-		
-		
-	
-		
+		// graphic2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		// graphic3.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		// bemale das vollständige Bild rot
+
+		graphic.setColor(new Color((int) (255 * Math.random()),
+				(int) (255 * Math.random()), (int) (255 * Math.random())));
+		graphic.fillRect(0, 0, 100, (int) (500 * Math.random()));
+		graphic.setColor(new Color((int) (255 * Math.random()),
+				(int) (255 * Math.random()), (int) (255 * Math.random())));
+		graphic.fillRect(100, 0, 100, (int) (500 * Math.random()));
+		graphic.setColor(new Color((int) (255 * Math.random()),
+				(int) (255 * Math.random()), (int) (255 * Math.random())));
+		graphic.fillRect(200, 0, 100, (int) (500 * Math.random()));
+		graphic.setColor(new Color((int) (255 * Math.random()),
+				(int) (255 * Math.random()), (int) (255 * Math.random())));
+		graphic.fillRect(300, 0, 100, (int) (500 * Math.random()));
+		graphic.setColor(new Color((int) (255 * Math.random()),
+				(int) (255 * Math.random()), (int) (255 * Math.random())));
+		graphic.fillRect(400, 0, 100, (int) (500 * Math.random()));
+		graphic.setColor(new Color((int) (255 * Math.random()),
+				(int) (255 * Math.random()), (int) (255 * Math.random())));
+		graphic.fillRect(500, 0, 100, (int) (500 * Math.random()));
+		graphic.setColor(new Color((int) (255 * Math.random()),
+				(int) (255 * Math.random()), (int) (255 * Math.random())));
+		graphic.fillRect(600, 0, 100, (int) (500 * Math.random()));
+		graphic.setColor(new Color((int) (255 * Math.random()),
+				(int) (255 * Math.random()), (int) (255 * Math.random())));
+		graphic.fillRect(700, 0, 100, (int) (500 * Math.random()));
+		graphic.setColor(new Color((int) (255 * Math.random()),
+				(int) (255 * Math.random()), (int) (255 * Math.random())));
+
 		// TODO Fenster ausradieren alle paar Pixel
 		// Alle Paar Pixel eine andere Farbe setzen (vgl. GamplayState Zeile
 		// 93ff. (Drop of Water))
@@ -129,18 +133,18 @@ public class GameplayState extends BasicTWLGameState {
 		// erstellen einer DestructibleImageEntity, damit beim Bananenschlag das
 		// Bild entfernt wird
 		DestructibleImageEntity obstracle = new DestructibleImageEntity(
-				"obstracle", image, "gorillas/destruction.png",
-				false);
+				"obstracle", image, "gorillas/destruction.png", false);
 		obstracle.setPosition(new Vector2f(game.getContainer().getWidth() / 2,
 				game.getContainer().getHeight() - 100));
-//		DestructibleImageEntity obstracle2 = new DestructibleImageEntity(
-//				"obstracle2", image2, "gorillas/destruction.png",
-//				false);
-//		obstracle2.setPosition(new Vector2f(game.getContainer().getWidth() / 2,
-//				game.getContainer().getHeight() - 100));
+		// DestructibleImageEntity obstracle2 = new DestructibleImageEntity(
+		// "obstracle2", image2, "gorillas/destruction.png",
+		// false);
+		// obstracle2.setPosition(new Vector2f(game.getContainer().getWidth() /
+		// 2,
+		// game.getContainer().getHeight() - 100));
 
 		entityManager.addEntity(stateID, obstracle);
-//		entityManager.addEntity(stateID, obstracle2);
+		// entityManager.addEntity(stateID, obstracle2);
 	}
 
 	/**
@@ -273,14 +277,16 @@ public class GameplayState extends BasicTWLGameState {
 		angleLabelL.setPosition(xOffsetL, yOffsetL);
 		angleInputL.setPosition(xOffsetL + angleLabelL.getWidth() + gap,
 				yOffsetL);
-		velocityLabelL.setPosition(xOffsetL -13, yOffsetL + angleLabelL.getHeight()
-				+ gap);
-		velocityInputL.setPosition(xOffsetL + velocityLabelL.getWidth() -14 + gap,
+		velocityLabelL.setPosition(xOffsetL - 13,
 				yOffsetL + angleLabelL.getHeight() + gap);
-		throwButtonL.setPosition(xOffsetL -13 + velocityLabelL.getWidth() + gap, yOffsetL
-				+ angleLabelR.getHeight() + 25 + gap + velocityLabelL.getHeight() + gap);
+		velocityInputL.setPosition(xOffsetL + velocityLabelL.getWidth() - 14
+				+ gap, yOffsetL + angleLabelL.getHeight() + gap);
+		throwButtonL.setPosition(xOffsetL - 13 + velocityLabelL.getWidth()
+				+ gap, yOffsetL + angleLabelR.getHeight() + 25 + gap
+				+ velocityLabelL.getHeight() + gap);
 
-		//TODO Plazierung der Eingabefelder + throw Button präziser anpassen -- Fertig durch Ausprobieren..ist das ok?
+		// TODO Plazierung der Eingabefelder + throw Button präziser anpassen --
+		// Fertig durch Ausprobieren..ist das ok?
 		int xOffsetR = 700 - xOffsetL;
 		int yOffsetR = yOffsetL;
 
@@ -299,7 +305,7 @@ public class GameplayState extends BasicTWLGameState {
 				+ gap);
 		velocityInputR.setPosition(xOffsetR + velocityLabelR.getWidth() + gap,
 				yOffsetR + velocityLabelR.getHeight() + gap);
-		throwButtonR.setPosition(xOffsetR + 62 , yOffsetL + 55);
+		throwButtonR.setPosition(xOffsetR + 62, yOffsetL + 55);
 
 	}
 
