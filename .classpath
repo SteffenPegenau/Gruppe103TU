@@ -18,6 +18,6 @@
 	<classpathentry kind="lib" path="lib/jorbis-0.0.15.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/xpp3-1.1.4c.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Len Williamson/Desktop/Ordner/Programmieren/Arbeitsmaterialien Java/translator.jar"/>
+	<classpathentry kind="lib" path="/Users/AdamShafei/Downloads/translator.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

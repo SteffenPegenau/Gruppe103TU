@@ -8,6 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
 import de.matthiasmann.twl.slick.TWLStateBasedGame;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.GameplayState;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.MainMenuState;
 import eea.engine.entity.StateBasedEntityManager;
 
