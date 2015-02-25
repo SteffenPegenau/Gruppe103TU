@@ -80,12 +80,12 @@ public class GameplayState extends BasicTWLGameState {
 		escListener.addComponent(escPressed);
 		entityManager.addEntity(stateID, escListener);
 
-		// erstelle ein Bild der Breite 500 und der H�he 200
+		// erstelle ein Bild der Breite 500 und der Höhe 200
 		BufferedImage image = new BufferedImage(500, 200,
 				BufferedImage.TYPE_INT_ARGB);
 		// mit Graphics2D l�sst sich das Bild bemalen
 		Graphics2D graphic = image.createGraphics();
-		// die folgende Zeile bewirkt, dass sich auch wieder "ausradieren" l�sst
+		// die folgende Zeile bewirkt, dass sich auch wieder "ausradieren" lässt
 		graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
 		// bemale das vollst�ndige Bild wei�
 		graphic.setColor(new Color(255, 255, 255));
@@ -95,7 +95,7 @@ public class GameplayState extends BasicTWLGameState {
 		graphic.fillRect(100, 50, 300, 100);
 
 		// erstelle eine DestructibleImageEntity mit dem gerade gemalten Bild
-		// als Image, das durch das Zerst�rungs-Pattern destruction.png zerst�rt
+		// als Image, das durch das Zerst�rungs-Pattern destruction.png zerstört
 		// werden kann
 		DestructibleImageEntity obstacle = new DestructibleImageEntity(
 				"obstacle", image, "dropofwater/destruction.png", false);
@@ -169,10 +169,10 @@ public class GameplayState extends BasicTWLGameState {
 
 		// zuletzt wird noch ein Button hinzugef�gt
 		dropButton = new Button("drop");
-		// �hnlich wie einem EditField kann auch einem Button ein CallBack
-		// hinzugef�gt werden
+		// ähnlich wie ein EditField kann auch einem Button ein CallBack
+		// hinzugefügt werden
 		// Hier ist es jedoch von Typ Runnable, da keine Parameter (z. B. welche
-		// Taste wurde gedr�ckt) ben�tigt werden
+		// Taste wurde gedrückt) benötigt werden
 		dropButton.addCallback(new Runnable() {
 			@Override
 			public void run() {
@@ -235,13 +235,13 @@ public class GameplayState extends BasicTWLGameState {
 	 * Diese Methode wird aufgerufen, wenn ein Zeichen in ein EditField eingegeben wurde.
 	 * 
 	 * @param key
-	 * 			die gedr�ckte Taste
+	 * 			die gedrückte Taste
 	 * @param editField
-	 * 			das EditField, in das ein Zeichen eingef�gt wurde
+	 * 			das EditField, in das ein Zeichen eingefügt wurde
 	 * @param callback
-	 * 			der CallBack, der dem EditField hinzugef�gt wurde
+	 * 			der CallBack, der dem EditField hinzugefügt wurde
 	 * @param maxValue
-	 * 			die gr��te Zahl, die in das <code>editField</code> eingegeben werden kann
+	 * 			die größte Zahl, die in das <code>editField</code> eingegeben werden kann
 	 */
 	void handleEditFieldInput(int key, EditField editField,
 			Callback callback, int maxValue) {
