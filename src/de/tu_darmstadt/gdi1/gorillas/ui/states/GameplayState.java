@@ -47,6 +47,14 @@ public class GameplayState extends BasicTWLGameState {
 	EditField velocityInputR;
 	private Button throwButtonL;
 	private Button throwButtonR;
+	int firstRandom = (int) (500 * Math.random());
+	int secondRandom = (int) (500 * Math.random());
+	int thirdRandom = (int) (500 * Math.random());
+	int fourthRandom = (int) (500 * Math.random());
+	int fifthRandom = (int) (500 * Math.random());
+	int sixthRandom = (int) (500 * Math.random());
+	int seventhRandom = (int) (500 * Math.random());
+	int eighthRandom = (int) (500 * Math.random());
 
 	// Methode um eine Zufallszahl zu berechnen zwischen Minimum und Maximum
 	public int randomInt(int max, int min) {
@@ -97,34 +105,34 @@ public class GameplayState extends BasicTWLGameState {
 		graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
 		// graphic2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
 		// graphic3.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-		// bemale das vollständige Bild rot
+		// es wird bei jedem Hochhaus zuerst mit (first bis eighth Random)ausgerechnet wie hoch er wird.
+		// Man malt dann das bild von Oben nach unten und fängt bei (350-Random) an. 350 ist in der Y-Achse die max höhe.
+		// Das bedeutet bei Y = 350 ist man ganz unten im Bild.
 
 		graphic.setColor(new Color((int) (255 * Math.random()),
 				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(0, 0, 100, (int) (500 * Math.random()));
+		graphic.fillRect(0, (350 - firstRandom), 100, firstRandom);
 		graphic.setColor(new Color((int) (255 * Math.random()),
 				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(100, 0, 100, (int) (500 * Math.random()));
+		graphic.fillRect(100, (350 - secondRandom), 100, secondRandom);
 		graphic.setColor(new Color((int) (255 * Math.random()),
 				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(200, 0, 100, (int) (500 * Math.random()));
+		graphic.fillRect(200, (350 - thirdRandom), 100, thirdRandom);
 		graphic.setColor(new Color((int) (255 * Math.random()),
 				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(300, 0, 100, (int) (500 * Math.random()));
+		graphic.fillRect(300, (350 - fourthRandom), 100, fourthRandom);
 		graphic.setColor(new Color((int) (255 * Math.random()),
 				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(400, 0, 100, (int) (500 * Math.random()));
+		graphic.fillRect(400, (350 - fifthRandom), 100, fifthRandom);
 		graphic.setColor(new Color((int) (255 * Math.random()),
 				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(500, 0, 100, (int) (500 * Math.random()));
+		graphic.fillRect(500, (350 - sixthRandom), 100, sixthRandom);
 		graphic.setColor(new Color((int) (255 * Math.random()),
 				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(600, 0, 100, (int) (500 * Math.random()));
+		graphic.fillRect(600, (350 - seventhRandom), 100, seventhRandom);
 		graphic.setColor(new Color((int) (255 * Math.random()),
 				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(700, 0, 100, (int) (500 * Math.random()));
-		graphic.setColor(new Color((int) (255 * Math.random()),
-				(int) (255 * Math.random()), (int) (255 * Math.random())));
+		graphic.fillRect(700, (350 - eighthRandom), 100, eighthRandom);
 
 		// TODO Fenster ausradieren alle paar Pixel
 		// Alle Paar Pixel eine andere Farbe setzen (vgl. GamplayState Zeile
