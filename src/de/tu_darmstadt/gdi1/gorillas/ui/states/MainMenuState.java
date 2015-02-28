@@ -1,5 +1,7 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -29,6 +31,8 @@ public class MainMenuState extends BasicTWLGameState {
 
 	private final int distance = 110;
 	private final int startPosition = 90;
+	
+	private ArrayList<String> menuentries = new ArrayList<String>();
 
 	public MainMenuState(int sid) {
 		stateID = sid;
@@ -56,7 +60,7 @@ public class MainMenuState extends BasicTWLGameState {
 		return background;
 	}
 
-	private void createButton(String name, Action action, int x, int y) {
+	private void createButton(String name, String title, Action action, int x, int y) {
 		Entity button = new Entity(name);
 		button.setPosition(new Vector2f(x, y));
 		button.setScale(0.28f);
@@ -67,19 +71,41 @@ public class MainMenuState extends BasicTWLGameState {
 				new MouseClickedEvent());
 		mainEventsQ.addAction(action);
 		button.addComponent(mainEventsQ);
-
+		System.out.println(title);
+		menuentries.add(title);
 		entityManager.addEntity(stateID, button);
 	}
 
 	private void drawMenu() {
-
+		Action action;
 		int counter = 0;
-		Action newGameAction = new ChangeStateAction(Gorillas.GAMEPLAYSTATE);
-		createButton("newGame", newGameAction, 220, startPosition + counter * distance);
+		/*
+		static final int GAMESETUPSTATE = 1;
+		public static final int GAMEPLAYSTATE = 2;
+		public static final int HIGHSCORESTATE = 3;
+		public static final int OPTIONSTATE = 4;
+		public static final int INSTRUCTIONSSTATE = 5;
+		*/
+		action = new ChangeStateAction(Gorillas.GAMEPLAYSTATE);
+		createButton("newGame", "Neues Spiel", action, 220, startPosition + counter * distance);
+		
 		counter++;
-		createButton("options", null, 220, startPosition + counter * distance);
+		action = new ChangeStateAction(Gorillas.GAMESETUPSTATE);
+		createButton("newGameWithSteup", "Neues Spiel mit Setup", action, 220, startPosition + counter * distance);
+		
+		counter++;
+		action = new ChangeStateAction(Gorillas.HIGHSCORESTATE);
+		createButton("highscore", "Highscore", action, 220, startPosition + counter * distance);
+		
+		counter++;
+		action = new ChangeStateAction(Gorillas.OPTIONSTATE);
+		createButton("options", "Optionen", action, 220, startPosition + counter * distance);
+		
+		counter++;
+		action = new ChangeStateAction(Gorillas.INSTRUCTIONSSTATE);
+		createButton("instructions", "Instruktionen", action, 220, startPosition + counter * distance);
 
-		createButton("exit", new QuitAction(), 600, 540);
+		createButton("exit", " ", new QuitAction(), 600, 540);
 	}
 
 	@Override
@@ -98,17 +124,22 @@ public class MainMenuState extends BasicTWLGameState {
 		entityManager.updateEntities(container, game, delta);
 	}
 
+	private void drawButtonLabels(Graphics g) {
+		int counter = 0;
+		
+		for(String title : menuentries) {
+			g.drawString(title, 110, startPosition + counter * distance - 10);
+			counter++;
+		}
+		
+	}
+	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		entityManager.renderEntities(container, game, g);
 		
-		
-		int counter = 0;
-		g.drawString("Neues Spiel", 110, startPosition + counter * distance - 10);
-		counter++;
-		g.drawString("Optionen", 110, startPosition + counter * distance - 10);
-		counter++;
+		drawButtonLabels(g);
 		
 		
 		
@@ -129,8 +160,8 @@ public class MainMenuState extends BasicTWLGameState {
 	@Override
 	protected void layoutRootPane() {
 
-		int paneHeight = this.getRootPane().getHeight();
-		int paneWidth = this.getRootPane().getWidth();
+		//int paneHeight = this.getRootPane().getHeight();
+		//int paneWidth = this.getRootPane().getWidth();
 
 	}
 }
