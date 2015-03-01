@@ -38,7 +38,7 @@ public class MainMenuState extends BasicTWLGameState {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
 		try {
-			MENU_ENTRY_BG = new Image("assets/dropofwater/entry.png");
+			MENU_ENTRY_BG = new Image("assets/gorillas/button/entry.png");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
