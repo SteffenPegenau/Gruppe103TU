@@ -1,5 +1,14 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 
+import de.matthiasmann.twl.Container;
+import de.matthiasmann.twl.HAlignment;
+import de.matthiasmann.twl.Label;
+import de.matthiasmann.twl.TextArea;
+import de.matthiasmann.twl.renderer.AnimationState;
+import de.matthiasmann.twl.renderer.Font;
+import de.matthiasmann.twl.renderer.FontCache;
+import de.matthiasmann.twl.textarea.HTMLTextAreaModel;
+
 
 
 /**
@@ -44,6 +53,7 @@ public class Player {
 		private void setUsername (String newVar) {
 				username = newVar;
 		}
+		
 
 		/**
 		 * Get the value of username
@@ -216,5 +226,26 @@ public class Player {
 		//
 		// Other methods
 		//
+		
+		public static Container getPlayerSelectContainer(Player player, int x, int y) {
+			Container container = new Container();
+			
+			String html = "<b><button>BUTTON</button>Hello World! ssssssssssssssssssssss</b>";
+			HTMLTextAreaModel content = new HTMLTextAreaModel(html);
+			content.domModified();
+			if(player == null) {
+				// Kein Spieler selektiert
+				// => zeige entsprechende Meldung und Button, um Spieler auszuwaehlen
+				TextArea structure = new TextArea(content);
+				structure.setPosition(x, y);
+				structure.adjustSize();
+				structure.registerImage("name", null);
+				container.add(structure.getGUI());
+			} else {
+				// Spieler selektiert
+				// => zeige Informationen zum Spieler und Button, um anderen Spieler auszuwaehlen
+			}
+			return container;
+		}
 
 }
