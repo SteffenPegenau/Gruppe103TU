@@ -45,7 +45,7 @@ public class MainMenuState extends BasicTWLGameState {
 		}
 	}
 
-	private Entity background() {
+	public static Entity background() {
 		Entity background = new Entity("menu"); // Entitaet fuer Hintergrund
 		background.setPosition(new Vector2f(400, 300)); // Startposition des
 														// Hintergrunds
@@ -79,13 +79,7 @@ public class MainMenuState extends BasicTWLGameState {
 	private void drawMenu() {
 		Action action;
 		int counter = 0;
-		/*
-		static final int GAMESETUPSTATE = 1;
-		public static final int GAMEPLAYSTATE = 2;
-		public static final int HIGHSCORESTATE = 3;
-		public static final int OPTIONSTATE = 4;
-		public static final int INSTRUCTIONSSTATE = 5;
-		*/
+		
 		action = new ChangeStateAction(Gorillas.GAMEPLAYSTATE);
 		createButton("newGame", "Neues Spiel", action, 220, startPosition + counter * distance);
 		

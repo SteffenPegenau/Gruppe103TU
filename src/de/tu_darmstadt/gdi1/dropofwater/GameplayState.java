@@ -41,6 +41,7 @@ import eea.engine.interfaces.IDestructible;
  *         erscheint und nach unten faellt.
  */
 public class GameplayState extends BasicTWLGameState {
+
 	private int stateID; // Identifier dieses BasicTWLGameState
 	private StateBasedEntityManager entityManager; // zugehoeriger entityManager
 	private Label xLabel;
