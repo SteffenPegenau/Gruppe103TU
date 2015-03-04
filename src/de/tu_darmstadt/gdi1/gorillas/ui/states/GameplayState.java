@@ -47,14 +47,6 @@ public class GameplayState extends BasicTWLGameState {
 	EditField velocityInputR;
 	private Button throwButtonL;
 	private Button throwButtonR;
-	int firstRandom = (int) (500 * Math.random());
-	int secondRandom = (int) (500 * Math.random());
-	int thirdRandom = (int) (500 * Math.random());
-	int fourthRandom = (int) (500 * Math.random());
-	int fifthRandom = (int) (500 * Math.random());
-	int sixthRandom = (int) (500 * Math.random());
-	int seventhRandom = (int) (500 * Math.random());
-	int eighthRandom = (int) (500 * Math.random());
 
 	// Methode um eine Zufallszahl zu berechnen zwischen Minimum und Maximum
 	public int randomInt(int max, int min) {
@@ -93,66 +85,86 @@ public class GameplayState extends BasicTWLGameState {
 		// Hintergrund-Entiät an StateBasedEntityManager übergeben
 		StateBasedEntityManager.getInstance().addEntity(stateID, background);
 
-		// Erstellen der Hochhäuser (Bildbreite: 800 | Bildhöhe 600) max. Höhe
-		// der Skyline 500
-		// TODO zufallsgenerierte Map
-		// erstelle ein Bild (100 | 500)
-		BufferedImage image = new BufferedImage(800, 500,
+		BufferedImage image1 = new BufferedImage(150, 375,
 				BufferedImage.TYPE_INT_ARGB);
-		// mit Graphics2D lässt sich das Bild bemalen
-		Graphics2D graphic = image.createGraphics();
-		// folgende Zeile ermöglicht das Ausradieren
-		graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-		// graphic2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-		// graphic3.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-		// es wird bei jedem Hochhaus zuerst mit (first bis eighth Random)ausgerechnet wie hoch er wird.
-		// Man malt dann das bild von Oben nach unten und fängt bei (350-Random) an. 350 ist in der Y-Achse die max höhe.
-		// Das bedeutet bei Y = 350 ist man ganz unten im Bild.
+		BufferedImage image2 = new BufferedImage(75, 500,
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image3 = new BufferedImage(125, 400,
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image4 = new BufferedImage(100, 500,
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image5 = new BufferedImage(150, 400,
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image6 = new BufferedImage(100, 500,
+				BufferedImage.TYPE_INT_ARGB);
 
-		graphic.setColor(new Color((int) (255 * Math.random()),
-				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(0, (350 - firstRandom), 100, firstRandom);
-		graphic.setColor(new Color((int) (255 * Math.random()),
-				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(100, (350 - secondRandom), 100, secondRandom);
-		graphic.setColor(new Color((int) (255 * Math.random()),
-				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(200, (350 - thirdRandom), 100, thirdRandom);
-		graphic.setColor(new Color((int) (255 * Math.random()),
-				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(300, (350 - fourthRandom), 100, fourthRandom);
-		graphic.setColor(new Color((int) (255 * Math.random()),
-				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(400, (350 - fifthRandom), 100, fifthRandom);
-		graphic.setColor(new Color((int) (255 * Math.random()),
-				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(500, (350 - sixthRandom), 100, sixthRandom);
-		graphic.setColor(new Color((int) (255 * Math.random()),
-				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(600, (350 - seventhRandom), 100, seventhRandom);
-		graphic.setColor(new Color((int) (255 * Math.random()),
-				(int) (255 * Math.random()), (int) (255 * Math.random())));
-		graphic.fillRect(700, (350 - eighthRandom), 100, eighthRandom);
+		Graphics2D building1 = image1.createGraphics();
+		Graphics2D building2 = image2.createGraphics();
+		Graphics2D building3 = image3.createGraphics();
+		Graphics2D building4 = image4.createGraphics();
+		Graphics2D building5 = image5.createGraphics();
+		Graphics2D building6 = image6.createGraphics();
 
-		// TODO Fenster ausradieren alle paar Pixel
-		// Alle Paar Pixel eine andere Farbe setzen (vgl. GamplayState Zeile
-		// 93ff. (Drop of Water))
+		building1.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		building2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		building3.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		building4.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		building5.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		building6.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
 
-		// erstellen einer DestructibleImageEntity, damit beim Bananenschlag das
-		// Bild entfernt wird
-		DestructibleImageEntity obstracle = new DestructibleImageEntity(
-				"obstracle", image, "gorillas/destruction.png", false);
-		obstracle.setPosition(new Vector2f(game.getContainer().getWidth() / 2,
-				game.getContainer().getHeight() - 100));
-		// DestructibleImageEntity obstracle2 = new DestructibleImageEntity(
-		// "obstracle2", image2, "gorillas/destruction.png",
-		// false);
-		// obstracle2.setPosition(new Vector2f(game.getContainer().getWidth() /
-		// 2,
-		// game.getContainer().getHeight() - 100));
+		building1.setColor(new Color(255, 0, 0));
+		building2.setColor(new Color(255, 0, 0));
+		building3.setColor(new Color(255, 0, 0));
+		building4.setColor(new Color(255, 0, 0));
+		building5.setColor(new Color(255, 0, 0));
+		building6.setColor(new Color(255, 0, 0));
 
-		entityManager.addEntity(stateID, obstracle);
-		// entityManager.addEntity(stateID, obstracle2);
+		building1.fillRect(0, 0, 150, 375);
+		building2.fillRect(0, 150, 75, 500);
+		building3.fillRect(0, 225, 125, 400);
+		building4.fillRect(0, 350, 100, 500);
+		building5.fillRect(0, 450, 150, 400);
+		building6.fillRect(0, 600, 100, 500);
+		// TODO building7?
+
+		DestructibleImageEntity skyScraper1 = new DestructibleImageEntity(
+				"obstracle1", image1, "gorillas/destruction.png", false);
+		DestructibleImageEntity skyScraper2 = new DestructibleImageEntity(
+				"obstracle2", image2, "gorillas/destruction.png", false);
+		DestructibleImageEntity skyScraper3 = new DestructibleImageEntity(
+				"obstracle3", image3, "gorillas/destruction.png", false);
+		DestructibleImageEntity skyScraper4 = new DestructibleImageEntity(
+				"obstracle4", image4, "gorillas/destruction.png", false);
+		DestructibleImageEntity skyScraper5 = new DestructibleImageEntity(
+				"obstracle5", image5, "gorillas/destruction.png", false);
+		DestructibleImageEntity skyScraper6 = new DestructibleImageEntity(
+				"obstracle6", image6, "gorillas/destruction.png", false);
+
+		skyScraper1.setPosition(new Vector2f(
+				game.getContainer().getWidth() / 2, game.getContainer()
+						.getHeight() - 100));
+		skyScraper2.setPosition(new Vector2f(
+				game.getContainer().getWidth() / 2, game.getContainer()
+						.getHeight() - 100));
+		skyScraper3.setPosition(new Vector2f(
+				game.getContainer().getWidth() / 2, game.getContainer()
+						.getHeight() - 100));
+		skyScraper4.setPosition(new Vector2f(
+				game.getContainer().getWidth() / 2, game.getContainer()
+						.getHeight() - 100));
+		skyScraper5.setPosition(new Vector2f(
+				game.getContainer().getWidth() / 2, game.getContainer()
+						.getHeight() - 100));
+		skyScraper6.setPosition(new Vector2f(
+				game.getContainer().getWidth() / 2, game.getContainer()
+						.getHeight() - 100));
+
+		entityManager.addEntity(stateID, skyScraper1);
+		entityManager.addEntity(stateID, skyScraper2);
+		entityManager.addEntity(stateID, skyScraper3);
+		entityManager.addEntity(stateID, skyScraper4);
+		entityManager.addEntity(stateID, skyScraper5);
+		entityManager.addEntity(stateID, skyScraper6);
 	}
 
 	/**
