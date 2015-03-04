@@ -84,6 +84,20 @@ public class GameplayState extends BasicTWLGameState {
 
 		// Hintergrund-Entiät an StateBasedEntityManager übergeben
 		StateBasedEntityManager.getInstance().addEntity(stateID, background);
+		
+		// TODO Error: kann nicht auf das Bild zugreifen... 
+		// TODO Position der monkeyA/B mit denen der Hochhäuser anpssen 
+//		Entity monkeyA = new Entity("monkeyA");
+//		monkeyA.setPosition(new Vector2f(50, 50));
+//		monkeyA.addComponent(new ImageRenderComponent(new Image(
+//				"/assets/gorillas.gorilass/gorilla.png")));
+//		StateBasedEntityManager.getInstance().addEntity(stateID, monkeyA);
+//		
+//		Entity monkeyB = new Entity("monkeyB");
+//		monkeyB.setPosition(new Vector2f(150, 150));
+//		monkeyB.addComponent(new ImageRenderComponent(new Image(
+//				"/assets/gorillas.gorilass/gorilla.png")));
+//		StateBasedEntityManager.getInstance().addEntity(stateID, monkeyB);
 
 		// Aus diesem Array wird eine zufällige höhe ausgewählt.
 		int[] heightOfBuilding = { (int) (Math.random() * 500),
