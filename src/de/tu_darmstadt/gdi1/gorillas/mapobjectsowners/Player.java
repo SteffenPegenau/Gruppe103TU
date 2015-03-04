@@ -23,14 +23,14 @@ import de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState;
 /**
  * Class Player
  */
-public class Player {
+public class Player implements java.io.Serializable{
 
 	//
 	// Fields
 	//
 
-	private String username;
-	private String fullname;
+	private String username = "";
+	private String fullname = "";
 	private String password;
 	private int highscore;
 	private int money;
@@ -50,6 +50,18 @@ public class Player {
 		isInitialised = true;
 	};
 	
+	public Player() {
+		
+	}
+	/**
+	 * @param username
+	 * @param fullname
+	 */
+	public Player(String username, String fullname) {
+		this.username = username;
+		this.fullname = fullname;
+	}
+
 	public String getUsername() {
 		return username;
 	}

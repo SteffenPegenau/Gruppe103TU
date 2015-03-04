@@ -1,6 +1,9 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -9,11 +12,14 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.ComboBox;
+import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.PropertySheet.ComboBoxEditorFactory;
+import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.model.CombinedListModel;
 import de.matthiasmann.twl.model.SimpleChangableListModel;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
 import eea.engine.entity.StateBasedEntityManager;
 
 /**
@@ -21,27 +27,26 @@ import eea.engine.entity.StateBasedEntityManager;
  *
  */
 public class PlayerSelectState extends ExtendedTWLState {
-	private int stateID;
-	private StateBasedEntityManager entityManager;
-	private StateBasedGame game;
-	
 	GameSetupState setupState;
-	
+	private StateBasedGame game;
 	private int playerArrayIndex;
-	private ArrayList<Player> playerList = new ArrayList<Player>();
 	private SimpleChangableListModel<Player> model;
 	private ComboBox<Player> box;
-	private Player player;
+	private Player selectedPlayer;
 	
 	Button btnSelectPlayer;
-	
+
+
 	CombinedListModel<Player> listModel;
 	ComboBoxEditorFactory<Player> factory;
 	
 	public PlayerSelectState(GameSetupState setupState, int sid, Player player, int playerArrayIndex, StateBasedGame game) {
-		stateID = sid;
-		entityManager = StateBasedEntityManager.getInstance();
-		this.player = player;
+		super(sid);
+		if(player == null) {
+			this.selectedPlayer = new Player();
+		} else {
+			this.selectedPlayer = player;
+		}
 		this.playerArrayIndex = playerArrayIndex;
 		this.setupState = setupState;
 		this.game = game;
@@ -50,17 +55,18 @@ public class PlayerSelectState extends ExtendedTWLState {
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		entityManager.addEntity(stateID, MainMenuState.background());
-		this.game = game;
+		super.init(container, game);
+		entityManager.addEntity(stateID, setBackground(null));
+		System.out.println("Hello World!!!");
+		widgets.put("LABEL_HELLOWORLD", createLabel("Hello WOrld", 400, 400, true));
+		
+		System.out.println("SIZE: " + widgets.size());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.newdawn.slick.state.GameState#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
-	 */
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		entityManager.renderEntities(container, game, g);
+		super.render(container, game, g);
 	}
 
 	/* (non-Javadoc)
@@ -69,16 +75,8 @@ public class PlayerSelectState extends ExtendedTWLState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		entityManager.updateEntities(container, game, delta);
+		super.update(container, game, delta);
 		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.newdawn.slick.state.BasicGameState#getID()
-	 */
-	@Override
-	public int getID() {
-		return stateID;
 	}
 	
 	protected void layoutRootPane() {
@@ -93,55 +91,169 @@ public class PlayerSelectState extends ExtendedTWLState {
 			private Player player;
 			private int playerArrayIndex;
 			private GameSetupState setupState;
-			private ComboBox<Player> box;
-			private SimpleChangableListModel<Player> model;
 			private StateBasedGame game;
+			SimpleChangableListModel<Player> model;
+			ComboBox<Player> box;
 			
-			public Choose(GameSetupState state, SimpleChangableListModel<Player> model,
-					ComboBox<Player> box, int index, StateBasedGame game) {
-				playerArrayIndex = index;
-				setupState = state;
+			public Choose(GameSetupState state, int index, StateBasedGame game, SimpleChangableListModel<Player> model, ComboBox<Player> box) {
+				this.playerArrayIndex = index;
+				this.setupState = state;
+				this.game = game;
 				this.model = model;
 				this.box = box;
-				this.game = game;
 			}
 			@Override
 			public void run() {
-				player = model.getEntry(box.getSelected());
+				this.player = model.getEntry(box.getSelected());
+				System.out.println("Try to save player " + player.getUsername() + " in Slot " + playerArrayIndex);
 				setupState.setPlayer(player, playerArrayIndex);
 				System.out.println("Try to change to state " + setupState.getID());
 				game.enterState(setupState.getID());
 			}
 			
 		}
-		Runnable c = new Choose(setupState, model, box, playerArrayIndex, game);
+		Runnable c = new Choose(setupState, playerArrayIndex, game, model, box);
 		return c;
 		
 	}
 	
 
+	private ArrayList<Player> getPlayers() {
+		PlayerList playerList = PlayerList.restorePlayerList();
+		return playerList.getPlayers();
+	}
+	
+	private Widget createComboBox(int posX, int posY) {
+		model = new SimpleChangableListModel<Player>(getPlayers()); 
+		box = new ComboBox<Player>(model);
+		box.setDisplayTextNoSelection("Spieler wählen:");
+		box.setPosition(posX, posY);
+		box.setSize(400, 30);
+		box.addCallback(playerSelectedInComboBoxEvent());
+		return box;
+	}
+	
+	protected Runnable playerSelectedInComboBoxEvent() {
+		class playerSelected implements Runnable {
+			ComboBox<Player> box;
+			SimpleChangableListModel<Player> model;
+			Player player;
+			Map<String, Widget> widgets;
+			public playerSelected(ComboBox<Player> box, SimpleChangableListModel<Player> model, Player player, Map<String, Widget> widgets) {
+				this.box = box;
+				this.model = model;
+				this.player = player;
+				this.widgets = widgets;
+			}
+			@Override
+			public void run() {
+				player = model.getEntry(box.getSelected());
+				EditField editUsername = (EditField) widgets.get("EDIT_USERNAME");
+				EditField editFullname = (EditField) widgets.get("EDIT_FULLNAME");
+				
+				editUsername.setText(player.getUsername());
+				editFullname.setText(player.getFullname());
+			}
+		}
+		Runnable r = new playerSelected(box, model, selectedPlayer, widgets);
+		return r;
+	}
+	
+	protected Runnable deletePlayerClick() {
+		class deletePlayer implements Runnable {
+			private Map<String, Widget> widgets;
+			private SimpleChangableListModel<Player> model;
+			private ComboBox<Player> box;
+			public deletePlayer(Map<String, Widget> widgets, SimpleChangableListModel<Player> model, ComboBox<Player> box) {
+				this.widgets = widgets;
+				this.model = model;
+				this.box = box;
+			}
+			@Override
+			public void run() {
+				model.removeElement(box.getSelected());
+				PlayerList.savePlayerList(model);
+				box.setModel(model);
+			}
+			
+		}
+		Runnable run = new deletePlayer(widgets, model, box);
+		return run;
+	}
+	
+	protected Runnable savePlayerClick() {
+		class createNewPlayer implements Runnable {
+			private Map<String, Widget> widgets;
+			private SimpleChangableListModel<Player> model;
+			public createNewPlayer(Map<String, Widget> widgets, SimpleChangableListModel<Player> model) {
+				this.widgets = widgets;
+				this.model = model;
+			}
+			@Override
+			public void run() {
+				EditField editFieldUsername = (EditField) widgets.get("EDIT_USERNAME");
+				editFieldUsername.setEnabled(false);
+				String username = editFieldUsername.getText();
+				EditField editFieldFullname = (EditField) widgets.get("EDIT_FULLNAME");
+				String fullname = editFieldFullname.getText();
+				Player newPlayer = new Player(username, fullname);
+				model.addElement(newPlayer);
+				box.setSelected(model.findElement(newPlayer));
+				PlayerList.savePlayerList(model);
+			}
+			
+		}
+		Runnable run = new createNewPlayer(widgets, model);
+		return run;
+	}
+	
+	protected Runnable newPlayerClick() {
+		class createNewPlayer implements Runnable {
+			private Map<String, Widget> widgets;
+			public createNewPlayer(Map<String, Widget> widgets) {
+				this.widgets = widgets;
+			}
+			@Override
+			public void run() {
+				for(HashMap.Entry<String, Widget> entry : widgets.entrySet()) {
+					if(entry.getKey().contains("EDIT_")) {
+						EditField field = (EditField) entry.getValue();
+						field.setText("Eingabe");
+						field.setEnabled(true);
+					}
+				}
+			}
+			
+		}
+		Runnable run = new createNewPlayer(widgets);
+		return run;
+	}
+	
+	
 	/**
 	 * In dieser Methode werden in einem BasicTWLGameSate alle GUI-Elemente dem
 	 * GameState mit Hilfe einer RootPane hinzugef�gt
 	 */
 	protected RootPane createRootPane() {
 		// erstelle die RootPane
-		entityManager.addEntity(stateID, MainMenuState.background());
-		RootPane rp = super.createRootPane();
+		rootPane = super.createRootPane();
 		
-		playerList.add(new Player("Steffen"));
-		playerList.add(new Player("dooferAffe"));
+		entityManager.addEntity(stateID, setBackground(DEFAULT_BACKGROUND));
 		
-		model = new SimpleChangableListModel<Player>(playerList); 
-		box = new ComboBox<Player>(model);
-		box.setPosition(50, 50);
-		box.setSize(500, 50);
+		widgets.put("COMBOBOX_PLAYER_SELECT", createComboBox(posX.A.get(), posY.A.get()));
 		
-		rp.add(box);
+		widgets.put("LABEL_USERNAME", createLabel("Username:", posX.A.get(), posY.D.get(), true));
+		widgets.put("EDIT_USERNAME", createEditField(posX.C.get(), posY.D.get(), false));
+		widgets.put("LABEL_FULLNAME", createLabel("Ganzer Name:", posX.A.get(), posY.F.get(), true));
+		widgets.put("EDIT_FULLNAME", createEditField(posX.C.get(), posY.F.get(), false));
 		
-		btnSelectPlayer = createButton("Speichern", choosePlayer(), BUTTON_LEFT_X, BUTTON_LAST_LINE_Y);
-		rp.add(btnSelectPlayer);
 		
-		return rp;
+		widgets.put("BTN_SAVE_PLAYER_TO_LIST", createButton("Spieler speichern", savePlayerClick(), posX.M.get(), posY.C.get()));
+		widgets.put("BTN_DELETE_PLAYER", createButton("Spieler Löschen", deletePlayerClick(), posX.M.get(), posY.E.get()));
+		widgets.put("BTN_NEW_PLAYER", createButton("Neuer Spieler", newPlayerClick(), posX.M.get(), posY.G.get()));
+		widgets.put("BTN_CHOOSE_SELECTED_PLAYER", createButton("Spieler wählen", choosePlayer(), posX.M.get(), posY.T.get()));
+
+		addAllWidgetsToRootPane(widgets);
+		return rootPane;
 	}
 }

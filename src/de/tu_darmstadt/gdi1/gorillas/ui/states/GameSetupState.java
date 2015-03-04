@@ -23,8 +23,7 @@ public class GameSetupState extends ExtendedTWLState {
 	private Player players[] = new Player[2];
 	
 	public GameSetupState(int sid) {
-		stateID = sid;
-		entityManager = StateBasedEntityManager.getInstance();
+		super(sid);
 	}	
 	
 	private Runnable switchToPlayerSelectState(Player player, int arrayIndex) {
@@ -44,7 +43,9 @@ public class GameSetupState extends ExtendedTWLState {
 			
 			@Override
 			public void run() {
-				game.addState(new PlayerSelectState(state, SID, player, arrayIndex, game));
+				PlayerSelectState selectState = new PlayerSelectState(state, SID, player, arrayIndex, game);
+				//game.init(container);
+				game.addState(selectState);
 				StateBasedEntityManager.getInstance().addState(SID);
 				game.enterState(SID);
 			}
@@ -58,7 +59,7 @@ public class GameSetupState extends ExtendedTWLState {
 			throws SlickException {
 		super.init(container, game);
 		int y = 0;
-		
+
 		for(int i = 0; i <= 1; i++) {
 			players[i] = null;
 			y = startPosition + i * distance;
@@ -117,8 +118,7 @@ public class GameSetupState extends ExtendedTWLState {
 		// erstelle die RootPane
 		RootPane rp = super.createRootPane();
 		
-		addAllWidgetsToRootPane();
+		addAllWidgetsToRootPane(widgets);
 		return rp;
 	}
-
 }

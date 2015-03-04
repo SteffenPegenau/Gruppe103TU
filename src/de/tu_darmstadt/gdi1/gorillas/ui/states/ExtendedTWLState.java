@@ -4,6 +4,7 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +16,14 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.ComboBox;
+import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.Widget;
+import de.matthiasmann.twl.model.SimpleChangableListModel;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
@@ -50,6 +55,11 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	protected RootPane rootPane = null;
 	protected StateBasedGame game = null;
 	protected GameContainer container = null;
+	
+	public ExtendedTWLState(int sid) {
+		stateID = sid;
+		entityManager = StateBasedEntityManager.getInstance();
+	}
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -70,6 +80,9 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
+		if(entityManager == null) {
+			entityManager = StateBasedEntityManager.getInstance();
+		}
 		entityManager.updateEntities(container, game, delta);
 
 	}
@@ -160,11 +173,11 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	 * Adds all registered widgets to the root pane
 	 * @param rp
 	 */
-	protected void addAllWidgetsToRootPane() {
+	protected void addAllWidgetsToRootPane(Map<String, Widget> widgets) {
 		for (Map.Entry<String, Widget> entry : widgets.entrySet()) {
 			rootPane.add(entry.getValue());
-		    // ...
 		}
+		System.out.println("Added " + widgets.size() + " to the root pane");
 	}
 	
 	protected Label createLabel(String title, int posX, int posY, boolean isVisible) {
@@ -172,6 +185,26 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		label.setPosition(posX, posY);
 		label.setVisible(isVisible);
 		return label;
-		
+	}
+	
+	protected EditField createEditField(int posX, int posY, boolean isEnabled) {
+		EditField field = new EditField();
+		int yOffset = (posY - 20 < 0) ? 0 : -20;
+		field.setPosition(posX, posY + yOffset);
+		field.setEnabled(isEnabled);
+		field.setSize(300, 30);
+		return field;
+	}
+	
+	
+	protected Runnable nullRun() {
+		class nothing implements Runnable {
+			@Override
+			public void run() {
+				// NOTHING
+			}
+			
+		}
+		return new nothing();
 	}
 }

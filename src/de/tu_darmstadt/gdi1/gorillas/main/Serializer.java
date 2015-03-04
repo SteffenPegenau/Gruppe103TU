@@ -5,11 +5,13 @@ package de.tu_darmstadt.gdi1.gorillas.main;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.WriteAbortedException;
 
 /**
  * @author Steffen Pegenau (steffen.pegenau@gmail.com)
@@ -61,7 +63,7 @@ public class Serializer {
 			prepareSaveFile(filename);
 	        FileOutputStream fileOut = new FileOutputStream(filename);
 	        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-	        out.writeObject(o);
+	        out.writeObject(o.getClass().cast(o));
 	        out.close();
 	        fileOut.close();
 	        System.out.println("Serialized object is saved in /save/" + classname + ".ser");
@@ -93,7 +95,11 @@ public class Serializer {
 	         restored = clazz.cast(in.readObject());
 	         in.close();
 	         fileIn.close();
-	      }catch(IOException i)
+	      } catch (WriteAbortedException e) {
+	    	  return null;
+	      }catch(FileNotFoundException e) {
+	    	  return null;
+	      } catch(IOException i)
 	      {
 	         i.printStackTrace();
 	         return null;
