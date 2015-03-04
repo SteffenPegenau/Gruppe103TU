@@ -71,7 +71,6 @@ public class MainMenuState extends BasicTWLGameState {
 				new MouseClickedEvent());
 		mainEventsQ.addAction(action);
 		button.addComponent(mainEventsQ);
-		System.out.println(title);
 		menuentries.add(title);
 		entityManager.addEntity(stateID, button);
 	}

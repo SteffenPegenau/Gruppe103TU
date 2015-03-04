@@ -1,251 +1,158 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 
+import org.newdawn.slick.state.StateBasedGame;
+
+import de.matthiasmann.twl.Alignment;
+import de.matthiasmann.twl.BoxLayout;
+import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.Container;
+import de.matthiasmann.twl.DialogLayout;
+import de.matthiasmann.twl.DialogLayout.Group;
 import de.matthiasmann.twl.HAlignment;
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.TextArea;
+import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.renderer.AnimationState;
 import de.matthiasmann.twl.renderer.Font;
 import de.matthiasmann.twl.renderer.FontCache;
 import de.matthiasmann.twl.textarea.HTMLTextAreaModel;
-
-
+import de.matthiasmann.twl.textarea.SimpleTextAreaModel;
+import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState;
 
 /**
  * Class Player
  */
 public class Player {
 
-		//
-		// Fields
-		//
+	//
+	// Fields
+	//
 
-		private String username;
-		private String fullname;
-		private String password;
-		private int highscore;
-		private int money;
-		private int roundsPlayed;
-		private int wonRounds;
-		private double percentageWon;
-		private int numberOfThrownObjects;
-		private int numberOfHits;
-		private double accuracy;
-		
-		//
-		// Constructors
-		//
-		public Player () { };
-		
-		//
-		// Methods
-		//
+	private String username;
+	private String fullname;
+	private String password;
+	private int highscore;
+	private int money;
+	private int roundsPlayed;
+	private int wonRounds;
+	private double percentageWon;
+	private int numberOfThrownObjects;
+	private int numberOfHits;
+	private double accuracy;
+	public boolean isInitialised = false;
 
+	//
+	// Constructors
+	//
+	public Player(String username) {
+		this.username = username;
+		isInitialised = true;
+	};
+	
+	public String getUsername() {
+		return username;
+	}
 
-		//
-		// Accessor methods
-		//
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-		/**
-		 * Set the value of username
-		 * @param newVar the new value of username
-		 */
-		private void setUsername (String newVar) {
-				username = newVar;
-		}
-		
+	public String getFullname() {
+		return fullname;
+	}
 
-		/**
-		 * Get the value of username
-		 * @return the value of username
-		 */
-		private String getUsername () {
-				return username;
-		}
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
 
-		/**
-		 * Set the value of fullname
-		 * @param newVar the new value of fullname
-		 */
-		private void setFullname (String newVar) {
-				fullname = newVar;
-		}
+	public String getPassword() {
+		return password;
+	}
 
-		/**
-		 * Get the value of fullname
-		 * @return the value of fullname
-		 */
-		private String getFullname () {
-				return fullname;
-		}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-		/**
-		 * Set the value of password
-		 * @param newVar the new value of password
-		 */
-		private void setPassword (String newVar) {
-				password = newVar;
-		}
+	public int getHighscore() {
+		return highscore;
+	}
 
-		/**
-		 * Get the value of password
-		 * @return the value of password
-		 */
-		private String getPassword () {
-				return password;
-		}
+	public void setHighscore(int highscore) {
+		this.highscore = highscore;
+	}
 
-		/**
-		 * Set the value of highscore
-		 * @param newVar the new value of highscore
-		 */
-		private void setHighscore (int newVar) {
-				highscore = newVar;
-		}
+	public int getMoney() {
+		return money;
+	}
 
-		/**
-		 * Get the value of highscore
-		 * @return the value of highscore
-		 */
-		private int getHighscore () {
-				return highscore;
-		}
+	public void setMoney(int money) {
+		this.money = money;
+	}
 
-		/**
-		 * Set the value of money
-		 * @param newVar the new value of money
-		 */
-		private void setMoney (int newVar) {
-				money = newVar;
-		}
+	public int getRoundsPlayed() {
+		return roundsPlayed;
+	}
 
-		/**
-		 * Get the value of money
-		 * @return the value of money
-		 */
-		private int getMoney () {
-				return money;
-		}
+	public void setRoundsPlayed(int roundsPlayed) {
+		this.roundsPlayed = roundsPlayed;
+	}
 
-		/**
-		 * Set the value of roundsPlayed
-		 * @param newVar the new value of roundsPlayed
-		 */
-		private void setRoundsPlayed (int newVar) {
-				roundsPlayed = newVar;
-		}
+	public int getWonRounds() {
+		return wonRounds;
+	}
 
-		/**
-		 * Get the value of roundsPlayed
-		 * @return the value of roundsPlayed
-		 */
-		private int getRoundsPlayed () {
-				return roundsPlayed;
-		}
+	public void setWonRounds(int wonRounds) {
+		this.wonRounds = wonRounds;
+	}
 
-		/**
-		 * Set the value of wonRounds
-		 * @param newVar the new value of wonRounds
-		 */
-		private void setWonRounds (int newVar) {
-				wonRounds = newVar;
-		}
+	public double getPercentageWon() {
+		return percentageWon;
+	}
 
-		/**
-		 * Get the value of wonRounds
-		 * @return the value of wonRounds
-		 */
-		private int getWonRounds () {
-				return wonRounds;
-		}
+	public void setPercentageWon(double percentageWon) {
+		this.percentageWon = percentageWon;
+	}
 
-		/**
-		 * Set the value of percentageWon
-		 * @param newVar the new value of percentageWon
-		 */
-		private void setPercentageWon (double newVar) {
-				percentageWon = newVar;
-		}
+	public int getNumberOfThrownObjects() {
+		return numberOfThrownObjects;
+	}
 
-		/**
-		 * Get the value of percentageWon
-		 * @return the value of percentageWon
-		 */
-		private double getPercentageWon () {
-				return percentageWon;
-		}
+	public void setNumberOfThrownObjects(int numberOfThrownObjects) {
+		this.numberOfThrownObjects = numberOfThrownObjects;
+	}
 
-		/**
-		 * Set the value of numberOfThrownObjects
-		 * @param newVar the new value of numberOfThrownObjects
-		 */
-		private void setNumberOfThrownObjects (int newVar) {
-				numberOfThrownObjects = newVar;
-		}
+	public int getNumberOfHits() {
+		return numberOfHits;
+	}
 
-		/**
-		 * Get the value of numberOfThrownObjects
-		 * @return the value of numberOfThrownObjects
-		 */
-		private int getNumberOfThrownObjects () {
-				return numberOfThrownObjects;
-		}
+	public void setNumberOfHits(int numberOfHits) {
+		this.numberOfHits = numberOfHits;
+	}
 
-		/**
-		 * Set the value of numberOfHits
-		 * @param newVar the new value of numberOfHits
-		 */
-		private void setNumberOfHits (int newVar) {
-				numberOfHits = newVar;
-		}
+	public double getAccuracy() {
+		return accuracy;
+	}
 
-		/**
-		 * Get the value of numberOfHits
-		 * @return the value of numberOfHits
-		 */
-		private int getNumberOfHits () {
-				return numberOfHits;
-		}
+	public void setAccuracy(double accuracy) {
+		this.accuracy = accuracy;
+	}
 
-		/**
-		 * Set the value of accuracy
-		 * @param newVar the new value of accuracy
-		 */
-		private void setAccuracy (double newVar) {
-				accuracy = newVar;
-		}
+	public boolean isInitialised() {
+		return isInitialised;
+	}
 
-		/**
-		 * Get the value of accuracy
-		 * @return the value of accuracy
-		 */
-		private double getAccuracy () {
-				return accuracy;
-		}
+	public void setInitialised(boolean isInitialised) {
+		this.isInitialised = isInitialised;
+	}
 
-		//
-		// Other methods
-		//
-		
-		public static Container getPlayerSelectContainer(Player player, int x, int y) {
-			Container container = new Container();
-			
-			String html = "<b><button>BUTTON</button>Hello World! ssssssssssssssssssssss</b>";
-			HTMLTextAreaModel content = new HTMLTextAreaModel(html);
-			content.domModified();
-			if(player == null) {
-				// Kein Spieler selektiert
-				// => zeige entsprechende Meldung und Button, um Spieler auszuwaehlen
-				TextArea structure = new TextArea(content);
-				structure.setPosition(x, y);
-				structure.adjustSize();
-				structure.registerImage("name", null);
-				container.add(structure.getGUI());
-			} else {
-				// Spieler selektiert
-				// => zeige Informationen zum Spieler und Button, um anderen Spieler auszuwaehlen
-			}
-			return container;
-		}
+	public String toString() {
+		return this.username;
+	}
+
+	//
+	// Other methods
+	//
+
 
 }

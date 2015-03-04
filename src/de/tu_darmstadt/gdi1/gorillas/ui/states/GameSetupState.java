@@ -1,19 +1,16 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import java.util.Map;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import de.matthiasmann.twl.Button;
-import de.matthiasmann.twl.ColumnLayout.Panel;
-import de.matthiasmann.twl.Container;
-import de.matthiasmann.twl.Menu;
-import de.matthiasmann.twl.MenuElement;
-import de.matthiasmann.twl.MenuManager;
+import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.Widget;
-import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import eea.engine.entity.StateBasedEntityManager;
 
@@ -22,70 +19,96 @@ import eea.engine.entity.StateBasedEntityManager;
  * @author Steffen Pegenau (steffen.pegenau@gmail.com)
  *
  */
-public class GameSetupState extends BasicTWLGameState {
-	private int stateID;
-	private StateBasedEntityManager entityManager;
-	
-	Player players[] = new Player[2];
-	Container player1;
-	Container player2;
+public class GameSetupState extends ExtendedTWLState {
+	private Player players[] = new Player[2];
 	
 	public GameSetupState(int sid) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
 	}	
-	/* (non-Javadoc)
-	 * @see org.newdawn.slick.state.GameState#init(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame)
-	 */
+	
+	private Runnable switchToPlayerSelectState(Player player, int arrayIndex) {
+		class switcher implements Runnable {
+			private StateBasedGame game;
+			private GameSetupState state;
+			private Player player;
+			private int arrayIndex;
+			private final static int SID = Gorillas.PLAYERSELECTSTATE;
+			
+			public switcher(GameSetupState s, StateBasedGame game, Player player, int arrayIndex) {
+				this.game = game;
+				this.player = player;
+				this.arrayIndex = arrayIndex;
+				this.state = s;
+			}
+			
+			@Override
+			public void run() {
+				game.addState(new PlayerSelectState(state, SID, player, arrayIndex, game));
+				StateBasedEntityManager.getInstance().addState(SID);
+				game.enterState(SID);
+			}
+		}
+		switcher s = new switcher(this, game, player, arrayIndex);
+		return s;
+	}
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		entityManager.addEntity(stateID, MainMenuState.background());
+		super.init(container, game);
+		int y = 0;
 		
-		players[0] = null;
-		players[1] = null;
+		for(int i = 0; i <= 1; i++) {
+			players[i] = null;
+			y = startPosition + i * distance;
+			widgets.put("LABELPLAYER" + i, createLabel("Spieler " + (i + 1), BUTTON_LEFT_X, y, true));
+			widgets.put("PLAYERNAME" + i, createLabel("PLAYERNAME" + i, BUTTON_MIDDLELEFT_X, y, false));
+			widgets.put("CHOOSEPLAYERNAME" + i, createButton("Spieler wählen", switchToPlayerSelectState(players[i], i), BUTTON_RIGHT_X, y));
+		}
 		
-		player1 = Player.getPlayerSelectContainer(players[0], 100, 200);
-		player1.setPosition(200, 200);
-
+		widgets.put("BUTTON_BACKTOMAINMENU", createButton("Zurück", switchState(game, Gorillas.MAINMENUSTATE), BUTTON_LEFT_X, BUTTON_LAST_LINE_Y));
+		
 	}
 
-	/* (non-Javadoc)
-	 * @see org.newdawn.slick.state.GameState#render(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, org.newdawn.slick.Graphics)
-	 */
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		entityManager.renderEntities(container, game, g);
-		
+		super.render(container, game, g);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.newdawn.slick.state.GameState#update(org.newdawn.slick.GameContainer, org.newdawn.slick.state.StateBasedGame, int)
-	 */
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		entityManager.updateEntities(container, game, delta);
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.newdawn.slick.state.BasicGameState#getID()
-	 */
-	@Override
-	public int getID() {
-		return stateID;
+		super.update(container, game, delta);
+		//drawPlayerSelectWidgets();
 	}
 	
 	protected void layoutRootPane() {
-
 		//int paneHeight = this.getRootPane().getHeight();
 		//int paneWidth = this.getRootPane().getWidth();
 
 	}
 	
-
+	private void setPlayersName(Player p, int arrayIndex) {
+		// Get the right widget
+		for (Map.Entry<String, Widget> entry : widgets.entrySet()) {
+			if(entry.getValue().getClass() == Label.class) {
+				if(entry.getKey().equals("PLAYERNAME" + arrayIndex)) {
+					Label label = (Label) entry.getValue();
+					label.setText(p.getUsername());
+					label.setVisible(true);
+				}
+			}
+			
+		}
+	}
+	
+	public void setPlayer(Player p, int arrayIndex) {
+		players[arrayIndex] = p;
+		setPlayersName(p, arrayIndex);
+	}
+	
 	/**
 	 * In dieser Methode werden in einem BasicTWLGameSate alle GUI-Elemente dem
 	 * GameState mit Hilfe einer RootPane hinzugef�gt
@@ -93,7 +116,8 @@ public class GameSetupState extends BasicTWLGameState {
 	protected RootPane createRootPane() {
 		// erstelle die RootPane
 		RootPane rp = super.createRootPane();
-		rp.add(player1);
+		
+		addAllWidgetsToRootPane();
 		return rp;
 	}
 
