@@ -84,20 +84,20 @@ public class Gorillas extends TWLStateBasedGame {
 			throws SlickException {
 
 		// Add states to the StateBasedGame
-		this.addState(new MainMenuState(MAINMENUSTATE));
-		this.addState(new GameSetupState(GAMESETUPSTATE));
-		this.addState(new HighscoreState(HIGHSCORESTATE));
-		this.addState(new InstructionState(INSTRUCTIONSSTATE));
-		this.addState(new OptionState(OPTIONSTATE));
+//		this.addState(new MainMenuState(MAINMENUSTATE));
+//		this.addState(new GameSetupState(GAMESETUPSTATE));
+//		this.addState(new HighscoreState(HIGHSCORESTATE));
+//		this.addState(new InstructionState(INSTRUCTIONSSTATE));
+//		this.addState(new OptionState(OPTIONSTATE));
 		this.addState(new GameplayState(GAMEPLAYSTATE));
 		//this.addState(new PlayerSelectState(PLAYERSELECTSTATE));
 		
 		// Add states to the StateBasedEntityManager
-		StateBasedEntityManager.getInstance().addState(MAINMENUSTATE);
-		StateBasedEntityManager.getInstance().addState(GAMESETUPSTATE);
-		StateBasedEntityManager.getInstance().addState(HIGHSCORESTATE);
-		StateBasedEntityManager.getInstance().addState(INSTRUCTIONSSTATE);
-		StateBasedEntityManager.getInstance().addState(OPTIONSTATE);
+//		StateBasedEntityManager.getInstance().addState(MAINMENUSTATE);
+//		StateBasedEntityManager.getInstance().addState(GAMESETUPSTATE);
+//		StateBasedEntityManager.getInstance().addState(HIGHSCORESTATE);
+//		StateBasedEntityManager.getInstance().addState(INSTRUCTIONSSTATE);
+//		StateBasedEntityManager.getInstance().addState(OPTIONSTATE);
 		StateBasedEntityManager.getInstance().addState(GAMEPLAYSTATE);
 		//StateBasedEntityManager.getInstance().addState(PLAYERSELECTSTATE);
 	}

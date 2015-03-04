@@ -85,25 +85,23 @@ public class GameplayState extends BasicTWLGameState {
 		// Hintergrund-Entiät an StateBasedEntityManager übergeben
 		StateBasedEntityManager.getInstance().addEntity(stateID, background);
 		
-		// TODO Error: kann nicht auf das Bild zugreifen... 
-		// TODO Position der monkeyA/B mit denen der Hochhäuser anpssen 
-		Image gorilla = new Image("/assets/gorillas/gorillas/gorilla.png");
-		Entity monkeyA = new Entity("monkeyA");
-		monkeyA.setPosition(new Vector2f(50, 50));
-		monkeyA.addComponent(new ImageRenderComponent(gorilla));
-		StateBasedEntityManager.getInstance().addEntity(stateID, monkeyA);
-		
-		Entity monkeyB = new Entity("monkeyB");
-		monkeyB.setPosition(new Vector2f(150, 150));
-		monkeyB.addComponent(new ImageRenderComponent(gorilla));
-		StateBasedEntityManager.getInstance().addEntity(stateID, monkeyB);
-
 		// Aus diesem Array wird eine zufällige höhe ausgewählt.
 		int[] heightOfBuilding = { (int) (Math.random() * 500),
 				(int) (Math.random() * 500), (int) (Math.random() * 500),
 				(int) (Math.random() * 500), (int) (Math.random() * 500),
 				(int) (Math.random() * 500), (int) (Math.random() * 500),
 				(int) (Math.random() * 500) };
+		
+		Image gorilla = new Image("/assets/gorillas/gorillas/gorilla.png");
+		Entity monkeyA = new Entity("monkeyA");
+		monkeyA.setPosition(new Vector2f(50, 600 - (heightOfBuilding[0] + 21)));
+		monkeyA.addComponent(new ImageRenderComponent(gorilla));
+		StateBasedEntityManager.getInstance().addEntity(stateID, monkeyA);
+		
+		Entity monkeyB = new Entity("monkeyB");
+		monkeyB.setPosition(new Vector2f(650, 600 - (heightOfBuilding[6] + 21)));
+		monkeyB.addComponent(new ImageRenderComponent(gorilla));
+		StateBasedEntityManager.getInstance().addEntity(stateID, monkeyB);
 
 		// game.getContainer().getWidth() / 8, weil man 8 häuser hat.
 		BufferedImage image1 = new BufferedImage(
@@ -130,7 +128,7 @@ public class GameplayState extends BasicTWLGameState {
 		BufferedImage image8 = new BufferedImage(
 				game.getContainer().getWidth() / 8, heightOfBuilding[7],
 				BufferedImage.TYPE_INT_ARGB);
-
+		
 		Graphics2D building1 = image1.createGraphics();
 		Graphics2D building2 = image2.createGraphics();
 		Graphics2D building3 = image3.createGraphics();
