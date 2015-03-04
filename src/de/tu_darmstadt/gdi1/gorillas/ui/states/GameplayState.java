@@ -85,17 +85,37 @@ public class GameplayState extends BasicTWLGameState {
 		// Hintergrund-Entiät an StateBasedEntityManager übergeben
 		StateBasedEntityManager.getInstance().addEntity(stateID, background);
 
-		BufferedImage image1 = new BufferedImage(150, 375,
+		// Aus diesem Array wird eine zufällige höhe ausgewählt.
+		int[] heightOfBuilding = { (int) (Math.random() * 500),
+				(int) (Math.random() * 500), (int) (Math.random() * 500),
+				(int) (Math.random() * 500), (int) (Math.random() * 500),
+				(int) (Math.random() * 500), (int) (Math.random() * 500),
+				(int) (Math.random() * 500) };
+
+		// game.getContainer().getWidth() / 8, weil man 8 häuser hat.
+		BufferedImage image1 = new BufferedImage(
+				game.getContainer().getWidth() / 8, heightOfBuilding[0],
 				BufferedImage.TYPE_INT_ARGB);
-		BufferedImage image2 = new BufferedImage(75, 500,
+		BufferedImage image2 = new BufferedImage(
+				game.getContainer().getWidth() / 8, heightOfBuilding[1],
 				BufferedImage.TYPE_INT_ARGB);
-		BufferedImage image3 = new BufferedImage(125, 400,
+		BufferedImage image3 = new BufferedImage(
+				game.getContainer().getWidth() / 8, heightOfBuilding[2],
 				BufferedImage.TYPE_INT_ARGB);
-		BufferedImage image4 = new BufferedImage(100, 500,
+		BufferedImage image4 = new BufferedImage(
+				game.getContainer().getWidth() / 8, heightOfBuilding[3],
 				BufferedImage.TYPE_INT_ARGB);
-		BufferedImage image5 = new BufferedImage(150, 400,
+		BufferedImage image5 = new BufferedImage(
+				game.getContainer().getWidth() / 8, heightOfBuilding[4],
 				BufferedImage.TYPE_INT_ARGB);
-		BufferedImage image6 = new BufferedImage(100, 500,
+		BufferedImage image6 = new BufferedImage(
+				game.getContainer().getWidth() / 8, heightOfBuilding[5],
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image7 = new BufferedImage(
+				game.getContainer().getWidth() / 8, heightOfBuilding[6],
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image8 = new BufferedImage(
+				game.getContainer().getWidth() / 8, heightOfBuilding[7],
 				BufferedImage.TYPE_INT_ARGB);
 
 		Graphics2D building1 = image1.createGraphics();
@@ -104,6 +124,8 @@ public class GameplayState extends BasicTWLGameState {
 		Graphics2D building4 = image4.createGraphics();
 		Graphics2D building5 = image5.createGraphics();
 		Graphics2D building6 = image6.createGraphics();
+		Graphics2D building7 = image7.createGraphics();
+		Graphics2D building8 = image8.createGraphics();
 
 		building1.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
 		building2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
@@ -111,53 +133,86 @@ public class GameplayState extends BasicTWLGameState {
 		building4.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
 		building5.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
 		building6.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		building6.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		building6.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
 
-		building1.setColor(new Color(255, 0, 0));
-		building2.setColor(new Color(255, 0, 0));
-		building3.setColor(new Color(255, 0, 0));
-		building4.setColor(new Color(255, 0, 0));
-		building5.setColor(new Color(255, 0, 0));
-		building6.setColor(new Color(255, 0, 0));
+		// Aus diesem Color Array werden die Farben ausgesucht.
+		Color[] basicColors = { new Color(255, 0, 0), new Color(0, 0, 255),
+				new Color(0, 255, 0), new Color(0, 255, 120),
+				new Color(255, 255, 0), new Color(0, 255, 255),
+				new Color(255, 0, 255), new Color(255, 160, 0) };
 
-		building1.fillRect(0, 0, 150, 375);
-		building2.fillRect(0, 150, 75, 500);
-		building3.fillRect(0, 225, 125, 400);
-		building4.fillRect(0, 350, 100, 500);
-		building5.fillRect(0, 450, 150, 400);
-		building6.fillRect(0, 600, 100, 500);
-		// TODO building7?
+		// Damit man nicht zwei mal hintereinander die gleiche Farbe bekommt
+		// wird hier immer abwechselnd
+		// eine Farbe aus den ersten 5 Farben ausgewählt und dann eine aus den
+		// letzten 3.
+		building1.setColor(basicColors[(int) (Math.random() * 4)]);
+		building2.setColor(basicColors[7 - (int) (Math.random() * 2)]);
+		building3.setColor(basicColors[(int) (Math.random() * 4)]);
+		building4.setColor(basicColors[7 - (int) (Math.random() * 2)]);
+		building5.setColor(basicColors[(int) (Math.random() * 4)]);
+		building6.setColor(basicColors[7 - (int) (Math.random() * 2)]);
+		building7.setColor(basicColors[(int) (Math.random() * 4)]);
+		building8.setColor(basicColors[7 - (int) (Math.random() * 2)]);
+
+		building1.fillRect(0, 0, game.getContainer().getWidth() / 8,
+				heightOfBuilding[0]);
+		building2.fillRect(0, 0, game.getContainer().getWidth() / 8,
+				heightOfBuilding[1]);
+		building3.fillRect(0, 0, game.getContainer().getWidth() / 8,
+				heightOfBuilding[2]);
+		building4.fillRect(0, 0, game.getContainer().getWidth() / 8,
+				heightOfBuilding[3]);
+		building5.fillRect(0, 0, game.getContainer().getWidth() / 8,
+				heightOfBuilding[4]);
+		building6.fillRect(0, 0, game.getContainer().getWidth() / 8,
+				heightOfBuilding[5]);
+		building7.fillRect(0, 0, game.getContainer().getWidth() / 8,
+				heightOfBuilding[6]);
+		building8.fillRect(0, 0, game.getContainer().getWidth() / 8,
+				heightOfBuilding[7]);
 
 		DestructibleImageEntity skyScraper1 = new DestructibleImageEntity(
-				"obstracle1", image1, "gorillas/destruction.png", false);
+				"obstacle1", image1, "gorillas/destruction.png", false);
 		DestructibleImageEntity skyScraper2 = new DestructibleImageEntity(
-				"obstracle2", image2, "gorillas/destruction.png", false);
+				"obstacle2", image2, "gorillas/destruction.png", false);
 		DestructibleImageEntity skyScraper3 = new DestructibleImageEntity(
-				"obstracle3", image3, "gorillas/destruction.png", false);
+				"obstacle3", image3, "gorillas/destruction.png", false);
 		DestructibleImageEntity skyScraper4 = new DestructibleImageEntity(
-				"obstracle4", image4, "gorillas/destruction.png", false);
+				"obstacle4", image4, "gorillas/destruction.png", false);
 		DestructibleImageEntity skyScraper5 = new DestructibleImageEntity(
-				"obstracle5", image5, "gorillas/destruction.png", false);
+				"obstacle5", image5, "gorillas/destruction.png", false);
 		DestructibleImageEntity skyScraper6 = new DestructibleImageEntity(
-				"obstracle6", image6, "gorillas/destruction.png", false);
+				"obstacle6", image6, "gorillas/destruction.png", false);
+		DestructibleImageEntity skyScraper7 = new DestructibleImageEntity(
+				"obstacle6", image7, "gorillas/destruction.png", false);
+		DestructibleImageEntity skyScraper8 = new DestructibleImageEntity(
+				"obstacle6", image8, "gorillas/destruction.png", false);
 
 		skyScraper1.setPosition(new Vector2f(
-				game.getContainer().getWidth() / 2, game.getContainer()
-						.getHeight() - 100));
+				game.getContainer().getWidth() / 16, game.getContainer()
+						.getHeight() - (heightOfBuilding[0]) / 2));
 		skyScraper2.setPosition(new Vector2f(
-				game.getContainer().getWidth() / 2, game.getContainer()
-						.getHeight() - 100));
+				game.getContainer().getWidth() / 16 * 3, game.getContainer()
+						.getHeight() - (heightOfBuilding[1]) / 2));
 		skyScraper3.setPosition(new Vector2f(
-				game.getContainer().getWidth() / 2, game.getContainer()
-						.getHeight() - 100));
+				game.getContainer().getWidth() / 16 * 5, game.getContainer()
+						.getHeight() - (heightOfBuilding[2]) / 2));
 		skyScraper4.setPosition(new Vector2f(
-				game.getContainer().getWidth() / 2, game.getContainer()
-						.getHeight() - 100));
+				game.getContainer().getWidth() / 16 * 7, game.getContainer()
+						.getHeight() - (heightOfBuilding[3]) / 2));
 		skyScraper5.setPosition(new Vector2f(
-				game.getContainer().getWidth() / 2, game.getContainer()
-						.getHeight() - 100));
+				game.getContainer().getWidth() / 16 * 9, game.getContainer()
+						.getHeight() - (heightOfBuilding[4]) / 2));
 		skyScraper6.setPosition(new Vector2f(
-				game.getContainer().getWidth() / 2, game.getContainer()
-						.getHeight() - 100));
+				game.getContainer().getWidth() / 16 * 11, game.getContainer()
+						.getHeight() - (heightOfBuilding[5]) / 2));
+		skyScraper7.setPosition(new Vector2f(
+				game.getContainer().getWidth() / 16 * 13, game.getContainer()
+						.getHeight() - (heightOfBuilding[6]) / 2));
+		skyScraper8.setPosition(new Vector2f(
+				game.getContainer().getWidth() / 16 * 15, game.getContainer()
+						.getHeight() - (heightOfBuilding[7]) / 2));
 
 		entityManager.addEntity(stateID, skyScraper1);
 		entityManager.addEntity(stateID, skyScraper2);
@@ -165,6 +220,9 @@ public class GameplayState extends BasicTWLGameState {
 		entityManager.addEntity(stateID, skyScraper4);
 		entityManager.addEntity(stateID, skyScraper5);
 		entityManager.addEntity(stateID, skyScraper6);
+		entityManager.addEntity(stateID, skyScraper7);
+		entityManager.addEntity(stateID, skyScraper8);
+
 	}
 
 	/**
