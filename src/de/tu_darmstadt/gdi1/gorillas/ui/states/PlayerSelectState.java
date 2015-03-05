@@ -3,7 +3,6 @@ package de.tu_darmstadt.gdi1.gorillas.ui.states;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -20,7 +19,6 @@ import de.matthiasmann.twl.model.SimpleChangableListModel;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
-import eea.engine.entity.StateBasedEntityManager;
 
 /**
  * @author Steffen Pegenau (steffen.pegenau@gmail.com)
@@ -97,7 +95,6 @@ public class PlayerSelectState extends ExtendedTWLState {
 			private int playerArrayIndex;
 			private GameSetupState setupState;
 			private StateBasedGame game;
-			private PlayerSelectState playerSelectState;
 			SimpleChangableListModel<Player> model;
 			ComboBox<Player> box;
 
@@ -108,7 +105,6 @@ public class PlayerSelectState extends ExtendedTWLState {
 				this.game = game;
 				this.model = model;
 				this.box = box;
-				this.playerSelectState = playerSelectState;
 			}
 
 			@Override

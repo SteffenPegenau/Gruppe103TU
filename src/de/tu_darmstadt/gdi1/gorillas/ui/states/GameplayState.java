@@ -21,6 +21,7 @@ import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.DestructibleImageEntity;
 import eea.engine.entity.Entity;
@@ -32,6 +33,8 @@ public class GameplayState extends BasicTWLGameState {
 
 	private int stateID; // Identifier dieses GamplayState
 	private StateBasedEntityManager entityManager; // zugehoeriger entityManager
+	
+	private Player[] players = new Player[2];
 	double gravity;
 	int numberOfRounds;
 	int numberOfHitsForVictory;
@@ -61,6 +64,22 @@ public class GameplayState extends BasicTWLGameState {
 	public GameplayState(int sid) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
+	}
+	
+	/**
+	 * 
+	 */
+	public GameplayState(int sid, Player[] players) {
+		if(players.length != 2) {
+			System.err.println("Bad number of players: " + players.length);
+		} else {
+			stateID = sid;
+			entityManager = StateBasedEntityManager.getInstance();
+			for (int i = 0; i < players.length; i++) {
+				this.players[i] = players[i];
+				System.out.println("Started with Player " + i + ": " + players[i].getUsername());
+			}
+		}
 	}
 
 	@Override
@@ -251,6 +270,7 @@ public class GameplayState extends BasicTWLGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
+		//System.out.println("Container: " + container + "\tGame: " + game + "\tDelta: " + delta);
 		entityManager.updateEntities(container, game, delta);
 	}
 

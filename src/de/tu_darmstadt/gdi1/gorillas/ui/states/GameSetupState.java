@@ -1,14 +1,11 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
-import java.util.Map;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Label;
-import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
@@ -55,6 +52,37 @@ public class GameSetupState extends ExtendedTWLState {
 		return s;
 	}
 	
+	private Runnable startGame() {
+		class switcher implements Runnable {
+			private Player[] players = new Player[2];
+			private StateBasedGame game;
+			private GameContainer container;
+			
+			public switcher(StateBasedGame game, Player[] players, GameContainer container) {
+				this.game = game;
+				this.players = players;
+				this.container = container;
+			}
+			
+			@Override
+			public void run() {
+				GameplayState gamePlayState = new GameplayState(Gorillas.GAMEPLAYSTATE, players);
+				game.addState(gamePlayState);
+				StateBasedEntityManager.getInstance().addState(Gorillas.GAMEPLAYSTATE);
+				try {
+					gamePlayState.init(container, game);
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
+				game.enterState(Gorillas.GAMEPLAYSTATE);
+			}
+		}
+		switcher s = new switcher(game, players, container);
+		return s;
+	}
+	
+	
+	
 	private void tryToRestoreSelectedPlayers() {
 		Player p;
 		
@@ -93,6 +121,7 @@ public class GameSetupState extends ExtendedTWLState {
 		}
 		tryToRestoreSelectedPlayers();
 		widgets.put("BUTTON_BACKTOMAINMENU", createButton("Zurück", switchState(game, Gorillas.MAINMENUSTATE), BUTTON_LEFT_X, BUTTON_LAST_LINE_Y));
+		widgets.put("BUTTON_START_GAME", createButton("Spiel starten", startGame(), BUTTON_RIGHT_X, BUTTON_LAST_LINE_Y));
 		
 	}
 
