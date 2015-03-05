@@ -41,6 +41,10 @@ public class Player implements java.io.Serializable{
 	private int numberOfHits;
 	private double accuracy;
 	public boolean isInitialised = false;
+	private int xPos;
+	private int yPos;
+	private double angle;
+	private double velocity;
 
 	//
 	// Constructors
@@ -160,6 +164,22 @@ public class Player implements java.io.Serializable{
 
 	public String toString() {
 		return this.username;
+	}
+	
+	public int getX() {
+		return xPos;
+	}
+	
+	public int getY(){
+		return yPos;
+	}
+	
+	public double getAngle(){
+		return angle;
+	}
+	
+	public double getVelocity(){
+		return velocity;
 	}
 
 	//

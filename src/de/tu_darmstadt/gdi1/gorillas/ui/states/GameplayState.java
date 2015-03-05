@@ -27,13 +27,16 @@ import eea.engine.entity.DestructibleImageEntity;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
 import eea.engine.event.basicevents.KeyPressedEvent;
+import eea.engine.event.basicevents.LoopEvent;
+import eea.engine.action.Action;
 import eea.engine.action.basicactions.ChangeStateAction;
+import eea.engine.action.basicactions.MoveDownAction;
 
 public class GameplayState extends BasicTWLGameState {
 
 	private int stateID; // Identifier dieses GamplayState
 	private StateBasedEntityManager entityManager; // zugehoeriger entityManager
-	
+
 	private Player[] players = new Player[2];
 	double gravity;
 	int numberOfRounds;
@@ -50,6 +53,7 @@ public class GameplayState extends BasicTWLGameState {
 	EditField velocityInputR;
 	private Button throwButtonL;
 	private Button throwButtonR;
+	private Player player;
 
 	// Methode um eine Zufallszahl zu berechnen zwischen Minimum und Maximum
 	public int randomInt(int max, int min) {
@@ -61,26 +65,28 @@ public class GameplayState extends BasicTWLGameState {
 	}
 
 	/*
-	 * Der Konstruktor sollte nicht mehr genutzt werden, da dabei keine Spieler uebergeben werden
+	 * Der Konstruktor sollte nicht mehr genutzt werden, da dabei keine Spieler
+	 * uebergeben werden
 	 */
 	// Konsturktor
 	public GameplayState(int sid) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
 	}
+
 	/*
-	/**
-	 * 
+	 * /**
 	 */
 	public GameplayState(int sid, Player[] players) {
-		if(players.length != 2) {
+		if (players.length != 2) {
 			System.err.println("Bad number of players: " + players.length);
 		} else {
 			stateID = sid;
 			entityManager = StateBasedEntityManager.getInstance();
 			for (int i = 0; i < players.length; i++) {
 				this.players[i] = players[i];
-				System.out.println("Started with Player " + i + ": " + players[i].getUsername());
+				System.out.println("Started with Player " + i + ": "
+						+ players[i].getUsername());
 			}
 		}
 	}
@@ -106,20 +112,20 @@ public class GameplayState extends BasicTWLGameState {
 
 		// Hintergrund-Entiät an StateBasedEntityManager übergeben
 		StateBasedEntityManager.getInstance().addEntity(stateID, background);
-		
+
 		// Aus diesem Array wird eine zufällige höhe ausgewählt.
 		int[] heightOfBuilding = { (int) (Math.random() * 500),
 				(int) (Math.random() * 500), (int) (Math.random() * 500),
 				(int) (Math.random() * 500), (int) (Math.random() * 500),
 				(int) (Math.random() * 500), (int) (Math.random() * 500),
 				(int) (Math.random() * 500) };
-		
+
 		Image gorilla = new Image("/assets/gorillas/gorillas/gorilla.png");
 		Entity monkeyA = new Entity("monkeyA");
 		monkeyA.setPosition(new Vector2f(50, 600 - (heightOfBuilding[0] + 21)));
 		monkeyA.addComponent(new ImageRenderComponent(gorilla));
 		StateBasedEntityManager.getInstance().addEntity(stateID, monkeyA);
-		
+
 		Entity monkeyB = new Entity("monkeyB");
 		monkeyB.setPosition(new Vector2f(650, 600 - (heightOfBuilding[6] + 21)));
 		monkeyB.addComponent(new ImageRenderComponent(gorilla));
@@ -150,7 +156,7 @@ public class GameplayState extends BasicTWLGameState {
 		BufferedImage image8 = new BufferedImage(
 				game.getContainer().getWidth() / 8, heightOfBuilding[7],
 				BufferedImage.TYPE_INT_ARGB);
-		
+
 		Graphics2D building1 = image1.createGraphics();
 		Graphics2D building2 = image2.createGraphics();
 		Graphics2D building3 = image3.createGraphics();
@@ -273,7 +279,8 @@ public class GameplayState extends BasicTWLGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		//System.out.println("Container: " + container + "\tGame: " + game + "\tDelta: " + delta);
+		// System.out.println("Container: " + container + "\tGame: " + game +
+		// "\tDelta: " + delta);
 		entityManager.updateEntities(container, game, delta);
 	}
 
@@ -464,6 +471,18 @@ public class GameplayState extends BasicTWLGameState {
 	// TODO Methode für keyboard input anpassen und andere Wurfgegenstände
 	// vgl. Zeile 272ff. GamplayState Drop of Water
 	void inputFinished() {
+		Entity banana = new Entity("banana");
+		banana.setPosition(new Vector2f((Integer) player.getX(),
+				(Integer) player.getY()));
 
+		try {
+			// Bild laden und zuweisen
+			banana.addComponent(new ImageRenderComponent(new Image(
+					"assets/gorillas/banana.png")));
+		} catch (SlickException e) {
+			System.err.println("Cannot find file assets/gorillas/banana.png!");
+			e.printStackTrace();
+		}
 	}
+
 }
