@@ -11,6 +11,7 @@ import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import eea.engine.entity.StateBasedEntityManager;
 
@@ -54,6 +55,29 @@ public class GameSetupState extends ExtendedTWLState {
 		return s;
 	}
 	
+	private void tryToRestoreSelectedPlayers() {
+		Player p;
+		
+		for (int i = 0; i < players.length; i++) {
+			players[i] = p = (Player) Serializer.restore(new Player(), "selectedPlayer" + i);
+			if(p != null && p.getClass() == Player.class && !p.getUsername().isEmpty()) {
+				setPlayersName(players[i], i);
+			}
+		}
+		
+	}
+	
+	private void saveSelectedPlayers() {
+		Player p;
+		for (int i = 0; i < players.length; i++) {
+			p = players[i];
+			if (p != null && p.getClass() == Player.class && !p.getUsername().isEmpty()) {
+				Serializer.save(p, "selectedPlayer" + i);
+			}
+			
+		}
+	}
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -67,7 +91,7 @@ public class GameSetupState extends ExtendedTWLState {
 			widgets.put("PLAYERNAME" + i, createLabel("PLAYERNAME" + i, BUTTON_MIDDLELEFT_X, y, false));
 			widgets.put("CHOOSEPLAYERNAME" + i, createButton("Spieler wählen", switchToPlayerSelectState(players[i], i), BUTTON_RIGHT_X, y));
 		}
-		
+		tryToRestoreSelectedPlayers();
 		widgets.put("BUTTON_BACKTOMAINMENU", createButton("Zurück", switchState(game, Gorillas.MAINMENUSTATE), BUTTON_LEFT_X, BUTTON_LAST_LINE_Y));
 		
 	}
@@ -93,21 +117,15 @@ public class GameSetupState extends ExtendedTWLState {
 	
 	private void setPlayersName(Player p, int arrayIndex) {
 		// Get the right widget
-		for (Map.Entry<String, Widget> entry : widgets.entrySet()) {
-			if(entry.getValue().getClass() == Label.class) {
-				if(entry.getKey().equals("PLAYERNAME" + arrayIndex)) {
-					Label label = (Label) entry.getValue();
-					label.setText(p.getUsername());
-					label.setVisible(true);
-				}
-			}
-			
-		}
+		Label label = (Label) widgets.get("PLAYERNAME" + arrayIndex);
+		label.setText(p.getUsername());
+		label.setVisible(true);
 	}
 	
 	public void setPlayer(Player p, int arrayIndex) {
 		players[arrayIndex] = p;
 		setPlayersName(p, arrayIndex);
+		saveSelectedPlayers();
 	}
 	
 	/**

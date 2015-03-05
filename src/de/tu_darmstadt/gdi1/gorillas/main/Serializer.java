@@ -55,10 +55,21 @@ public class Serializer {
 	 * @param Object o, muss die Schnittstelle 'java.io.Serializable' implementieren
 	 */
 	public static void save(Object o) {
+			String classname = o.getClass().getSimpleName();
+			save(o, classname);
+	}
+	
+	
+	/**
+	 * Speichert das Objekt unter save/filename.ser
+	 * 
+	 * @param Object o, muss die Schnittstelle 'java.io.Serializable' implementieren
+	 * @param String filename, der gewuenschte Dateiname
+	 */
+	public static void save(Object o, String filename) {
 		try
 	      {
-			String classname = o.getClass().getSimpleName();
-			String filename = "save" + File.separator + classname + ".ser";
+			filename = "save" + File.separator + filename + ".ser";
 			createSaveDirIfNotExisting();
 			prepareSaveFile(filename);
 	        FileOutputStream fileOut = new FileOutputStream(filename);
@@ -66,7 +77,7 @@ public class Serializer {
 	        out.writeObject(o.getClass().cast(o));
 	        out.close();
 	        fileOut.close();
-	        System.out.println("Serialized object is saved in /save/" + classname + ".ser");
+	        System.out.println("Serialized object is saved in " + filename);
 	      }catch(NotSerializableException e) {
 	    	  System.out.println("Object to be saved does not implement java.io.Serializable!");
 	    	  e.printStackTrace();
@@ -85,12 +96,23 @@ public class Serializer {
 	 * @param Object o, muss die Schnittstelle 'java.io.Serializable' implementieren
 	 */
 	public static Object restore(Object o) {
-		Object restored = null;
 		String classname = o.getClass().getSimpleName();
+		return restore(o, classname);
+	}
+	
+	/**
+	 * Stellt ein gespeichertes Objekt aus der Datei
+	 * save/FILENAME.ser
+	 * wieder her und gibt es zurueck
+	 * 
+	 * @param Object o, muss die Schnittstelle 'java.io.Serializable' implementieren
+	 */
+	public static Object restore(Object o, String filename) {
+		Object restored = null;
 		Class<?> clazz = o.getClass();
 	      try
 	      {
-	         FileInputStream fileIn = new FileInputStream("save" + File.separator + classname + ".ser");
+	         FileInputStream fileIn = new FileInputStream("save" + File.separator + filename + ".ser");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         restored = clazz.cast(in.readObject());
 	         in.close();
@@ -105,7 +127,7 @@ public class Serializer {
 	         return null;
 	      }catch(ClassNotFoundException c)
 	      {
-	         System.out.println("class " + classname + " not found");
+	         System.out.println("class " + clazz.getSimpleName() + " not found");
 	         c.printStackTrace();
 	         return null;
 	      }
