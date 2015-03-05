@@ -60,12 +60,15 @@ public class GameplayState extends BasicTWLGameState {
 		return randomNum;
 	}
 
+	/*
+	 * Der Konstruktor sollte nicht mehr genutzt werden, da dabei keine Spieler uebergeben werden
+	 */
 	// Konsturktor
 	public GameplayState(int sid) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
 	}
-	
+	/*
 	/**
 	 * 
 	 */

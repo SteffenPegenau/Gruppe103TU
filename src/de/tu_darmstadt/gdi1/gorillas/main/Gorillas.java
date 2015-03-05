@@ -89,7 +89,7 @@ public class Gorillas extends TWLStateBasedGame {
 		this.addState(new HighscoreState(HIGHSCORESTATE));
 		this.addState(new InstructionState(INSTRUCTIONSSTATE));
 		this.addState(new OptionState(OPTIONSTATE));
-		this.addState(new GameplayState(GAMEPLAYSTATE));
+		//this.addState(new GameplayState(GAMEPLAYSTATE));
 		//this.addState(new PlayerSelectState(PLAYERSELECTSTATE));
 		
 		// Add states to the StateBasedEntityManager
@@ -98,7 +98,7 @@ public class Gorillas extends TWLStateBasedGame {
 		StateBasedEntityManager.getInstance().addState(HIGHSCORESTATE);
 		StateBasedEntityManager.getInstance().addState(INSTRUCTIONSSTATE);
 		StateBasedEntityManager.getInstance().addState(OPTIONSTATE);
-		StateBasedEntityManager.getInstance().addState(GAMEPLAYSTATE);
+		//StateBasedEntityManager.getInstance().addState(GAMEPLAYSTATE);
 		//StateBasedEntityManager.getInstance().addState(PLAYERSELECTSTATE);
 	}
 

@@ -78,11 +78,12 @@ public class MainMenuState extends BasicTWLGameState {
 	private void drawMenu() {
 		Action action;
 		int counter = 0;
-		
+		/*
+		 * Der Gameplaystate soll nur ueber GameSetupState gestartet werden, damit die Spieler gesetzt werden 
 		action = new ChangeStateAction(Gorillas.GAMEPLAYSTATE);
 		createButton("newGame", "Neues Spiel", action, 220, startPosition + counter * distance);
-		
 		counter++;
+		*/
 		action = new ChangeStateAction(Gorillas.GAMESETUPSTATE);
 		createButton("newGameWithSteup", "Neues Spiel mit Setup", action, 220, startPosition + counter * distance);
 		
