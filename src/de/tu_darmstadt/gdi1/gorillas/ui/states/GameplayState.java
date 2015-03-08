@@ -58,6 +58,11 @@ public class GameplayState extends ExtendedTWLState {
 		entityManager.addEntity(stateID, setESCListener(Gorillas.MAINMENUSTATE));
 
 		skyline.createSkyline();
+		for (int i = 0; i < players.length; i++) {
+			players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
+			players[i].getPlayersFigure().setPosition(skyline.randomBuildingForPlayer(i));
+			entityManager.addEntity(stateID, players[i].getPlayersFigure());
+		}
 	}
 
 	/**

@@ -8,6 +8,7 @@ import eea.engine.entity.Entity;
  * Class MapObject
  */
 public class MapObject extends Entity {
+	Entity entity;
 
 	public MapObject(String entityID) {
 		super(entityID);
@@ -20,7 +21,7 @@ public class MapObject extends Entity {
 	 * @param max Maximum
 	 * @return Zufallszahl
 	 */
-	public int randomInt(int min, int max) {
+	public static int randomInt(int min, int max) {
 
 		Random rand = new Random();
 		int randomNum = rand.nextInt((max - min) + 1) + min;

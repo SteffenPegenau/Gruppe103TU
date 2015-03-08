@@ -130,6 +130,18 @@ public class Building extends MapObject {
 	private int getRandomHeight() {
 		return randomInt(MIN_HEIGHT, MAX_HEIGHT);
 	}
+	
+
+
+	public Vector2f getPosition() {
+		return position;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+	
+	
 
 	/*
 	

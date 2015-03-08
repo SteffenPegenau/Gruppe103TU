@@ -1,12 +1,21 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
+
+import eea.engine.component.render.ImageRenderComponent;
+
 
 
 /**
  * Class FigureWithWeapon
  */
-public class FigureWithWeapon {
+public class FigureWithWeapon extends MapObject {
+		
 
+		protected final static String FIGURE_IMAGE = null;
+		protected Image image = null;
 		//
 		// Fields
 		//
@@ -16,11 +25,34 @@ public class FigureWithWeapon {
 		private double velocity;
 		private double angle;
 		
-		//
-		// Constructors
-		//
-		public FigureWithWeapon () { };
+		public FigureWithWeapon(String entityID) {
+			super(entityID);
+			
+		}
 		
+		public void setFigureImage(String pathToImage) {
+			try {
+				//System.out.println("Figure Image: " + pathToImage);
+				image = new Image(pathToImage);
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			this.addComponent(new ImageRenderComponent(image));
+		}
+		
+		private Vector2f positionOnBuilding(Building building) {
+			Vector2f positionBuilding = building.getPosition();
+			float posX = positionBuilding.getX();
+			float posY = positionBuilding.getY();
+			posY -= building.getHeight() / 2 + image.getHeight() / 2;
+			System.out.println("Set position: " + posX + " | " + posY);
+			return new Vector2f(posX, posY);
+			
+		}
+		
+		public void setPosition(Building building) {
+			super.setPosition(positionOnBuilding(building));
+		}
 		//
 		// Methods
 		//

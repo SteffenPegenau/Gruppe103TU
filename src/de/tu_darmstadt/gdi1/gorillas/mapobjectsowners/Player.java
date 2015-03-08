@@ -1,39 +1,14 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 
-import org.newdawn.slick.state.StateBasedGame;
-
-import de.matthiasmann.twl.Alignment;
-import de.matthiasmann.twl.BoxLayout;
-import de.matthiasmann.twl.Button;
-import de.matthiasmann.twl.Container;
-import de.matthiasmann.twl.DialogLayout;
-import de.matthiasmann.twl.DialogLayout.Group;
-import de.matthiasmann.twl.HAlignment;
-import de.matthiasmann.twl.Label;
-import de.matthiasmann.twl.TextArea;
-import de.matthiasmann.twl.Widget;
-import de.matthiasmann.twl.renderer.AnimationState;
-import de.matthiasmann.twl.renderer.Font;
-import de.matthiasmann.twl.renderer.FontCache;
-import de.matthiasmann.twl.textarea.HTMLTextAreaModel;
-import de.matthiasmann.twl.textarea.SimpleTextAreaModel;
-import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
-import de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState;
 
 /**
  * Class Player
  */
-public class Player implements java.io.Serializable{
-
-	//
-	// Fields
-	//
-	
-	
-
+public class Player extends Owner implements java.io.Serializable{
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = -6462859935769741215L;
 	private String username = "";
 	private String fullname = "";
