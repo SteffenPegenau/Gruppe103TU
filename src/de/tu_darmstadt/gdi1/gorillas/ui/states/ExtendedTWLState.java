@@ -20,7 +20,6 @@ import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
-import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
@@ -58,6 +57,14 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	public ExtendedTWLState(int sid) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
+	}
+	
+	/**
+	 * Returns all registered widgets
+	 * @return
+	 */
+	public HashMap<String, Widget> getWidgets() {
+		return widgets;
 	}
 	
 	protected Entity setESCListener(int newState) {
@@ -118,7 +125,7 @@ public class ExtendedTWLState extends BasicTWLGameState {
 
 	}
 
-	protected Button createButton(String title, Runnable callback, int x, int y) {
+	public Button createButton(String title, Runnable callback, int x, int y) {
 		Button btn = new Button();
 		btn.setText(title);
 		btn.setSize(BUTTON_DEFAULT_WIDTH, BUTTON_DEFAULT_HEIGHT);
@@ -187,14 +194,14 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		System.out.println("Added " + widgets.size() + " to the root pane");
 	}
 	
-	protected Label createLabel(String title, int posX, int posY, boolean isVisible) {
+	public Label createLabel(String title, int posX, int posY, boolean isVisible) {
 		Label label = new Label(title);
 		label.setPosition(posX, posY);
 		label.setVisible(isVisible);
 		return label;
 	}
 	
-	protected EditField createEditField(int posX, int posY, boolean isEnabled) {
+	public EditField createEditField(int posX, int posY, boolean isEnabled) {
 		EditField field = new EditField();
 		int yOffset = (posY - 20 < 0) ? 0 : -20;
 		field.setPosition(posX, posY + yOffset);
