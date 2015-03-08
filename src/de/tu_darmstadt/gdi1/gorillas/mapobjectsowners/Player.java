@@ -28,7 +28,13 @@ public class Player implements java.io.Serializable{
 	//
 	// Fields
 	//
+	
+	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6462859935769741215L;
 	private String username = "";
 	private String fullname = "";
 	private String password;

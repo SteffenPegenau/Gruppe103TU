@@ -1,52 +1,31 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 
-import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Owner;
+import java.util.Random;
 
-
+import eea.engine.entity.Entity;
 
 /**
  * Class MapObject
  */
-public class MapObject {
+public class MapObject extends Entity {
 
-		//
-		// Fields
-		//
+	public MapObject(String entityID) {
+		super(entityID);
+	}
 
-		protected Owner owner;
-		
-		//
-		// Constructors
-		//
-		public MapObject () { };
-		
-		//
-		// Methods
-		//
+	/**
+	 * Erzeugt zufällige ganze Zahl zwischen min und max
+	 * 
+	 * @param min Minimum
+	 * @param max Maximum
+	 * @return Zufallszahl
+	 */
+	public int randomInt(int min, int max) {
 
+		Random rand = new Random();
+		int randomNum = rand.nextInt((max - min) + 1) + min;
 
-		//
-		// Accessor methods
-		//
-
-		/**
-		 * Set the value of owner
-		 * @param newVar the new value of owner
-		 */
-		protected void setOwner (Owner newVar) {
-				owner = newVar;
-		}
-
-		/**
-		 * Get the value of owner
-		 * @return the value of owner
-		 */
-		protected Owner getOwner () {
-				return owner;
-		}
-
-		//
-		// Other methods
-		//
+		return randomNum;
+	}
 
 }

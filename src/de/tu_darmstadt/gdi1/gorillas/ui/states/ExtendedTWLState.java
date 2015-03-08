@@ -9,6 +9,7 @@ import java.util.Map;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -19,9 +20,12 @@ import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
+import eea.engine.event.basicevents.KeyPressedEvent;
 
 /**
  * @author Steffen Pegenau (steffen.pegenau@gmail.com)
@@ -45,7 +49,7 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	
 	protected final static String DEFAULT_BACKGROUND = "/assets/gorillas/backgrounds/gorilla_face.png";
 
-	Map<String, Widget> widgets = new HashMap<String, Widget>();
+	HashMap<String, Widget> widgets = new HashMap<String, Widget>();
 
 	protected RootPane rootPane = null;
 	protected StateBasedGame game = null;
@@ -54,6 +58,14 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	public ExtendedTWLState(int sid) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
+	}
+	
+	protected Entity setESCListener(int newState) {
+		Entity escListener = new Entity("ESC_Listener");
+		KeyPressedEvent escPressed = new KeyPressedEvent(Input.KEY_ESCAPE);
+		escPressed.addAction(new ChangeStateAction(newState));
+		escListener.addComponent(escPressed);
+		return escListener;
 	}
 
 	@Override

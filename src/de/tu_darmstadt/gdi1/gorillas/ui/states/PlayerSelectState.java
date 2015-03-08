@@ -1,8 +1,8 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -256,7 +256,7 @@ public class PlayerSelectState extends ExtendedTWLState {
 
 			@Override
 			public void run() {
-				for (HashMap.Entry<String, Widget> entry : widgets.entrySet()) {
+				for (Entry<String, Widget> entry : widgets.entrySet()) {
 					if (entry.getKey().contains("EDIT_")) {
 						EditField field = (EditField) entry.getValue();
 						field.setText("Eingabe");
