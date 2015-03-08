@@ -25,7 +25,7 @@ public class Skyline {
 	 * 
 	 * @return Hintergrundbild
 	 */
-	public Entity getBackgroundEntity() {
+	private Entity getBackgroundEntity() {
 			Entity background = new Entity("background"); // Entität für Hintergrund
 			background.setPosition(new Vector2f(400, 300)); 
 			Image bgImage = null;
@@ -46,8 +46,11 @@ public class Skyline {
 	};
 	
 	public void createSkyline() {
-		int widthUsedByBuildings = 0;
+		// Hintergrund setzen
+		entityManager.addEntity(stateID, getBackgroundEntity());
 		
+		// alle Gebäude setzen
+		int widthUsedByBuildings = 0;
 		for (int i = 0; i < buildings.length; i++) {
 			buildings[i] = new Building("building" + i, widthUsedByBuildings, -1, (int) Gorillas.FRAME_WIDTH / buildings.length, null);
 			widthUsedByBuildings += buildings[i].getWidth();

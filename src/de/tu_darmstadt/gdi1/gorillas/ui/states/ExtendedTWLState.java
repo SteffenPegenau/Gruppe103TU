@@ -38,8 +38,8 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	protected final int distance = 200;
 	protected final int startPosition = 90;
 
-	private final static int BUTTON_DEFAULT_WIDTH = 120;
-	private final static int BUTTON_DEFAULT_HEIGHT = 40;
+	public final static int BUTTON_DEFAULT_WIDTH = 120;
+	public final static int BUTTON_DEFAULT_HEIGHT = 40;
 
 	public final static int BUTTON_LAST_LINE_Y = 525;
 	public final static int BUTTON_RIGHT_X = 625;

@@ -1,16 +1,8 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.util.Random;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Button;
@@ -21,9 +13,6 @@ import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
-import eea.engine.component.render.ImageRenderComponent;
-import eea.engine.entity.DestructibleImageEntity;
-import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
 
 public class GameplayState extends ExtendedTWLState {
@@ -32,6 +21,11 @@ public class GameplayState extends ExtendedTWLState {
 	private StateBasedEntityManager entityManager; // zugehoeriger entityManager
 	
 	private static final int NUMBER_OF_BUILDINGS = 8;
+	
+	private final static int FORM_DISTANCE_X = 125;
+	private int formOffsetX;
+	private final static int FORM_OFFSET_Y = posY.A.get();
+	private final static int FORM_DISTANCE_Y = 35;
 	
 	protected Skyline skyline;
 
@@ -51,8 +45,10 @@ public class GameplayState extends ExtendedTWLState {
 	EditField velocityInputR;
 	private Button throwButtonL;
 	private Button throwButtonR;
-	private Player player;
+	
+	private int currentPlayer;
 
+	/*
 	// Methode um eine Zufallszahl zu berechnen zwischen Minimum und Maximum
 	public int randomInt(int max, int min) {
 
@@ -61,6 +57,7 @@ public class GameplayState extends ExtendedTWLState {
 
 		return randomNum;
 	}
+	*/
 
 	/*
 	 * Setzt die Spieler
@@ -78,6 +75,8 @@ public class GameplayState extends ExtendedTWLState {
 						+ players[i].getUsername());
 			}
 			skyline = new Skyline(entityManager, sid, NUMBER_OF_BUILDINGS, false);
+			
+			currentPlayer = 0;
 		}
 	}
 
@@ -86,10 +85,6 @@ public class GameplayState extends ExtendedTWLState {
 			throws SlickException {
 		// Esc-Taste => Hauptmenü
 		entityManager.addEntity(stateID, setESCListener(Gorillas.MAINMENUSTATE));
-
-		
-		// Hintergrundbild der Skyline setzen
-		entityManager.addEntity(stateID, skyline.getBackgroundEntity());
 
 		skyline.createSkyline();
 	}
@@ -109,14 +104,119 @@ public class GameplayState extends ExtendedTWLState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		// System.out.println("Container: " + container + "\tGame: " + game +
-		// "\tDelta: " + delta);
 		entityManager.updateEntities(container, game, delta);
 	}
 
 	@Override
 	public int getID() {
 		return stateID;
+	}
+	
+	/*
+	 * Verschiebt die Eingabemaske auf die Seite des aktuellen Spielers
+	 */
+	private void adjustOffset() {
+		if(currentPlayer == 0) {
+			formOffsetX = posX.A.get();
+		} else {
+			formOffsetX = posX.K.get();
+		}
+	}
+	
+	/**
+	 * Wechselt den aktuellen Spieler. Aus 0 wird 1, aus 1 (allem anderen) wird 0;
+	 */
+	public void toggleActivePlayer() {
+		currentPlayer = (currentPlayer == 0) ? 1 : 0;
+		System.out.println("Aktiver Spieler ist nun: " + currentPlayer);
+	}
+	
+	/**
+	 * Initiiert Wurf und wechselt Spieler
+	 * 
+	 * @return 
+	 */
+	private Runnable buttonThrowClicked() {
+		class event implements Runnable {
+			private GameplayState state;
+			public event(GameplayState gameplayState) {
+				this.state = gameplayState;
+			}
+			@Override
+			public void run() {
+				state.toggleActivePlayer();
+				state.setInputFormsPosition();
+			}
+		}
+		Runnable c = new event(this);
+		return c;
+	}
+	
+	/**
+	 * Bringt die Formular-Elemente - abhängig vom aktuellen Spieler - in Position
+	 */
+	public void setInputFormsPosition() {
+		adjustOffset();
+		int posX = formOffsetX;
+		int posY = FORM_OFFSET_Y;
+		
+		widgets.get("LABEL_ANGLE").setPosition(posX, posY);
+		widgets.get("EDIT_ANGLE").setPosition(posX + FORM_DISTANCE_X, posY - 20);
+		posY += FORM_DISTANCE_Y;
+		widgets.get("LABEL_VELOCITY").setPosition(posX, posY);
+		widgets.get("EDIT_VELOCITY").setPosition(posX + FORM_DISTANCE_X, posY - 20);
+		posY += FORM_DISTANCE_Y;
+		widgets.get("BUTTON_THROW").setPosition(posX + FORM_DISTANCE_X, posY - 20);
+	}
+	
+	/**
+	 * Fügt dem EditField ein Callback hinzu, der dafür sorgt, dass nur Zahlen bis maxValue akzeptiert werden
+	 * 
+	 * @param editField
+	 * @param maxValue
+	 */
+	private void addNumberInputCheck(EditField editField, int maxValue) {
+		class NumberCheck implements Callback {
+			private EditField editField;
+			private int maxValue;
+			public NumberCheck(EditField editField, int maxValue) {
+				this.editField = editField;
+				this.maxValue = maxValue;
+			}
+
+			@Override
+			public void callback(int buttonPressed) {
+				numberInputCheck(buttonPressed, editField, this, maxValue);
+				
+			}
+		}
+		NumberCheck cb = new NumberCheck(editField, maxValue);
+		editField.addCallback(cb);
+	}
+	
+	/**
+	 * Erzeugt alle Formular-Elemente ohne Position
+	 */
+	private void initiallyDrawInputForm() {
+		// Fügt erst alle Elemente ohne Position hinzu
+		widgets.put("BUTTON_THROW", createButton("Wurf!", buttonThrowClicked(), 0, 0));
+		widgets.put("LABEL_ANGLE", createLabel("Winkel:", 0, 0, true));
+		widgets.put("EDIT_ANGLE", createEditField(0, 0, true));
+		widgets.put("LABEL_VELOCITY", createLabel("Geschwindigkeit:", 0, 0, true));
+		widgets.put("EDIT_VELOCITY", createEditField(0, 0, true));
+		
+		// Setze Breite der Eingabefelder
+		int edit_width = 40;
+		int edit_height = widgets.get("EDIT_ANGLE").getHeight();
+		widgets.get("EDIT_ANGLE").setSize(edit_width, edit_height);
+		widgets.get("EDIT_VELOCITY").setSize(edit_width, edit_height);
+		
+		// Setze Größe des Buttons
+		widgets.get("BUTTON_THROW").setSize(40, 40);
+		
+		// Setze callback für Eingabefelder zur Kontrolle der Eingabe
+		addNumberInputCheck((EditField) widgets.get("EDIT_ANGLE"), 360);
+		addNumberInputCheck((EditField) widgets.get("EDIT_VELOCITY"), 200);
 	}
 
 	/**
@@ -126,75 +226,10 @@ public class GameplayState extends ExtendedTWLState {
 	protected RootPane createRootPane() {
 		// erstelle die RootPane
 		RootPane rp = super.createRootPane();
-		// erstelle ein Label mit der Aufschrift "angle:"
-		angleLabelL = new Label("angle:");
-		angleLabelR = new Label("angle:");
-		// erstelle ein EditField. Es dient der Eingabe von Text
-		angleInputL = new EditField();
-		angleInputR = new EditField();
-		// mit der Methode addCallBack l�sst sich dem EditField ein CallBack
-		// hinzufügen, in dessen Methode callback(int key) bestimmt wird, was
-		// geschehen soll, wenn ein Zeichen eingegeben wird
-		angleInputL.addCallback(new Callback() {
-			public void callback(int key) {
-				// in unserem Fall wird der Input in der Methode
-				// handleEditFieldInput verarbeitet (siehe weiter unten in
-				// dieser Klasse, was diese tut, und was es mit ihren Parametern
-				// auf sich hat)
-				handleEditFieldInput(key, angleInputL, this, 360);
-			}
-		});
-		angleInputR.addCallback(new Callback() {
-			public void callback(int key) {
-				handleEditFieldInput(key, angleInputR, this, 360);
-			}
-		});
-		// analog zu einer Eingabemöglichkeit für x-Werte wird auch eine für
-		// y-Werte kreiert
-		// TODO im späteren Spielverlauf Wurfstärke anpassen
-		velocityLabelL = new Label("velocity:");
-		velocityLabelR = new Label("velocity:");
-		velocityInputL = new EditField();
-		velocityInputR = new EditField();
-		velocityInputL.addCallback(new Callback() {
-			public void callback(int key) {
-				handleEditFieldInput(key, velocityInputL, this, 500);
-			}
-		});
-		velocityInputR.addCallback(new Callback() {
-			public void callback(int key) {
-				handleEditFieldInput(key, velocityInputR, this, 500);
-			}
-		});
-
-		// TODO Callback: keyboard input ergänzen + vgl. GameplayState Drop of
-		// Water Zeile 172ff.
-		throwButtonL = new Button("throw");
-		throwButtonL.addCallback(new Runnable() {
-			public void run() {
-				inputFinished();
-			}
-		});
-
-		throwButtonR = new Button("throw");
-		throwButtonR.addCallback(new Runnable() {
-			public void run() {
-				inputFinished();
-			}
-		});
-
-		// Hinzfügen aller GUI-Elemente er Rootpane
-		rp.add(angleLabelL);
-		rp.add(angleLabelR);
-		rp.add(angleInputL);
-		rp.add(angleInputR);
-		rp.add(velocityLabelL);
-		rp.add(velocityLabelR);
-		rp.add(velocityInputL);
-		rp.add(velocityInputR);
-		rp.add(throwButtonL);
-		rp.add(throwButtonR);
-
+		
+		initiallyDrawInputForm();
+		setInputFormsPosition();
+		addAllWidgetsToRootPane(widgets);
 		return rp;
 	}
 
@@ -204,58 +239,7 @@ public class GameplayState extends ExtendedTWLState {
 	 */
 
 	protected void layoutRootPane() {
-
-		// Ersten bzw. linker Player
-		int xOffsetL = 50;
-		int yOffsetL = 50;
-		int gap = 5;
-
-		// alle GUI-Elemente müssen eine Gruppe zugewiesen bekommen
-		// adjustSize() muss aufgerufen werden, wenn die Größe automatisch über
-		// die Beschriftung des GUI-Elemnts bestimmt werden soll
-		angleLabelL.adjustSize();
-		velocityLabelL.adjustSize();
-
-		// sonst wird die Größe manuell mit set size gesetzt
-		angleInputL.setSize(50, 25);
-		velocityInputL.setSize(50, 25);
-		throwButtonL.setSize(50, 25);
-
-		// Nachdem alle Gruppen adjustiert wruden, muss allen GUI-Elementen eine
-		// Position (linke obere Ecke) zugewiesen werden
-		angleLabelL.setPosition(xOffsetL, yOffsetL);
-		angleInputL.setPosition(xOffsetL + angleLabelL.getWidth() + gap,
-				yOffsetL);
-		velocityLabelL.setPosition(xOffsetL - 13,
-				yOffsetL + angleLabelL.getHeight() + gap);
-		velocityInputL.setPosition(xOffsetL + velocityLabelL.getWidth() - 14
-				+ gap, yOffsetL + angleLabelL.getHeight() + gap);
-		throwButtonL.setPosition(xOffsetL - 13 + velocityLabelL.getWidth()
-				+ gap, yOffsetL + angleLabelR.getHeight() + 25 + gap
-				+ velocityLabelL.getHeight() + gap);
-
-		// TODO Plazierung der Eingabefelder + throw Button präziser anpassen --
-		// Fertig durch Ausprobieren..ist das ok?
-		int xOffsetR = 700 - xOffsetL;
-		int yOffsetR = yOffsetL;
-
-		angleLabelR.adjustSize();
-		velocityLabelR.adjustSize();
-
-		angleInputR.setSize(angleInputL.getWidth(), angleInputL.getHeight());
-		velocityInputR.setSize(velocityInputL.getWidth(),
-				velocityInputL.getHeight());
-		throwButtonR.setSize(throwButtonL.getWidth(), throwButtonL.getHeight());
-
-		angleLabelR.setPosition(xOffsetR + 14, yOffsetR);
-		angleInputR.setPosition(xOffsetR + angleLabelR.getWidth() + 14 + gap,
-				yOffsetR);
-		velocityLabelR.setPosition(xOffsetR, yOffsetR + angleLabelR.getHeight()
-				+ gap);
-		velocityInputR.setPosition(xOffsetR + velocityLabelR.getWidth() + gap,
-				yOffsetR + velocityLabelR.getHeight() + gap);
-		throwButtonR.setPosition(xOffsetR + 62, yOffsetL + 55);
-
+		
 	}
 
 	/**
@@ -272,7 +256,7 @@ public class GameplayState extends ExtendedTWLState {
 	 *            die größte Zahl, die in das <code>editField</code> eingegeben
 	 *            werden kann
 	 */
-	void handleEditFieldInput(int key, EditField editField, Callback callback,
+	void numberInputCheck(int key, EditField editField, Callback callback,
 			int maxValue) {
 		if (key == de.matthiasmann.twl.Event.KEY_NONE) {
 			String inputText = editField.getText();
@@ -294,10 +278,11 @@ public class GameplayState extends ExtendedTWLState {
 		}
 	}
 
+	/*
 	/**
 	 * diese Methode wird bei Klick auf den Button ausgeführt, bzw. mit dem
 	 * richtigen keyboard input
-	 */
+	 
 	// TODO Methode für keyboard input anpassen und andere Wurfgegenstände
 	// vgl. Zeile 272ff. GamplayState Drop of Water
 	void inputFinished() {
@@ -314,5 +299,6 @@ public class GameplayState extends ExtendedTWLState {
 			e.printStackTrace();
 		}
 	}
+	*/
 
 }
