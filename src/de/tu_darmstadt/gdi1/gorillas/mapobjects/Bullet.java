@@ -23,6 +23,8 @@ public class Bullet extends MapObject {
 
 	public final static double SCALING_FACTOR = Math.pow(10, -2.8);
 
+	
+	// Radiant, nicht in Grad!
 	protected double angle;
 
 	protected float accelerationX;
@@ -68,8 +70,9 @@ public class Bullet extends MapObject {
 	 */
 	public void setVelocity(double angle, float velocity) {
 		this.velocity = velocity;
-		velocityX = (float) (Math.cos(angle) * velocity);
-		velocityY = (float) (Math.sin(angle) * velocity);
+		velocityX = (float) (Math.cos(Math.toRadians(angle)) * velocity);
+		velocityY = (float) (Math.sin(Math.toRadians(angle)) * velocity);
+		System.out.println("v_X=" + velocityX + " v_y=" + velocityY);
 	}
 
 	public float getAccelerationX() {
