@@ -120,7 +120,9 @@ public class GameplayState extends ExtendedTWLState {
 	}
 
 	
-
+	public Player getCurrentPlayer() {
+		return players[currentPlayer];
+	}
 	/*
 	/**
 	 * diese Methode wird bei Klick auf den Button ausgeführt, bzw. mit dem

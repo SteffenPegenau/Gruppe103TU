@@ -6,6 +6,10 @@ import java.util.Map;
 import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.Widget;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.FigureWithWeapon;
+import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
+import eea.engine.entity.StateBasedEntityManager;
 
 public class ThrowForm {
 	private final static int FORM_DISTANCE_X = 125;
@@ -150,18 +154,30 @@ public class ThrowForm {
 	private Runnable buttonThrowClicked() {
 		class event implements Runnable {
 			private GameplayState state;
+			StateBasedEntityManager entityManager;
+			ThrowForm throwForm;
+			double angle;
+			float velocity;
 
-			public event(GameplayState gameplayState) {
+			public event(GameplayState gameplayState, ThrowForm throwForm) {
 				this.state = gameplayState;
+				entityManager = StateBasedEntityManager.getInstance();
+				this.throwForm = throwForm;
 			}
 
 			@Override
 			public void run() {
+				angle = throwForm.getAngle();
+				velocity = throwForm.getVelocity();
+				Player player = state.getCurrentPlayer();
+				FigureWithWeapon fig = player.getPlayersFigure();
+				Weapon weapon = fig.getWeapon();
+				entityManager.addEntity(state.getID(), weapon.shot(player, fig, angle, velocity));
 				state.toggleActivePlayer();
 				setInputFormsPosition();
 			}
 		}
-		Runnable c = new event(gameplayState);
+		Runnable c = new event(gameplayState, this);
 		return c;
 	}
 
@@ -184,6 +200,24 @@ public class ThrowForm {
 		posY += FORM_DISTANCE_Y;
 		widgets.get("FORM_BUTTON_THROW").setPosition(posX + FORM_DISTANCE_X,
 				posY - 20);
+	}
+	
+	/**
+	 * Returns the currently Value of the Angle Edit Field
+	 * @return Angle
+	 */
+	public double getAngle() {
+		EditField editAngle = (EditField) widgets.get("FORM_EDIT_ANGLE");
+		return Double.parseDouble(editAngle.getText());
+	}
+	
+	/**
+	 * Returns the currently value of the velocity edit field
+	 * @return Velocity
+	 */
+	public float getVelocity() {
+		EditField editVelocity = (EditField) widgets.get("FORM_EDIT_VELOCITY");
+		return Float.parseFloat(editVelocity.getText());
 	}
 
 	/**

@@ -1,10 +1,8 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import eea.engine.component.render.ImageRenderComponent;
+import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
 
 
 
@@ -12,16 +10,10 @@ import eea.engine.component.render.ImageRenderComponent;
  * Class FigureWithWeapon
  */
 public class FigureWithWeapon extends MapObject {
-		
-
-		protected final static String FIGURE_IMAGE = null;
-		protected Image image = null;
 		//
 		// Fields
 		//
-
 		protected Weapon weapon;
-		private Weapon selectedWeapon;
 		private double velocity;
 		private double angle;
 		
@@ -29,17 +21,7 @@ public class FigureWithWeapon extends MapObject {
 			super(entityID);
 			
 		}
-		
-		public void setFigureImage(String pathToImage) {
-			try {
-				//System.out.println("Figure Image: " + pathToImage);
-				image = new Image(pathToImage);
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
-			this.addComponent(new ImageRenderComponent(image));
-		}
-		
+				
 		private Vector2f positionOnBuilding(Building building) {
 			Vector2f positionBuilding = building.getPosition();
 			float posX = positionBuilding.getX();
@@ -74,25 +56,10 @@ public class FigureWithWeapon extends MapObject {
 		 * Get the value of weapon
 		 * @return the value of weapon
 		 */
-		protected Weapon getWeapon () {
+		public Weapon getWeapon () {
 				return weapon;
 		}
 
-		/**
-		 * Set the value of selectedWeapon
-		 * @param newVar the new value of selectedWeapon
-		 */
-		private void setSelectedWeapon (Weapon newVar) {
-				selectedWeapon = newVar;
-		}
-
-		/**
-		 * Get the value of selectedWeapon
-		 * @return the value of selectedWeapon
-		 */
-		private Weapon getSelectedWeapon () {
-				return selectedWeapon;
-		}
 
 		/**
 		 * Set the value of velocity

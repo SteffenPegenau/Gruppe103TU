@@ -2,18 +2,34 @@ package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 
 import java.util.Random;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
+import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 
 /**
  * Class MapObject
  */
 public class MapObject extends Entity {
-	Entity entity;
-
+	protected final static String FIGURE_IMAGE = null;
+	protected Image image = null;
+	
 	public MapObject(String entityID) {
 		super(entityID);
 	}
 
+	
+	public void setFigureImage(String pathToImage) {
+		try {
+			//System.out.println("Figure Image: " + pathToImage);
+			image = new Image(pathToImage);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		this.addComponent(new ImageRenderComponent(image));
+	}
+	
 	/**
 	 * Erzeugt zufällige ganze Zahl zwischen min und max
 	 * 
