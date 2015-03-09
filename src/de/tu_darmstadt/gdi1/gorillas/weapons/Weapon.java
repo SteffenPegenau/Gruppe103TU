@@ -85,9 +85,10 @@ public abstract class Weapon {
 		public Entity shot(Player player, FigureWithWeapon fig, double angle, float velocity) {
 			Bullet projectile = newBulletAsEntity(player, fig);
 			//projectile.setPosition(fig.getPosition());
-			
+			projectile.addEvents();
 			projectile.setPosX0(fig.getPosition().x);
 			projectile.setPosYO(fig.getPosition().y);
+			System.out.println("Shot with Angle " + angle + " and velocity " + velocity);
 			projectile.setVelocity(angle, velocity);
 			
 			//LoopEvent loop = new LoopEvent();

@@ -43,7 +43,7 @@ import eea.engine.interfaces.IDestructible;
 public class GameplayState extends BasicTWLGameState {
 
 	private int stateID; // Identifier dieses BasicTWLGameState
-	private StateBasedEntityManager entityManager; // zugehoeriger entityManager
+	StateBasedEntityManager entityManager; // zugehoeriger entityManager
 	private Label xLabel;
 	EditField xInput;
 	private Label yLabel;
