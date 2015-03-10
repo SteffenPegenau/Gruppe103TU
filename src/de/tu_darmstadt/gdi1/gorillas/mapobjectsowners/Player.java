@@ -27,6 +27,8 @@ public class Player extends Owner implements java.io.Serializable{
 	private int yPos;
 	private double angle;
 	private double velocity;
+	
+	private int arrayIndex;
 
 	//
 	// Constructors
@@ -178,6 +180,14 @@ public class Player extends Owner implements java.io.Serializable{
 		} else {
 			return "";
 		}
+	}
+
+	public int getArrayIndex() {
+		return arrayIndex;
+	}
+
+	public void setArrayIndex(int arrayIndex) {
+		this.arrayIndex = arrayIndex;
 	}
 
 	//

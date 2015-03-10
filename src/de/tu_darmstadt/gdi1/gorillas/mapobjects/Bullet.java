@@ -18,9 +18,6 @@ import eea.engine.interfaces.IDestructible;
  * Class Bullet
  */
 public class Bullet extends MapObject {
-	LoopEvent movingX;
-	LoopEvent movingY;
-
 	public final static double SCALING_FACTOR = Math.pow(10, -2.8);
 
 	
@@ -63,6 +60,14 @@ public class Bullet extends MapObject {
 	public float getVelocity() {
 		return velocity;
 	}
+	
+	protected float cos() {
+		return (float) Math.cos(Math.toRadians(angle));
+	}
+	
+	protected float sin() {
+		return (float) Math.sin(Math.toRadians(angle));
+	}
 
 	/**
 	 * 
@@ -70,9 +75,18 @@ public class Bullet extends MapObject {
 	 */
 	public void setVelocity(double angle, float velocity) {
 		this.velocity = velocity;
-		velocityX = (float) (Math.cos(Math.toRadians(angle)) * velocity);
-		velocityY = (float) (Math.sin(Math.toRadians(angle)) * velocity);
-		System.out.println("v_X=" + velocityX + " v_y=" + velocityY);
+		
+		// Unterscheidung linker - rechter - Spieler
+		if(player.getArrayIndex() == 1) {
+			// rechter Spieler
+			this.angle = 180 - angle;
+		} else {
+			this.angle = angle;
+		}
+		
+		velocityX = cos() * velocity;
+		velocityY = sin() * velocity;
+		System.out.println("v=" + velocity + "\tvX=" + velocityX + "\tvY=" + velocityY);
 	}
 
 	public float getAccelerationX() {
@@ -91,13 +105,13 @@ public class Bullet extends MapObject {
 		return velocityY;
 	}
 
-	protected Vector2f calculateNewPosition() {
+	public Vector2f calculateNewPosition() {
+		double scaledTimeOfExistence = SCALING_FACTOR * existenceTimeInNS;
 		float x = posX0
-				+ (float) (velocityX * SCALING_FACTOR * existenceTimeInNS);
+				+ (float) (velocityX * scaledTimeOfExistence);
 		float y = posYO
-				- (float) (velocityY * SCALING_FACTOR * existenceTimeInNS)
-				+ (float) (0.5 * 10 * Math.pow(SCALING_FACTOR
-						* existenceTimeInNS, 2));
+				- (float) (velocityY * scaledTimeOfExistence)
+				+ (float) (0.5 * 10 * Math.pow(scaledTimeOfExistence, 2));
 		Vector2f newPosition = new Vector2f(x, y);
 		//System.out.println("New Position: " + newPosition);
 		return newPosition;
@@ -130,9 +144,10 @@ public class Bullet extends MapObject {
 		return existenceTimeInNS;
 	}
 
-	public void addExistenceTime(int delta) {
-		//System.out.println("Add " + delta + " = " + getExistenceTimeInNS());
-		this.existenceTimeInNS += delta;
+	public void addExistenceTime(long delta) {
+		System.out.println("AddExistenceTime: " + getExistenceTimeInNS() + " + " + delta + " = " + (getExistenceTimeInNS() + delta));
+		existenceTimeInNS += delta;
+		
 	}
 	
 	protected Event leftScreenLeftRightBottom() {
@@ -197,6 +212,14 @@ public class Bullet extends MapObject {
 	public void addEvents() {
 		this.addComponent(leftScreenLeftRightBottom());
 		this.addComponent(getCollisionEvent());
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
 	/**

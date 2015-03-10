@@ -4,7 +4,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.EditField.Callback;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
@@ -291,9 +290,21 @@ public class GorillasTestAdapterMinimal {
 	 */
 	public Vector2f getNextShotPosition(Vector2f startPosition, int angle,
 			int speed, boolean fromLeftToRight, int deltaTime) {
-
-		// TODO: Implement
-		return null;
+		String name = startPosition.getX() + " " + startPosition.getY() + angle + speed + deltaTime;
+		Bullet bullet = new Bullet(name);
+		bullet.setPosX0(startPosition.x);
+		bullet.setPosYO(startPosition.y);
+		
+		Player p1 = new Player(startPosition.toString());
+		int arrayIndex = (fromLeftToRight) ? 0 : 1;
+		p1.setArrayIndex(arrayIndex);
+		bullet.setPlayer(p1);
+		
+		bullet.setVelocity(angle, speed);	
+		long delta = (long) (deltaTime) * (long)1000000;
+		System.out.println("deltaTime " + deltaTime +  " => delta " + delta);
+		bullet.addExistenceTime(delta); 
+		return bullet.calculateNewPosition();
 	}
 
 	/**
@@ -304,6 +315,7 @@ public class GorillasTestAdapterMinimal {
 	 * @return the time scaling factor for the parabolic flight calculation
 	 */
 	public float getTimeScalingFactor() {
+		//return 1;
 		return (float) Bullet.SCALING_FACTOR;
 	}
 

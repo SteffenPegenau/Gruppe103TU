@@ -6,10 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.FigureWithWeapon;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
-import eea.engine.action.Action;
-import eea.engine.action.basicactions.MoveRightAction;
 import eea.engine.entity.Entity;
-import eea.engine.event.basicevents.LoopEvent;
 
 
 
@@ -79,6 +76,8 @@ public abstract class Weapon {
 					| IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
 			}
+			
+			projectile.setPlayer(player);
 			return projectile;
 		}
 

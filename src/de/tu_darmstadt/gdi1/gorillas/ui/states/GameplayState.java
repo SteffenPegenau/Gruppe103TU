@@ -35,6 +35,7 @@ public class GameplayState extends ExtendedTWLState {
 		} else {
 			for (int i = 0; i < players.length; i++) {
 				this.players[i] = players[i];
+				this.players[i].setArrayIndex(i);
 				System.out.println("Started with Player " + i + ": "
 						+ players[i].getUsername());
 			}

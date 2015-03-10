@@ -15,6 +15,7 @@ public class ThrowTest {
 	@Before
 	public void setUp() {
 		adapter = new GorillasTestAdapterMinimal();
+		System.out.println("=============");
 	}
 
 	@Test
