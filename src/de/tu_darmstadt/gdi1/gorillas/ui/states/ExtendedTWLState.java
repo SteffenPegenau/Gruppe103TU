@@ -20,6 +20,7 @@ import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import eea.engine.action.Action;
 import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
@@ -65,6 +66,30 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	 */
 	public HashMap<String, Widget> getWidgets() {
 		return widgets;
+	}
+	
+	/**
+	 * Erzeugt ein key-pressed-Event in Form einer Entität
+	 * @param key Taste, die gedrückt wurde
+	 * @param a Action, die bei Tastendruck ausgeführt werden soll
+	 * @return Entität mit Event
+	 */
+	protected Entity keyPressedEvent(int key, Action a) {
+		Entity listener = new Entity("Listener_KEY_" + key);
+		KeyPressedEvent keyPressed = new KeyPressedEvent(key);
+		keyPressed.addAction(a);
+		listener.addComponent(keyPressed);
+		return listener;
+	}
+	
+	/**
+	 * Erzeugt ein keyPressedEvent und fügt es dem entity manager hinzu
+	 * 
+	 * @param key Taste, die gedrückt wurde
+	 * @param a, Action die bei Tastendruck ausgeführt werden soll
+	 */
+	protected void addKeyPressedEvent(int key, Action a) {
+		entityManager.addEntity(stateID, keyPressedEvent(key, a));
 	}
 	
 	protected Entity setESCListener(int newState) {

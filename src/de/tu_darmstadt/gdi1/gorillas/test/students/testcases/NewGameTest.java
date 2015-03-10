@@ -32,6 +32,7 @@ public class NewGameTest {
 		adapter.initializeGame();
 		assertTrue(adapter.getStateBasedGame().getCurrentStateID() == TestGorillas.MAINMENUSTATE);
 		adapter.handleKeyPressN();
+		System.out.println(adapter.getStateBasedGame().getCurrentState().getClass().toString());
 		assertTrue(adapter.getStateBasedGame().getCurrentStateID() == TestGorillas.GAMESETUPSTATE);
 	}
 }
