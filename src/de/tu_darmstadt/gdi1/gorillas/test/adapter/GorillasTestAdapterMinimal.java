@@ -9,6 +9,7 @@ import de.matthiasmann.twl.EditField;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestAppGameContainer;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestStateBasedGame;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
@@ -304,8 +305,7 @@ public class GorillasTestAdapterMinimal {
 	 *         left empty and the start game button is pressed
 	 */
 	public String getEmptyError() {
-		// TODO: Implement
-		return null;
+		return Player.ERROR_MSG_EMPTY_USERNAME;
 	}
 
 	/**
@@ -317,10 +317,34 @@ public class GorillasTestAdapterMinimal {
 	 * 
 	 */
 	public String getEqualError() {
-		// TODO: Implement
-		return null;
+		return PlayerList.ERROR_MSG_EQUAL_USERNAMES;
 	}
 
+	
+	private String getPlayerError(int arrayIndex) {
+		if(gorillas.getCurrentStateID() == Gorillas.GAMESETUPSTATE) {
+			GameSetupState state = (GameSetupState) gorillas.getCurrentState();
+			Player p = state.getPlayer(arrayIndex);
+			String msg = p.checkUsername();
+			
+			if(!msg.contains("") || !msg.isEmpty()) {
+				return msg;
+			}
+			
+			// Check whether usernames are equal
+			Player p1 = state.getPlayer(0);
+			Player p2 = state.getPlayer(1);
+			if(p1.getUsername().contentEquals(p2.getUsername())) {
+				return PlayerList.ERROR_MSG_EQUAL_USERNAMES;
+			}
+			
+			return msg;
+		} else {
+			System.err.println("Not in GameSetupState!");
+			return null;
+		}
+	}
+	
 	/**
 	 * This method should return the name input error message for player one.
 	 * 
@@ -329,8 +353,7 @@ public class GorillasTestAdapterMinimal {
 	 *         GameSetupState
 	 */
 	public String getPlayer1Error() {
-		// TODO: Implement
-		return null;
+		return getPlayerError(0);
 	}
 
 	/**
@@ -341,8 +364,7 @@ public class GorillasTestAdapterMinimal {
 	 *         GameSetupState
 	 */
 	public String getPlayer2Error() {
-		// TODO: Implement
-		return null;
+		return getPlayerError(1);
 	}
 
 	/**

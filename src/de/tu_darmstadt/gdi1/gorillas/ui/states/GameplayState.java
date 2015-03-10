@@ -12,13 +12,8 @@ import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import eea.engine.entity.StateBasedEntityManager;
 
 public class GameplayState extends ExtendedTWLState {
-
-	private int stateID; // Identifier dieses GamplayState
-	private StateBasedEntityManager entityManager; // zugehoeriger entityManager
-	
 	private static final int NUMBER_OF_BUILDINGS = 8;
 
-	
 	protected Skyline skyline;
 	public ThrowForm throwForm;
 
@@ -28,7 +23,7 @@ public class GameplayState extends ExtendedTWLState {
 	int numberOfHitsForVictory;
 	double windVelocityX;
 	double windVelocityY;
-	
+
 	private int currentPlayer;
 
 	/*
@@ -46,7 +41,8 @@ public class GameplayState extends ExtendedTWLState {
 				System.out.println("Started with Player " + i + ": "
 						+ players[i].getUsername());
 			}
-			skyline = new Skyline(entityManager, sid, NUMBER_OF_BUILDINGS, false);
+			skyline = new Skyline(entityManager, sid, NUMBER_OF_BUILDINGS,
+					false);
 			currentPlayer = 0;
 		}
 	}
@@ -54,15 +50,8 @@ public class GameplayState extends ExtendedTWLState {
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		// Esc-Taste => Hauptmenü
-		entityManager.addEntity(stateID, setESCListener(Gorillas.MAINMENUSTATE));
+		super.init(container, game);
 
-		skyline.createSkyline();
-		for (int i = 0; i < players.length; i++) {
-			players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
-			players[i].getPlayersFigure().setPosition(skyline.randomBuildingForPlayer(i));
-			entityManager.addEntity(stateID, players[i].getPlayersFigure());
-		}
 	}
 
 	/**
@@ -72,31 +61,32 @@ public class GameplayState extends ExtendedTWLState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		entityManager.renderEntities(container, game, g);
+		if (!skyline.isSkyline_built()) {
+			skyline.createSkyline();
+			for (int i = 0; i < players.length; i++) {
+				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
+				players[i].getPlayersFigure().setPosition(
+						skyline.randomBuildingForPlayer(i));
+				entityManager.addEntity(stateID, players[i].getPlayersFigure());
+			}
+
+			throwForm = new ThrowForm(this, currentPlayer);
+			addESCListener(Gorillas.GAMESETUPSTATE);
+			addAllWidgetsToRootPane(widgets);
+			skyline.setSkyline_built(true);
+		}
 	}
 
 	/**
-	 * wird vom Frame ausgeführt
-	 */
-	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException {
-		entityManager.updateEntities(container, game, delta);
-	}
-
-	@Override
-	public int getID() {
-		return stateID;
-	}
-	
-	/**
-	 * Wechselt den aktuellen Spieler. Aus 0 wird 1, aus 1 (allem anderen) wird 0;
+	 * Wechselt den aktuellen Spieler. Aus 0 wird 1, aus 1 (allem anderen) wird
+	 * 0;
 	 */
 	public void toggleActivePlayer() {
 		currentPlayer = (currentPlayer == 0) ? 1 : 0;
 		throwForm.setCurrentPlayer(currentPlayer);
 		System.out.println("Aktiver Spieler ist nun: " + currentPlayer);
 	}
-	
+
 	/**
 	 * In dieser Methode werden in einem BasicTWLGameSate alle GUI-Elemente dem
 	 * GameState mit Hilfe einer RootPane hinzugef�gt
@@ -104,8 +94,7 @@ public class GameplayState extends ExtendedTWLState {
 	protected RootPane createRootPane() {
 		// erstelle die RootPane
 		RootPane rp = super.createRootPane();
-		
-		throwForm = new ThrowForm(this, currentPlayer);	
+
 		addAllWidgetsToRootPane(widgets);
 		return rp;
 	}
@@ -116,34 +105,26 @@ public class GameplayState extends ExtendedTWLState {
 	 */
 
 	protected void layoutRootPane() {
-		
+		super.layoutRootPane();
 	}
 
-	
 	public Player getCurrentPlayer() {
 		return players[currentPlayer];
 	}
 	/*
-	/**
-	 * diese Methode wird bei Klick auf den Button ausgeführt, bzw. mit dem
+	 * /** diese Methode wird bei Klick auf den Button ausgeführt, bzw. mit dem
 	 * richtigen keyboard input
-	 
-	// TODO Methode für keyboard input anpassen und andere Wurfgegenstände
-	// vgl. Zeile 272ff. GamplayState Drop of Water
-	void inputFinished() {
-		Entity banana = new Entity("banana");
-		banana.setPosition(new Vector2f((Integer) player.getX(),
-				(Integer) player.getY()));
-
-		try {
-			// Bild laden und zuweisen
-			banana.addComponent(new ImageRenderComponent(new Image(
-					"assets/gorillas/banana.png")));
-		} catch (SlickException e) {
-			System.err.println("Cannot find file assets/gorillas/banana.png!");
-			e.printStackTrace();
-		}
-	}
-	*/
+	 * 
+	 * // TODO Methode für keyboard input anpassen und andere Wurfgegenstände //
+	 * vgl. Zeile 272ff. GamplayState Drop of Water void inputFinished() {
+	 * Entity banana = new Entity("banana"); banana.setPosition(new
+	 * Vector2f((Integer) player.getX(), (Integer) player.getY()));
+	 * 
+	 * try { // Bild laden und zuweisen banana.addComponent(new
+	 * ImageRenderComponent(new Image( "assets/gorillas/banana.png"))); } catch
+	 * (SlickException e) {
+	 * System.err.println("Cannot find file assets/gorillas/banana.png!");
+	 * e.printStackTrace(); } }
+	 */
 
 }

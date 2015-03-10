@@ -17,6 +17,8 @@ public class Skyline {
 	protected StateBasedEntityManager entityManager;
 	protected int stateID;
 	
+	protected boolean skyline_built = false;
+	
 	protected Player[] players;
 	protected FigureWithWeapon[] playerFigures;
 	protected Building[] buildings;
@@ -47,6 +49,8 @@ public class Skyline {
 		this.buildingsWithRandomWidth = buildingsWithRandomWidth;
 		buildings = new Building[numberOfBuildings];
 	};
+	
+	
 	
 	public void createSkyline() {
 		// Hintergrund setzen
@@ -79,6 +83,14 @@ public class Skyline {
 			return getRandomBuilding(min, max);
 		}
 		
+	}
+
+	public boolean isSkyline_built() {
+		return skyline_built;
+	}
+
+	public void setSkyline_built(boolean skyline_built) {
+		this.skyline_built = skyline_built;
 	}
 
 }

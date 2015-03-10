@@ -8,6 +8,7 @@ public class Player extends Owner implements java.io.Serializable{
 	/**
 	 * 
 	 */
+	public static final String ERROR_MSG_EMPTY_USERNAME = "USERNAME MUST NOT BE EMPTY!";
 	
 	private static final long serialVersionUID = -6462859935769741215L;
 	private String username = "";
@@ -161,6 +162,22 @@ public class Player extends Owner implements java.io.Serializable{
 	
 	public double getVelocity(){
 		return velocity;
+	}
+	
+	public boolean isUsernameEmpty() {
+		if(username.isEmpty() || username.contentEquals("")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public String checkUsername() {
+		if(username.isEmpty() || username.contentEquals("")) {
+			return ERROR_MSG_EMPTY_USERNAME;
+		} else {
+			return "";
+		}
 	}
 
 	//
