@@ -301,9 +301,9 @@ public class GorillasTestAdapterMinimal {
 		bullet.setPlayer(p1);
 		
 		bullet.setVelocity(angle, speed);	
-		long delta = (long) (deltaTime) * (long)1000000;
-		System.out.println("deltaTime " + deltaTime +  " => delta " + delta);
-		bullet.addExistenceTime(delta); 
+		//long delta = (long) (deltaTime);
+		//System.out.println("deltaTime " + deltaTime +  " => delta " + delta);
+		bullet.addExistenceTime(deltaTime); 
 		return bullet.calculateNewPosition();
 	}
 

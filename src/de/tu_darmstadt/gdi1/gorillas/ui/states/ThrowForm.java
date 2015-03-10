@@ -112,7 +112,7 @@ public class ThrowForm {
 	public static void addCharToEditField(char inputChar, EditField editField,
 			Callback callback, int maxValue) {
 		String inputText = editField.getText();
-		System.out.println("INPUT TEXT: " + inputText);
+		//System.out.println("INPUT TEXT: " + inputText);
 		if (!Character.isDigit(inputChar)
 				|| Integer.parseInt(inputText) > maxValue) {
 			// a call of setText on an EditField triggers the callback, so
