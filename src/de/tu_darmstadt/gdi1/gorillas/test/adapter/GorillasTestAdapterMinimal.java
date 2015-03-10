@@ -4,9 +4,16 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.EditField;
+import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
+import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestAppGameContainer;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestStateBasedGame;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.GameplayState;
 import eea.engine.entity.StateBasedEntityManager;
 
 public class GorillasTestAdapterMinimal {
@@ -131,7 +138,13 @@ public class GorillasTestAdapterMinimal {
 	 *            the name of player 2
 	 */
 	public void setPlayerNames(String player1Name, String player2Name) {
-		// TODO: Implement
+		if(gorillas.getCurrentStateID() == Gorillas.GAMESETUPSTATE) {
+			GameSetupState state = (GameSetupState) gorillas.getCurrentState();
+			Player one = new Player(player1Name);
+			Player two = new Player(player2Name);
+			state.setPlayer(one, 0);
+			state.setPlayer(two, 1);
+		}
 	}
 
 	/**
@@ -141,7 +154,11 @@ public class GorillasTestAdapterMinimal {
 	 * GamePlayState. Otherwise it should stay in the GameSetupState.
 	 */
 	public void startGameButtonPressed() {
-		// TODO: Implement
+		if(gorillas.getCurrentStateID() == Gorillas.GAMESETUPSTATE) {
+			GameSetupState state = (GameSetupState) gorillas.getCurrentState();
+			Runnable startGame = state.startGame();
+			startGame.run();
+		}
 	}
 
 	/**
@@ -154,7 +171,11 @@ public class GorillasTestAdapterMinimal {
 	 *            the input character
 	 */
 	public void fillVelocityInput(char charac) {
-		// TODO: Implement
+		if(gorillas.getCurrentStateID() == Gorillas.GAMEPLAYSTATE) {
+			GameplayState state = (GameplayState) gorillas.getCurrentState();
+			EditField velocity = (EditField) state.getWidget("FORM_EDIT_VELOCITY");
+			velocity.setText(velocity.getText() + charac);
+		}
 	}
 
 	/**
@@ -162,7 +183,16 @@ public class GorillasTestAdapterMinimal {
 	 *         nothing was put in the method should return -1.
 	 */
 	public int getVelocityInput() {
-		// TODO: Implement
+		if(gorillas.getCurrentStateID() == Gorillas.GAMEPLAYSTATE) {
+			GameplayState state = (GameplayState) gorillas.getCurrentState();
+			EditField velocity = (EditField) state.getWidget("FORM_EDIT_VELOCITY");
+			String content = velocity.getText();
+			if(content.contentEquals("")) {
+				return -1;
+			} else {
+				return Integer.parseInt(velocity.getText());
+			}
+		}
 		return -1;
 	}
 
@@ -176,7 +206,11 @@ public class GorillasTestAdapterMinimal {
 	 *            the input character
 	 */
 	public void fillAngleInput(char charac) {
-		// TODO: Implement
+		if(gorillas.getCurrentStateID() == Gorillas.GAMEPLAYSTATE) {
+			GameplayState state = (GameplayState) gorillas.getCurrentState();
+			EditField angle = (EditField) state.getWidget("FORM_EDIT_ANGLE");
+			angle.setText(angle.getText() + charac);
+		}
 	}
 
 	/**
@@ -184,7 +218,16 @@ public class GorillasTestAdapterMinimal {
 	 *         was put in the method should return -1.
 	 */
 	public int getAngleInput() {
-		// TODO: Implement
+		if(gorillas.getCurrentStateID() == Gorillas.GAMEPLAYSTATE) {
+			GameplayState state = (GameplayState) gorillas.getCurrentState();
+			EditField angle = (EditField) state.getWidget("FORM_EDIT_ANGLE");
+			String content = angle.getText();
+			if(content.contentEquals("")) {
+				return -1;
+			} else {
+				return Integer.parseInt(angle.getText());
+			}
+		}
 		return -1;
 	}
 
@@ -193,11 +236,20 @@ public class GorillasTestAdapterMinimal {
 	 * player. Both angle value and velocity value should then be -1.
 	 */
 	public void resetPlayerWidget() {
-		// TODO: Implement
+		if(gorillas.getCurrentStateID() == Gorillas.GAMEPLAYSTATE) {
+			GameplayState state = (GameplayState) gorillas.getCurrentState();
+			EditField angle = (EditField) state.getWidget("FORM_EDIT_ANGLE");
+			EditField velocity = (EditField) state.getWidget("FORM_EDIT_VELOCITY");
+			angle.setText("");
+			velocity.setText("");
+		}
 	}
 
 	public void shootButtonPressed() {
-		// TODO: Implement
+		if(gorillas.getCurrentStateID() == Gorillas.GAMEPLAYSTATE) {
+			GameplayState state = (GameplayState) gorillas.getCurrentState();
+			state.throwForm.buttonThrowClicked();
+		}
 	}
 
 	/**
@@ -241,8 +293,7 @@ public class GorillasTestAdapterMinimal {
 	 * @return the time scaling factor for the parabolic flight calculation
 	 */
 	public float getTimeScalingFactor() {
-		// TODO: Implement
-		return -1;
+		return (float) Bullet.SCALING_FACTOR;
 	}
 
 	/**

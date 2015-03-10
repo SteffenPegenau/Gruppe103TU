@@ -20,7 +20,8 @@ public class ThrowForm {
 	private GameplayState gameplayState;
 	private HashMap<String, Widget> widgets;
 
-	private boolean isVisible = true;
+	
+	//private boolean isVisible = true;
 	private int currentPlayer;
 
 	public ThrowForm(GameplayState state, int currentPlayer) {
@@ -55,7 +56,7 @@ public class ThrowForm {
 	 * @param visibility
 	 */
 	public void setVisibility(boolean visibility) {
-		this.isVisible = visibility;
+		//this.isVisible = visibility;
 		for (Map.Entry<String, Widget> entry : getFormWidgets().entrySet()) {
 			entry.getValue().setVisible(visibility);
 		}
@@ -151,7 +152,7 @@ public class ThrowForm {
 	 * 
 	 * @return
 	 */
-	private Runnable buttonThrowClicked() {
+	public Runnable buttonThrowClicked() {
 		class event implements Runnable {
 			private GameplayState state;
 			StateBasedEntityManager entityManager;

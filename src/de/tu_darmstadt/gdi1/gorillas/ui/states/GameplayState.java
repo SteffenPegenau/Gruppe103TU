@@ -20,7 +20,7 @@ public class GameplayState extends ExtendedTWLState {
 
 	
 	protected Skyline skyline;
-	protected ThrowForm throwForm;
+	public ThrowForm throwForm;
 
 	private Player[] players = new Player[2];
 	double gravity;

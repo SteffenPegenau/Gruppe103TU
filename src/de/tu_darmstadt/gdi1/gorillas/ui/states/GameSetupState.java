@@ -52,7 +52,7 @@ public class GameSetupState extends ExtendedTWLState {
 		return s;
 	}
 	
-	private Runnable startGame() {
+	public Runnable startGame() {
 		class switcher implements Runnable {
 			private Player[] players = new Player[2];
 			private StateBasedGame game;
@@ -129,6 +129,7 @@ public class GameSetupState extends ExtendedTWLState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		super.render(container, game, g);
+		entityManager.addEntity(stateID, setBackground(DEFAULT_BACKGROUND));
 	}
 
 	@Override

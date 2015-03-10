@@ -74,11 +74,14 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		escListener.addComponent(escPressed);
 		return escListener;
 	}
+	
+	protected void addESCListener(int newState) {
+		entityManager.addEntity(stateID, setESCListener(newState));
+	}
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		entityManager.addEntity(stateID, setBackground(null));
 		this.game = game;
 		this.container = container;
 
@@ -220,5 +223,9 @@ public class ExtendedTWLState extends BasicTWLGameState {
 			
 		}
 		return new nothing();
+	}
+	
+	public Widget getWidget(String name) {
+		return widgets.get(name);
 	}
 }
