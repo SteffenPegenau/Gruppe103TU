@@ -6,6 +6,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.EditField;
+import de.matthiasmann.twl.EditField.Callback;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
@@ -15,6 +16,7 @@ import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestStateBasedGame;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.GameplayState;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.ThrowForm;
 import eea.engine.entity.StateBasedEntityManager;
 
 public class GorillasTestAdapterMinimal {
@@ -176,6 +178,10 @@ public class GorillasTestAdapterMinimal {
 			GameplayState state = (GameplayState) gorillas.getCurrentState();
 			EditField velocity = (EditField) state.getWidget("FORM_EDIT_VELOCITY");
 			velocity.setText(velocity.getText() + charac);
+			ThrowForm.addCharToEditField(charac, velocity, new Callback() {
+				public void callback(int arg0) {					
+				}
+			}, 200);
 		}
 	}
 
@@ -211,6 +217,10 @@ public class GorillasTestAdapterMinimal {
 			GameplayState state = (GameplayState) gorillas.getCurrentState();
 			EditField angle = (EditField) state.getWidget("FORM_EDIT_ANGLE");
 			angle.setText(angle.getText() + charac);
+			ThrowForm.addCharToEditField(charac, angle, new Callback() {
+				public void callback(int arg0) {					
+				}
+			}, 360);
 		}
 	}
 

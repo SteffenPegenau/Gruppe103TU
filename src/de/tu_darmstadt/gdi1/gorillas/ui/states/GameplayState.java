@@ -9,7 +9,6 @@ import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
-import eea.engine.entity.StateBasedEntityManager;
 
 public class GameplayState extends ExtendedTWLState {
 	private static final int NUMBER_OF_BUILDINGS = 8;
@@ -34,8 +33,6 @@ public class GameplayState extends ExtendedTWLState {
 		if (players.length != 2) {
 			System.err.println("Bad number of players: " + players.length);
 		} else {
-			stateID = sid;
-			entityManager = StateBasedEntityManager.getInstance();
 			for (int i = 0; i < players.length; i++) {
 				this.players[i] = players[i];
 				System.out.println("Started with Player " + i + ": "
@@ -44,6 +41,8 @@ public class GameplayState extends ExtendedTWLState {
 			skyline = new Skyline(entityManager, sid, NUMBER_OF_BUILDINGS,
 					false);
 			currentPlayer = 0;
+			
+			throwForm = new ThrowForm(this, currentPlayer);
 		}
 	}
 
@@ -69,10 +68,8 @@ public class GameplayState extends ExtendedTWLState {
 						skyline.randomBuildingForPlayer(i));
 				entityManager.addEntity(stateID, players[i].getPlayersFigure());
 			}
-
-			throwForm = new ThrowForm(this, currentPlayer);
 			addESCListener(Gorillas.GAMESETUPSTATE);
-			addAllWidgetsToRootPane(widgets);
+			//addAllWidgetsToRootPane(widgets);
 			skyline.setSkyline_built(true);
 		}
 	}

@@ -20,8 +20,7 @@ public class ThrowForm {
 	private GameplayState gameplayState;
 	private HashMap<String, Widget> widgets;
 
-	
-	//private boolean isVisible = true;
+	// private boolean isVisible = true;
 	private int currentPlayer;
 
 	public ThrowForm(GameplayState state, int currentPlayer) {
@@ -56,7 +55,7 @@ public class ThrowForm {
 	 * @param visibility
 	 */
 	public void setVisibility(boolean visibility) {
-		//this.isVisible = visibility;
+		// this.isVisible = visibility;
 		for (Map.Entry<String, Widget> entry : getFormWidgets().entrySet()) {
 			entry.getValue().setVisible(visibility);
 		}
@@ -64,7 +63,9 @@ public class ThrowForm {
 
 	/**
 	 * Setzt den aktuellen Spieler
-	 * @param currentPlayer arrayIndex des aktuellen Spielers (0 für ersten Spieler, etc)
+	 * 
+	 * @param currentPlayer
+	 *            arrayIndex des aktuellen Spielers (0 für ersten Spieler, etc)
 	 */
 	public void setCurrentPlayer(int currentPlayer) {
 		this.currentPlayer = currentPlayer;
@@ -101,6 +102,34 @@ public class ThrowForm {
 	}
 
 	/**
+	 * Überprüft, ob der Übergebene Charakter eine Zahl ist und ob
+	 * 
+	 * @param inputChar
+	 * @param editField
+	 * @param callback
+	 * @param maxValue
+	 */
+	public static void addCharToEditField(char inputChar, EditField editField,
+			Callback callback, int maxValue) {
+		String inputText = editField.getText();
+		System.out.println("INPUT TEXT: " + inputText);
+		if (!Character.isDigit(inputChar)
+				|| Integer.parseInt(inputText) > maxValue) {
+			// a call of setText on an EditField triggers the callback, so
+			// remove callback before and add it again after the call
+			editField.removeCallback(callback);
+
+			String newText = "";
+			if (inputText.length() - 1 >= 0) {
+				newText = inputText.substring(0, inputText.length() - 1);
+			}
+
+			editField.setText(newText);
+			editField.addCallback(callback);
+		}
+	}
+
+	/**
 	 * Diese Methode wird aufgerufen, wenn ein Zeichen in ein EditField
 	 * eingegeben wurde.
 	 * 
@@ -114,8 +143,8 @@ public class ThrowForm {
 	 *            die größte Zahl, die in das <code>editField</code> eingegeben
 	 *            werden kann
 	 */
-	void numberInputCheck(int key, EditField editField, Callback callback,
-			int maxValue) {
+	public void numberInputCheck(int key, EditField editField,
+			Callback callback, int maxValue) {
 		if (key == de.matthiasmann.twl.Event.KEY_NONE) {
 			String inputText = editField.getText();
 
@@ -124,15 +153,7 @@ public class ThrowForm {
 			}
 
 			char inputChar = inputText.charAt(inputText.length() - 1);
-			if (!Character.isDigit(inputChar)
-					|| Integer.parseInt(inputText) > maxValue) {
-				// a call of setText on an EditField triggers the callback, so
-				// remove callback before and add it again after the call
-				editField.removeCallback(callback);
-				editField
-						.setText(inputText.substring(0, inputText.length() - 1));
-				editField.addCallback(callback);
-			}
+			addCharToEditField(inputChar, editField, callback, maxValue);
 		}
 	}
 
@@ -173,7 +194,8 @@ public class ThrowForm {
 				Player player = state.getCurrentPlayer();
 				FigureWithWeapon fig = player.getPlayersFigure();
 				Weapon weapon = fig.getWeapon();
-				entityManager.addEntity(state.getID(), weapon.shot(player, fig, angle, velocity));
+				entityManager.addEntity(state.getID(),
+						weapon.shot(player, fig, angle, velocity));
 				state.toggleActivePlayer();
 				setInputFormsPosition();
 			}
@@ -202,18 +224,20 @@ public class ThrowForm {
 		widgets.get("FORM_BUTTON_THROW").setPosition(posX + FORM_DISTANCE_X,
 				posY - 20);
 	}
-	
+
 	/**
 	 * Returns the currently Value of the Angle Edit Field
+	 * 
 	 * @return Angle
 	 */
 	public double getAngle() {
 		EditField editAngle = (EditField) widgets.get("FORM_EDIT_ANGLE");
 		return Double.parseDouble(editAngle.getText());
 	}
-	
+
 	/**
 	 * Returns the currently value of the velocity edit field
+	 * 
 	 * @return Velocity
 	 */
 	public float getVelocity() {
