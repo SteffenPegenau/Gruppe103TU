@@ -10,6 +10,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
@@ -155,4 +156,11 @@ public class GameplayState extends ExtendedTWLState {
 		}
 	}
 
+	public String getPlayer1Name(){
+		return players[0].getUsername();
+	}
+	
+	public String getPlayer2Name(){
+		return players[1].getUsername();
+	}
 }
