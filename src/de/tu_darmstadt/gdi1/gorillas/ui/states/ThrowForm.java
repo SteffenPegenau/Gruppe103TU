@@ -3,6 +3,9 @@ package de.tu_darmstadt.gdi1.gorillas.ui.states;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
+
 import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.Widget;
@@ -10,6 +13,8 @@ import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.FigureWithWeapon;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
+import eea.engine.action.Action;
+import eea.engine.component.Component;
 import eea.engine.entity.StateBasedEntityManager;
 
 public class ThrowForm {
@@ -23,7 +28,7 @@ public class ThrowForm {
 
 	// private boolean isVisible = true;
 	private int currentPlayer;
-	
+
 	public ThrowForm(GameplayState state, int currentPlayer) {
 		widgets = state.getWidgets();
 		gameplayState = state;
@@ -48,6 +53,24 @@ public class ThrowForm {
 		}
 		return formWidgets;
 
+	}
+
+	public Action getThrowAction() {
+		class action implements Action {
+			ThrowForm throwForm;
+
+			public action(ThrowForm throwForm) {
+				this.throwForm = throwForm;
+			}
+
+			@Override
+			public void update(GameContainer gc, StateBasedGame sb, int delta,
+					Component event) {
+				throwForm.buttonThrowClicked().run();
+			}
+		}
+		Action a = new action(this);
+		return a;
 	}
 
 	/**
@@ -77,6 +100,10 @@ public class ThrowForm {
 	 */
 	private void initiallyDrawInputForm() {
 		// Fügt erst alle Elemente ohne Position hinzu
+		widgets.put("PLAYER_1_NAME",
+				gameplayState.createLabel(gameplayState.getPlayer1Name(), 0, 0, true));
+		widgets.put("PLAYER_2_NAME",
+				gameplayState.createLabel(gameplayState.getPlayer2Name(), 0, 0, true));
 		widgets.put("FORM_BUTTON_THROW",
 				gameplayState.createButton("Wurf!", buttonThrowClicked(), 0, 0));
 		widgets.put("FORM_LABEL_ANGLE",
@@ -96,10 +123,17 @@ public class ThrowForm {
 
 		// Setze Größe des Buttons
 		widgets.get("FORM_BUTTON_THROW").setSize(40, 40);
-
 		// Setze callback für Eingabefelder zur Kontrolle der Eingabe
 		addNumberInputCheck((EditField) widgets.get("FORM_EDIT_ANGLE"), 360);
 		addNumberInputCheck((EditField) widgets.get("FORM_EDIT_VELOCITY"), 200);
+	}
+
+	private String getCurrentPlayerName() {
+		if (currentPlayer == 0) {
+			return gameplayState.getPlayer1Name();
+		} else {
+			return gameplayState.getPlayer2Name();
+		}
 	}
 
 	/**
@@ -113,7 +147,7 @@ public class ThrowForm {
 	public static void addCharToEditField(char inputChar, EditField editField,
 			Callback callback, int maxValue) {
 		String inputText = editField.getText();
-		//System.out.println("INPUT TEXT: " + inputText);
+		// System.out.println("INPUT TEXT: " + inputText);
 		if (!Character.isDigit(inputChar)
 				|| Integer.parseInt(inputText) > maxValue) {
 			// a call of setText on an EditField triggers the callback, so
@@ -198,12 +232,12 @@ public class ThrowForm {
 				Weapon weapon = fig.getWeapon();
 				Bullet bullet = weapon.shot(player, fig, angle, velocity);
 				bullet.setGameplayState(state);
-				
+
 				entityManager.addEntity(state.getID(), bullet);
 				state.addBullet(bullet);
 				state.toggleActivePlayer();
 				setInputFormsPosition();
-				
+
 				throwForm.setVisibility(false);
 			}
 		}
@@ -219,7 +253,8 @@ public class ThrowForm {
 		adjustOffset();
 		int posX = formOffsetX;
 		int posY = FORM_OFFSET_Y;
-
+		widgets.get("PLAYER_1_NAME").setPosition(posX, posY - 30);
+		widgets.get("PLAYER_2_NAME").setPosition(posX + 500, posY - 30);
 		widgets.get("FORM_LABEL_ANGLE").setPosition(posX, posY);
 		widgets.get("FORM_EDIT_ANGLE").setPosition(posX + FORM_DISTANCE_X,
 				posY - 20);

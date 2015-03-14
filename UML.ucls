@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Moon" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Moon.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="77" width="181" x="1204" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Bird" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Bird.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="77" width="181" x="983" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Gorilla" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Gorilla.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="95" width="181" x="1576" y="3115"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Skyline.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="275" width="261" x="2854" y="1261"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Angel" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Angel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="77" width="181" x="2506" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Sun" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Sun.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="77" width="181" x="2285" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Bullet.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="725" width="265" x="1198" y="1261"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Banana" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Banana.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="95" width="181" x="1198" y="2026"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Building" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Building.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="401" width="271" x="1664" y="2026"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Item" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Item.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="77" width="181" x="1425" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.FlyingObject" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/FlyingObject.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="725" width="181" x="2064" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.MapObject" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/MapObject.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="149" width="181" x="1158" y="802"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.SpaceObject" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/SpaceObject.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="77" width="181" x="762" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.Cloud" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/Cloud.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="77" width="181" x="291" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjects.FigureWithWeapon" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjects/FigureWithWeapon.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="257" width="205" x="1419" y="2026"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Owner" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjectsowners/Owner.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="131" width="242" x="1968" y="1261"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.ArtificialIntelligence" 
+    project="Gorillas" file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjectsowners/ArtificialIntelligence.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="131" width="210" x="512" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjectsowners/PlayerList.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="257" width="297" x="3176" y="1261"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjectsowners/Player.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1049" width="226" x="2517" y="2026"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Referee" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/mapobjectsowners/Referee.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="77" width="210" x="41" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/GameSetupState.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="293" width="297" x="2517" y="1261"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.InstructionState" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/InstructionState.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="113" width="297" x="1379" y="802"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.PlayerSelectState" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/PlayerSelectState.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="419" width="348" x="2727" y="802"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.ThrowForm" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/ThrowForm.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="401" width="270" x="3136" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.OptionState" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/OptionState.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="113" width="297" x="2053" y="802"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="26" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.posX" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/posX.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="383" width="169" x="1855" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="27" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.GameplayState" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/GameplayState.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="311" width="297" x="3136" y="802"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.HighscoreState" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/HighscoreState.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="113" width="297" x="1716" y="802"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="29" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.posY" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/posY.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="491" width="169" x="1646" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="30" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.ExtendedTWLState" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/ExtendedTWLState.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="689" width="297" x="2727" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="de.tu_darmstadt.gdi1.gorillas.ui.states.MainMenuState" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/ui/states/MainMenuState.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="293" width="297" x="2390" y="802"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="de.tu_darmstadt.gdi1.gorillas.weapons.Weapon" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/weapons/Weapon.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="203" width="275" x="1261" y="3115"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="de.tu_darmstadt.gdi1.gorillas.weapons.BananaThrower" project="Gorillas" 
+    file="/Gorillas/src/de/tu_darmstadt/gdi1/gorillas/weapons/BananaThrower.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="77" width="169" x="1261" y="3358"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="34">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="35" name="weapon"/>      
+      <multiplicity id="36" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="37">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="38" name="skyline"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="40">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="41">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="42">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <association id="43">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="44" name="buildings"/>      
+      <multiplicity id="45" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="46">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="47" name="players"/>      
+      <multiplicity id="48" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="49">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="50" name="players"/>      
+      <multiplicity id="51" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="52">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="32"/>  
+  </generalization>  
+  <generalization id="53">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="54">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="55">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="56">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="57" name="playersFigure"/>      
+      <multiplicity id="58" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="59">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="60">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="61">    
+    <bendpoint x="1493" y="1261"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <association id="62">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="63" name="playerFigures"/>      
+      <multiplicity id="64" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <generalization id="66">    
+    <bendpoint x="3105" y="802"/>    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="67">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="68" name="player"/>      
+      <multiplicity id="69" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="70">    
+    <bendpoint x="2486" y="1261"/>    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="71" name="selectedPlayer"/>      
+      <multiplicity id="72" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="73">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="74" name="players"/>      
+      <multiplicity id="75" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="76">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="77" name="throwForm"/>      
+      <multiplicity id="78" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="79">    
+    <bendpoint x="1167" y="1261"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <association id="80">    
+    <bendpoint x="3145" y="1261"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="81" name="players"/>      
+      <multiplicity id="82" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="84" name="gameplayState"/>      
+      <multiplicity id="85" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="86">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="87" name="setupState"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="89">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="false" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
