@@ -205,8 +205,8 @@ public class Player extends Owner implements java.io.Serializable{
 	 * Wird aufgerufen, wenn die Figur des Spielers getroffen wird
 	 */
 	public void figureWasHit() {
-		System.out.println("Figur von Spieler " + getUsername() + " <" + getArrayIndex() + "> wurde getroffen!");
 		reduceLifesLeft();
+		System.out.println("Figur von Spieler " + getUsername() + " <" + getArrayIndex() + "> wurde getroffen!" + "Leben übrig: " + getLifesLeft());
 	}
 	
 	protected void reduceLifesLeft() {
@@ -232,7 +232,6 @@ public class Player extends Owner implements java.io.Serializable{
 		return (p.getArrayIndex() == 0) ? 1 : 0;
 	}
 	
-
 	//
 	// Other methods
 	//
