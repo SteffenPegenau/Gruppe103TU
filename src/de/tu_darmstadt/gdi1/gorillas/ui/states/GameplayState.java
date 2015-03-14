@@ -90,7 +90,8 @@ public class GameplayState extends ExtendedTWLState {
 	public void toggleActivePlayer() {
 		currentPlayer = (currentPlayer == 0) ? 1 : 0;
 		throwForm.setCurrentPlayer(currentPlayer);
-		System.out.println("Aktiver Spieler ist nun: " + currentPlayer);		
+		System.out.println("Aktiver Spieler ist nun: " + currentPlayer);
+		Bullet.perfectDegreeShot(80, getCurrentPlayer(), getNotCurrentPlayer());
 	}
 
 	/**
@@ -156,6 +157,11 @@ public class GameplayState extends ExtendedTWLState {
 	public Player getPlayer(int arrayIndex) {
 		System.out.println(players[arrayIndex]);
 		return players[arrayIndex];
+	}
+	
+	public Player getNotCurrentPlayer() {
+		int notCurrentPlayer = (currentPlayer == 0) ? 1 : 0;
+		return getPlayer(notCurrentPlayer);
 	}
 
 	public String getPlayer1Name(){

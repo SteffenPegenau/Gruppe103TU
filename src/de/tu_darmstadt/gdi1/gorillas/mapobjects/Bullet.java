@@ -212,13 +212,11 @@ public class Bullet extends MapObject {
 	
 	protected Action collisionAction() {
 		class collisionAction implements Action {
-			private Bullet bullet;
 			private GameplayState gameplayState;
 			private Player player;
 			private Player enemyPlayer;
 			
 			public collisionAction(Bullet bullet, GameplayState gameplayState, Player player) {
-				this.bullet = bullet;
 				this.gameplayState = gameplayState;
 				this.player = player;
 				int arrayIndexEnemyPlayer = (player.getArrayIndex() == 0) ? 1 : 0;
@@ -292,33 +290,45 @@ public class Bullet extends MapObject {
 		this.gameplayState = gameplayState;
 	}
 
-	/**
-	 * 
-	 * @param time
-	 *            die Zeit
-	 * @return die momentane x-Koordinate
-	 * 
-	 *         public int actualXPos(int time) { return player.getX() +
-	 *         this.xMod(player.getAngle(), player.getVelocity()) * time; }
-	 * 
-	 *         /**
-	 * 
-	 * @param time
-	 *            die Zeit
-	 * @param gravity
-	 *            die Erdbeschleunigung
-	 * @return die momentane y-Koordinate
-	 * 
-	 *         public int actualYPos(int time, double gravity) { return (int)
-	 *         (player.getY() + this.yMod(player.getAngle(),
-	 *         player.getVelocity()) * time + gravity time / 2); }
-	 */
-	//
-	// Accessor methods
-	//
+	public static void perfectDegreeShot(double degree, Player player, Player victim) {
+		System.out.println(">>>>>>>>>>>>>>>>> Berechnung der perfekten Geschwindigkeit für den Winkel " + degree + " Grad");
+		FigureWithWeapon playersFigure = player.getPlayersFigure();
+		FigureWithWeapon victimsFigure = victim.getPlayersFigure();
+		
+		double x = victimsFigure.getPosition().x;
+		double y = victimsFigure.getPosition().y;
+		
+		double x0 = playersFigure.getPosition().x;
+		double y0 = playersFigure.getPosition().y;
+		
 
-	//
-	// Other methods
-	//
+		double deltaX = 0;
+		double deltaY = 0;
+		
+		if(player.getArrayIndex() == 0) {
+			deltaX = x - x0;
+			deltaY = y - y0;
+		} else {
+			deltaX = x0 - x;
+			deltaY = y0 - y;
+		}
+		
+		System.out.println("x=" + x + "\ty=" + y + "\tx0=" + x0 + "\ty0="+y0 );
+		System.out.println("Delta X: " + deltaX +  "\tDelta Y: " + deltaY);
+		double tan = Math.tan(Math.toRadians(degree));
+		System.out.println("Tan(89Grad)=" + tan);
+		double toBeSquareRooted = 2 * (deltaY + tan * deltaX) / GRAVITY;
+		System.out.println("Wurzel:" + toBeSquareRooted);
+		double t = Math.sqrt(toBeSquareRooted);
+		
+		System.out.println("Flugzeit: " + t);
+		
+		double cos = Math.cos(Math.toRadians(degree));
+		double v = deltaX / (cos * t);
+		
+		System.out.println("Perfect velocity for a " + degree + " Degree shot: " + v);
+
+		System.out.println("<<<<<<<<<<<<<<<<<");
+	}
 
 }
