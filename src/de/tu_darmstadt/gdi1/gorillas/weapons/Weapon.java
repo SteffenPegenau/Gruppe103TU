@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.FigureWithWeapon;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.GameplayState;
 import eea.engine.entity.Entity;
 
 
@@ -81,14 +82,16 @@ public abstract class Weapon {
 			return projectile;
 		}
 
-		public Bullet shot(Player player, FigureWithWeapon fig, double angle, float velocity) {
+		public Bullet shot(Player player, FigureWithWeapon fig, double angle, float velocity, GameplayState state) {
 			Bullet projectile = newBulletAsEntity(player, fig);
 			//projectile.setPosition(fig.getPosition());
+			projectile.setGameplayState(state);
 			projectile.addEvents();
 			projectile.setPosX0(fig.getPosition().x);
 			projectile.setPosYO(fig.getPosition().y);
 			System.out.println("Shot with Angle " + angle + " and velocity " + velocity);
 			projectile.setVelocity(angle, velocity);
+			
 			
 			//LoopEvent loop = new LoopEvent();
 			//Action a = new MoveRightAction(0.25f);

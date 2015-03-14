@@ -230,8 +230,7 @@ public class ThrowForm {
 				Player player = state.getCurrentPlayer();
 				FigureWithWeapon fig = player.getPlayersFigure();
 				Weapon weapon = fig.getWeapon();
-				Bullet bullet = weapon.shot(player, fig, angle, velocity);
-				bullet.setGameplayState(state);
+				Bullet bullet = weapon.shot(player, fig, angle, velocity, state);
 
 				entityManager.addEntity(state.getID(), bullet);
 				state.addBullet(bullet);
