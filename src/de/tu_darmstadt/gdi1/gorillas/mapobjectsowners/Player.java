@@ -189,6 +189,14 @@ public class Player extends Owner implements java.io.Serializable{
 	public void setArrayIndex(int arrayIndex) {
 		this.arrayIndex = arrayIndex;
 	}
+	
+	public void hitEnemyFigure() {
+		System.out.println("Spieler " + getUsername() + " <" + getArrayIndex() + "> hat gegnerische Figur getroffen!");
+	}
+	
+	public void figureWasHit() {
+		System.out.println("Figur von Spieler " + getUsername() + " <" + getArrayIndex() + "> wurde getroffen!");
+	}
 
 	//
 	// Other methods

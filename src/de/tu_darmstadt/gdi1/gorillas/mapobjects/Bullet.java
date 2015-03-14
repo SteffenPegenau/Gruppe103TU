@@ -208,26 +208,43 @@ public class Bullet extends MapObject {
 	protected Action collisionAction() {
 		class collisionAction implements Action {
 			Bullet bullet;
+			GameplayState gameplayState;
+			Player player;
+			Player enemyPlayer;
 			
-			public collisionAction(Bullet bullet) {
+			public collisionAction(Bullet bullet, GameplayState gameplayState, Player player) {
 				this.bullet = bullet;
+				this.gameplayState = gameplayState;
+				this.player = player;
+				
 			}
 
 			@Override
 			public void update(GameContainer gc, StateBasedGame sb, int delta,
 					Component event) {
 
+				System.out.println("Übergebener Spieler: " + player);
+				int arrayIndexEnemyPlayer = (player.getArrayIndex() == 0) ? 1 : 0;
+				System.out.println("Try to get Player " + arrayIndexEnemyPlayer);
+				enemyPlayer = gameplayState.getPlayer(arrayIndexEnemyPlayer);
+				
 				// hole die Entity, mit der kollidiert wurde
 				CollisionEvent collider = (CollisionEvent) event;
 				Entity entity = collider.getCollidedEntity();
 				if (!entity.getID().contentEquals("background")) {
-					System.out.println("COLLIDED WITH " + entity.getID());
+					//System.out.println("COLLIDED WITH " + entity.getID());
 					// wenn diese durch ein Pattern zerst�rt werden kann, dann
 					// caste
 					// zu IDestructible
 					// ansonsten passiert bei der Kollision nichts
+					
 					IDestructible destructible = null;
-					if (entity instanceof IDestructible) {
+					if(entity.getID().contentEquals(enemyPlayer.getPlayersFigure().getID())) {
+						// Gegner getroffen!
+						enemyPlayer.figureWasHit();
+						player.hitEnemyFigure();
+					}else if (entity instanceof IDestructible) {
+						// Etwas anderes getroffen, zB Gebäude
 						destructible = (IDestructible) entity;
 					} else {
 						return;
@@ -245,7 +262,7 @@ public class Bullet extends MapObject {
 			}
 		}
 		
-		Action a = new collisionAction(this);
+		Action a = new collisionAction(this, gameplayState, player);
 		return a;
 	}
 

@@ -1,15 +1,12 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
@@ -151,6 +148,11 @@ public class GameplayState extends ExtendedTWLState {
 		if(bullets.size() == 0) {
 			throwForm.setVisibility(true);
 		}
+	}
+	
+	public Player getPlayer(int arrayIndex) {
+		System.out.println(players[arrayIndex]);
+		return players[arrayIndex];
 	}
 
 }

@@ -169,6 +169,7 @@ public class ThrowForm {
 		}
 	}
 
+	
 	/**
 	 * Initiiert Wurf und wechselt Spieler
 	 * 
