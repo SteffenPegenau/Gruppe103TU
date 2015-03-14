@@ -21,7 +21,7 @@ import eea.engine.interfaces.IDestructible;
  * Class Bullet
  */
 public class Bullet extends MapObject {
-	public final static double SCALING_FACTOR = (double) 1 / 700;
+	public final static double SCALING_FACTOR = (double) 1 / 100;
 	public final static double GRAVITY = 10.0;
 	
 	// Radiant, nicht in Grad!

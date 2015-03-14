@@ -5,7 +5,12 @@ package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 /**
  * Class FlyingObject
  */
-public class FlyingObject {
+public class FlyingObject extends MapObject {
+
+		public FlyingObject(String entityID) {
+		super(entityID);
+		// TODO Auto-generated constructor stub
+	}
 
 		//
 		// Fields
@@ -23,11 +28,6 @@ public class FlyingObject {
 		private int timeZero;
 		private int windScale;
 		private double dampingFactor;
-		
-		//
-		// Constructors
-		//
-		public FlyingObject () { };
 		
 		//
 		// Methods

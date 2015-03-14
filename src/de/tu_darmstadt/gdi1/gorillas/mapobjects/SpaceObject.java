@@ -5,29 +5,11 @@ package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 /**
  * Class SpaceObject
  */
-public class SpaceObject {
+public class SpaceObject extends MapObject {
 
-		//
-		// Fields
-		//
-
-		
-		//
-		// Constructors
-		//
-		public SpaceObject () { };
-		
-		//
-		// Methods
-		//
-
-
-		//
-		// Accessor methods
-		//
-
-		//
-		// Other methods
-		//
+	public SpaceObject(String entityID) {
+		super(entityID);
+		// TODO Auto-generated constructor stub
+	}
 
 }

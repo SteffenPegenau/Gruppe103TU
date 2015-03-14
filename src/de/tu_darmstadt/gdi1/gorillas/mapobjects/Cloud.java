@@ -5,29 +5,10 @@ package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 /**
  * Class Cloud
  */
-public class Cloud {
+public class Cloud extends FlyingObject {
 
-		//
-		// Fields
-		//
-
-		
-		//
-		// Constructors
-		//
-		public Cloud () { };
-		
-		//
-		// Methods
-		//
-
-
-		//
-		// Accessor methods
-		//
-
-		//
-		// Other methods
-		//
+	public Cloud(String entityID) {
+		super(entityID);
+	}
 
 }

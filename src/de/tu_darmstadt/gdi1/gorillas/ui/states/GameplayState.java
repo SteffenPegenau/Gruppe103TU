@@ -65,9 +65,8 @@ public class GameplayState extends ExtendedTWLState {
 			skyline.createSkyline();
 			for (int i = 0; i < players.length; i++) {
 				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
-				players[i].getPlayersFigure().setPosition(
-						skyline.randomBuildingForPlayer(i));
-				entityManager.addEntity(stateID, players[i].getPlayersFigure().asDestructibleImageEntity());
+				players[i].getPlayersFigure().setPosition(skyline.randomBuildingForPlayer(i));
+				entityManager.addEntity(stateID, players[i].getPlayersFigure());
 			}
 			addESCListener(Gorillas.GAMESETUPSTATE);
 			//addAllWidgetsToRootPane(widgets);

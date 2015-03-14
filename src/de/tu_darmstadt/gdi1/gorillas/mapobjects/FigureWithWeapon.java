@@ -19,12 +19,9 @@ public class FigureWithWeapon extends MapObject {
 		// Fields
 		//
 		protected Weapon weapon;
-		private double velocity;
-		private double angle;
 		
 		public final static String DESTRUCTION_PATH = "gorillas/destruction.png";
 		public final static boolean DEBUG = Gorillas.debug;
-		BufferedImage image;
 		Graphics2D building;
 		
 		public FigureWithWeapon(String entityID) {
@@ -48,17 +45,23 @@ public class FigureWithWeapon extends MapObject {
 		//
 		// Methods
 		//
-		
+		/*
 		public DestructibleImageEntity asDestructibleImageEntity() {
-			int width = 42;
-			int height = 35;
-			image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 			DestructibleImageEntity entity = new DestructibleImageEntity(
 					this.getID(), image, DESTRUCTION_PATH, DEBUG);
 			entity.setPosition(this.getPosition());
 			return entity;
+			/*
+			
+			int width = 42;
+			int height = 35;
+			image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			DestructibleImageEntity entity = new DestructibleImageEntity(this.getID(), image, DESTRUCTION_PATH, DEBUG);
+			entity.setPosition(this.getPosition());
+			return entity;
+			
 		}
-
+		*/
 		//
 		// Accessor methods
 		//
@@ -78,43 +81,4 @@ public class FigureWithWeapon extends MapObject {
 		public Weapon getWeapon () {
 				return weapon;
 		}
-
-
-		/**
-		 * Set the value of velocity
-		 * @param newVar the new value of velocity
-		 */
-		private void setVelocity (double newVar) {
-				velocity = newVar;
-		}
-
-		/**
-		 * Get the value of velocity
-		 * @return the value of velocity
-		 */
-		private double getVelocity () {
-				return velocity;
-		}
-
-		/**
-		 * Set the value of angle
-		 * @param newVar the new value of angle
-		 */
-		private void setAngle (double newVar) {
-				angle = newVar;
-		}
-
-		/**
-		 * Get the value of angle
-		 * @return the value of angle
-		 */
-		private double getAngle () {
-				return angle;
-		}
-		
-
-		//
-		// Other methods
-		//
-
 }

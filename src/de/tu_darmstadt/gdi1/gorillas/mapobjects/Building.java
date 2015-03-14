@@ -36,18 +36,6 @@ public class Building extends MapObject {
 	BufferedImage image;
 	Graphics2D building;
 	
-	/*
-	List<BufferedImage> BufferedImages;
-	List<Graphics2D> BuildingList;
-	List<Color> BuildingColors;
-	List<DestructibleImageEntity> DestructerList;
-
-	double RandomNr = Math.random();
-	BufferedImage imageX;
-	Graphics2D buildingX;
-	DestructibleImageEntity skyScraperX;
-	*/
-
 	/**
 	 * Erzeugt ein Hochhaus
 	 * 

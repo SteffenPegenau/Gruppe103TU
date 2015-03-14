@@ -5,29 +5,10 @@ package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 /**
  * Class Bird
  */
-public class Bird {
+public class Bird extends FlyingObject{
 
-		//
-		// Fields
-		//
-
-		
-		//
-		// Constructors
-		//
-		public Bird () { };
-		
-		//
-		// Methods
-		//
-
-
-		//
-		// Accessor methods
-		//
-
-		//
-		// Other methods
-		//
+	public Bird(String entityID) {
+		super(entityID);
+	}
 
 }

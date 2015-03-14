@@ -5,7 +5,7 @@ package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 /**
  * Class ArtificialIntelligence
  */
-public class ArtificialIntelligence {
+public class ArtificialIntelligence extends Owner {
 
 		//
 		// Fields
