@@ -3,6 +3,9 @@ package de.tu_darmstadt.gdi1.gorillas.ui.states;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
+
 import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.Widget;
@@ -10,6 +13,8 @@ import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.FigureWithWeapon;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
+import eea.engine.action.Action;
+import eea.engine.component.Component;
 import eea.engine.entity.StateBasedEntityManager;
 
 public class ThrowForm {
@@ -48,6 +53,23 @@ public class ThrowForm {
 		}
 		return formWidgets;
 
+	}
+	
+	public Action getThrowAction(){
+		class action implements Action{
+			ThrowForm throwForm;
+			
+			public action(ThrowForm throwForm){
+				this.throwForm = throwForm;
+			}
+			@Override
+			public void update(GameContainer gc, StateBasedGame sb, int delta,
+					Component event) {
+				throwForm.buttonThrowClicked().run();
+			}			
+		}
+		Action a = new action(this);
+		return a;
 	}
 
 	/**

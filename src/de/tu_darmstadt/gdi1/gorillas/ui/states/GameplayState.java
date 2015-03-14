@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -78,6 +79,7 @@ public class GameplayState extends ExtendedTWLState {
 				entityManager.addEntity(stateID, players[i].getPlayersFigure());
 			}
 			addESCListener(Gorillas.GAMESETUPSTATE);
+			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			//addAllWidgetsToRootPane(widgets);
 			skyline.setSkyline_built(true);
 		}
