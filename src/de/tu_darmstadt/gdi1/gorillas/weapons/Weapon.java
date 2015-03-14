@@ -81,7 +81,7 @@ public abstract class Weapon {
 			return projectile;
 		}
 
-		public Entity shot(Player player, FigureWithWeapon fig, double angle, float velocity) {
+		public Bullet shot(Player player, FigureWithWeapon fig, double angle, float velocity) {
 			Bullet projectile = newBulletAsEntity(player, fig);
 			//projectile.setPosition(fig.getPosition());
 			projectile.addEvents();

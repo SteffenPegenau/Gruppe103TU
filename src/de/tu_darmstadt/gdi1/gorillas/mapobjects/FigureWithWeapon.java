@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
 import eea.engine.entity.DestructibleImageEntity;
 
@@ -19,6 +20,7 @@ public class FigureWithWeapon extends MapObject {
 		// Fields
 		//
 		protected Weapon weapon;
+		Player owner;
 		
 		public final static String DESTRUCTION_PATH = "gorillas/destruction.png";
 		public final static boolean DEBUG = Gorillas.debug;
@@ -80,5 +82,13 @@ public class FigureWithWeapon extends MapObject {
 		 */
 		public Weapon getWeapon () {
 				return weapon;
+		}
+
+		public Player getOwner() {
+			return owner;
+		}
+
+		public void setOwner(Player owner) {
+			this.owner = owner;
 		}
 }

@@ -1,12 +1,18 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 
@@ -17,6 +23,9 @@ public class GameplayState extends ExtendedTWLState {
 	public ThrowForm throwForm;
 
 	private Player[] players = new Player[2];
+	
+	private HashMap<String, Bullet> bullets = new HashMap<String, Bullet>();
+	
 	double gravity;
 	int numberOfRounds;
 	int numberOfHitsForVictory;
@@ -81,7 +90,7 @@ public class GameplayState extends ExtendedTWLState {
 	public void toggleActivePlayer() {
 		currentPlayer = (currentPlayer == 0) ? 1 : 0;
 		throwForm.setCurrentPlayer(currentPlayer);
-		System.out.println("Aktiver Spieler ist nun: " + currentPlayer);
+		System.out.println("Aktiver Spieler ist nun: " + currentPlayer);		
 	}
 
 	/**
@@ -95,7 +104,9 @@ public class GameplayState extends ExtendedTWLState {
 		addAllWidgetsToRootPane(widgets);
 		return rp;
 	}
-
+	
+	
+	
 	/**
 	 * in dieser Methode des BasicTWLGameState werden die erstellten
 	 * GUI-Elemente platziert
@@ -123,5 +134,23 @@ public class GameplayState extends ExtendedTWLState {
 	 * System.err.println("Cannot find file assets/gorillas/banana.png!");
 	 * e.printStackTrace(); } }
 	 */
+	
+	public void addBullet(Bullet bullet) {
+		bullets.put(bullet.getID(), bullet);
+		System.out.println("Added bullet " + bullet.getID() + " to gameplaystate");
+	}
+	
+	public void removeBullet(Bullet bullet) {
+		bullets.remove(bullet.getID());
+	}
+
+	@Override
+	public void update(GameContainer container, StateBasedGame game, int delta)
+			throws SlickException {
+		super.update(container, game, delta);
+		if(bullets.size() == 0) {
+			throwForm.setVisibility(true);
+		}
+	}
 
 }

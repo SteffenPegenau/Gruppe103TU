@@ -6,6 +6,7 @@ import java.util.Map;
 import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.Widget;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.FigureWithWeapon;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
@@ -22,7 +23,7 @@ public class ThrowForm {
 
 	// private boolean isVisible = true;
 	private int currentPlayer;
-
+	
 	public ThrowForm(GameplayState state, int currentPlayer) {
 		widgets = state.getWidgets();
 		gameplayState = state;
@@ -194,10 +195,15 @@ public class ThrowForm {
 				Player player = state.getCurrentPlayer();
 				FigureWithWeapon fig = player.getPlayersFigure();
 				Weapon weapon = fig.getWeapon();
-				entityManager.addEntity(state.getID(),
-						weapon.shot(player, fig, angle, velocity));
+				Bullet bullet = weapon.shot(player, fig, angle, velocity);
+				bullet.setGameplayState(state);
+				
+				entityManager.addEntity(state.getID(), bullet);
+				state.addBullet(bullet);
 				state.toggleActivePlayer();
 				setInputFormsPosition();
+				
+				throwForm.setVisibility(false);
 			}
 		}
 		Runnable c = new event(gameplayState, this);

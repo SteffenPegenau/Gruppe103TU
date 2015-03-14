@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.GameplayState;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.Entity;
@@ -23,6 +24,8 @@ import eea.engine.interfaces.IDestructible;
 public class Bullet extends MapObject {
 	public final static double SCALING_FACTOR = (double) 1 / 100;
 	public final static double GRAVITY = 10.0;
+	
+	protected GameplayState gameplayState;
 	
 	// Radiant, nicht in Grad!
 	protected double angle;
@@ -115,8 +118,8 @@ public class Bullet extends MapObject {
 		//System.out.println(angle);
 		velocityX = cos() * velocity;
 		velocityY = sin() * velocity;
-		System.out.println("Winkel (Grad): " + angle + "\t Winkle(rad): " + Math.toRadians(angle) + "\tcos=" + cos() + "\tsin=" + sin());
-		System.out.println("v=" + velocity + "\tvX=" + velocityX + "\tvY=" + velocityY);
+		//System.out.println("Winkel (Grad): " + angle + "\t Winkle(rad): " + Math.toRadians(angle) + "\tcos=" + cos() + "\tsin=" + sin());
+		//System.out.println("v=" + velocity + "\tvX=" + velocityX + "\tvY=" + velocityY);
 	}
 
 	public float getAccelerationX() {
@@ -134,6 +137,7 @@ public class Bullet extends MapObject {
 	public double getVelocityY() {
 		return velocityY;
 	}
+	
 
 	public Vector2f calculateNewPosition() {
 		double scaledTimeOfExistence = SCALING_FACTOR * existenceTimeInms;
@@ -143,7 +147,7 @@ public class Bullet extends MapObject {
 				- velocityY * scaledTimeOfExistence
 				+ 0.5 * GRAVITY * Math.pow(scaledTimeOfExistence, 2);
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
-		System.out.println("New Position: " + newPosition);
+		//System.out.println("New Position: " + newPosition);
 		return newPosition;
 	}
 
@@ -200,10 +204,15 @@ public class Bullet extends MapObject {
 		});
 		return leftScreen;
 	}
+	
+	protected Action collisionAction() {
+		class collisionAction implements Action {
+			Bullet bullet;
+			
+			public collisionAction(Bullet bullet) {
+				this.bullet = bullet;
+			}
 
-	protected Event getCollisionEvent() {
-		Event collisionEvent = new CollisionEvent();
-		collisionEvent.addAction(new Action() {
 			@Override
 			public void update(GameContainer gc, StateBasedGame sb, int delta,
 					Component event) {
@@ -212,6 +221,7 @@ public class Bullet extends MapObject {
 				CollisionEvent collider = (CollisionEvent) event;
 				Entity entity = collider.getCollidedEntity();
 				if (!entity.getID().contentEquals("background")) {
+					System.out.println("COLLIDED WITH " + entity.getID());
 					// wenn diese durch ein Pattern zerst�rt werden kann, dann
 					// caste
 					// zu IDestructible
@@ -227,11 +237,21 @@ public class Bullet extends MapObject {
 					// zugewiese Zerst�rungs-Pattern benutzt)
 					destructible.impactAt(event.getOwnerEntity().getPosition());
 					
+					gameplayState.removeBullet(bullet);
+					
 					StateBasedEntityManager.getInstance().removeEntity(sb.getCurrentStateID(),
 					        event.getOwnerEntity());
 				}
 			}
-		});
+		}
+		
+		Action a = new collisionAction(this);
+		return a;
+	}
+
+	protected Event getCollisionEvent() {
+		Event collisionEvent = new CollisionEvent();
+		collisionEvent.addAction(collisionAction());
 		//collisionEvent.addAction(new DestroyEntityAction());
 		return collisionEvent;
 	}
@@ -250,6 +270,10 @@ public class Bullet extends MapObject {
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	public void setGameplayState(GameplayState gameplayState) {
+		this.gameplayState = gameplayState;
 	}
 
 	/**
