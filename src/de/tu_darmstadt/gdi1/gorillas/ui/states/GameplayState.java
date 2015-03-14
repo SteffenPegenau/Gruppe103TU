@@ -8,7 +8,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
@@ -32,6 +31,8 @@ public class GameplayState extends ExtendedTWLState {
 	double windVelocityY;
 
 	private int currentPlayer;
+	
+	private Player winner = null;
 
 	/*
 	 * Setzt die Spieler
@@ -46,6 +47,7 @@ public class GameplayState extends ExtendedTWLState {
 				this.players[i].setArrayIndex(i);
 				System.out.println("Started with Player " + i + ": "
 						+ players[i].getUsername());
+				this.players[i].setLifesLeft(1);
 			}
 			skyline = new Skyline(entityManager, sid, NUMBER_OF_BUILDINGS,
 					false);
@@ -152,6 +154,13 @@ public class GameplayState extends ExtendedTWLState {
 		if(bullets.size() == 0) {
 			throwForm.setVisibility(true);
 		}
+		
+		// Hat ein Spieler gewonnen?
+		winner = getWinner();
+		if(winner != null) {
+			playerWins(winner);
+		}
+		
 	}
 	
 	public Player getPlayer(int arrayIndex) {
@@ -170,5 +179,27 @@ public class GameplayState extends ExtendedTWLState {
 	
 	public String getPlayer2Name(){
 		return players[1].getUsername();
+	}
+	
+	public Player getWinner() {
+		int lifesLeft;
+		for (int i = 0; i < players.length; i++) {
+			lifesLeft = players[i].getLifesLeft();
+			//System.out.println("Player " + players[i].getUsername() + " hat noch " + lifesLeft + " Leben");
+			if(lifesLeft <= 0) {
+				return players[Player.getOtherPlayersArrayIndex(players[i])];
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Erzeugt den Dialog, in dem dem siegreichen Spieler gratuliert wird
+	 * @param winner
+	 */
+	public void playerWins(Player winner) {
+		System.out.println("**********************************");
+		System.out.println("Spieler " + winner.getUsername() + " gewinnt!");
+		System.out.println("**********************************");
 	}
 }

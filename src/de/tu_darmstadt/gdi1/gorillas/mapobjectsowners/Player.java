@@ -28,6 +28,8 @@ public class Player extends Owner implements java.io.Serializable{
 	private double angle;
 	private double velocity;
 	
+	protected int lifesLeft = 1;
+	
 	public String enteredAngle = "0";
 	public String enteredVelocity = "0";
 	
@@ -192,14 +194,44 @@ public class Player extends Owner implements java.io.Serializable{
 	public void setArrayIndex(int arrayIndex) {
 		this.arrayIndex = arrayIndex;
 	}
-	
+	/**
+	 * Wird aufgerufen, wenn Spieler die Figur des anderen Spielers getroffen hat
+	 */
 	public void hitEnemyFigure() {
 		System.out.println("Spieler " + getUsername() + " <" + getArrayIndex() + "> hat gegnerische Figur getroffen!");
 	}
 	
+	/**
+	 * Wird aufgerufen, wenn die Figur des Spielers getroffen wird
+	 */
 	public void figureWasHit() {
 		System.out.println("Figur von Spieler " + getUsername() + " <" + getArrayIndex() + "> wurde getroffen!");
+		reduceLifesLeft();
 	}
+	
+	protected void reduceLifesLeft() {
+		lifesLeft--;
+	}
+
+	public int getLifesLeft() {
+		return lifesLeft;
+	}
+
+	public void setLifesLeft(int lifesLeft) {
+		this.lifesLeft = lifesLeft;
+	}
+	
+	/**
+	 * Gibt den Array Index des jeweils anderen Spielers zurück
+	 * 
+	 * Beispiel: aus 0 wird 1 und umgekehrt
+	 * @param p Spieler, dessen Gegenspieler gesucht wird
+	 * @return Array Index des anderen Spielers
+	 */
+	public static int getOtherPlayersArrayIndex(Player p) {
+		return (p.getArrayIndex() == 0) ? 1 : 0;
+	}
+	
 
 	//
 	// Other methods
