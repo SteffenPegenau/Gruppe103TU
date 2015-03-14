@@ -1,8 +1,13 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
+import eea.engine.entity.DestructibleImageEntity;
 
 
 
@@ -16,6 +21,11 @@ public class FigureWithWeapon extends MapObject {
 		protected Weapon weapon;
 		private double velocity;
 		private double angle;
+		
+		public final static String DESTRUCTION_PATH = "gorillas/destruction.png";
+		public final static boolean DEBUG = Gorillas.debug;
+		BufferedImage image;
+		Graphics2D building;
 		
 		public FigureWithWeapon(String entityID) {
 			super(entityID);
@@ -38,7 +48,16 @@ public class FigureWithWeapon extends MapObject {
 		//
 		// Methods
 		//
-
+		
+		public DestructibleImageEntity asDestructibleImageEntity() {
+			int width = 42;
+			int height = 35;
+			image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			DestructibleImageEntity entity = new DestructibleImageEntity(
+					this.getID(), image, DESTRUCTION_PATH, DEBUG);
+			entity.setPosition(this.getPosition());
+			return entity;
+		}
 
 		//
 		// Accessor methods
@@ -92,6 +111,7 @@ public class FigureWithWeapon extends MapObject {
 		private double getAngle () {
 				return angle;
 		}
+		
 
 		//
 		// Other methods
