@@ -100,10 +100,10 @@ public class ThrowForm {
 	 */
 	private void initiallyDrawInputForm() {
 		// Fügt erst alle Elemente ohne Position hinzu
-		widgets.put("PLAYER_1_NAME",
-				gameplayState.createLabel(gameplayState.getPlayer1Name(), 0, 0, true));
-		widgets.put("PLAYER_2_NAME",
-				gameplayState.createLabel(gameplayState.getPlayer2Name(), 0, 0, true));
+		widgets.put("PLAYER_1_NAME", gameplayState.createLabel(
+				gameplayState.getPlayer1Name(), 0, 0, true));
+		widgets.put("PLAYER_2_NAME", gameplayState.createLabel(
+				gameplayState.getPlayer2Name(), 0, 0, true));
 		widgets.put("FORM_BUTTON_THROW",
 				gameplayState.createButton("Wurf!", buttonThrowClicked(), 0, 0));
 		widgets.put("FORM_LABEL_ANGLE",
@@ -203,7 +203,6 @@ public class ThrowForm {
 		}
 	}
 
-	
 	/**
 	 * Initiiert Wurf und wechselt Spieler
 	 * 
@@ -230,11 +229,14 @@ public class ThrowForm {
 				Player player = state.getCurrentPlayer();
 				FigureWithWeapon fig = player.getPlayersFigure();
 				Weapon weapon = fig.getWeapon();
-				Bullet bullet = weapon.shot(player, fig, angle, velocity, state);
+				Bullet bullet = weapon
+						.shot(player, fig, angle, velocity, state);
 
 				entityManager.addEntity(state.getID(), bullet);
 				state.addBullet(bullet);
+				throwForm.saveEnteredValues(throwForm.currentPlayer);
 				state.toggleActivePlayer();
+				throwForm.restoreEnteredValues(throwForm.currentPlayer);
 				setInputFormsPosition();
 
 				throwForm.setVisibility(false);
@@ -311,5 +313,35 @@ public class ThrowForm {
 		}
 		NumberCheck cb = new NumberCheck(editField, maxValue);
 		editField.addCallback(cb);
+	}
+
+	/**
+	 * Speichert die aktuelle Eingabe im Objekt des Spielers
+	 * @param arrayIndex Index des Spielers, dessen Werte gespeichert werden sollen
+	 */
+	public void saveEnteredValues(int arrayIndex) {
+		Player p = gameplayState.getPlayer(arrayIndex);
+		EditField angle = (EditField) widgets.get("FORM_EDIT_ANGLE");
+		p.enteredAngle = angle.getText();
+		EditField velocity = (EditField) widgets.get("FORM_EDIT_VELOCITY");
+		p.enteredVelocity = velocity.getText();
+	}
+
+	/**
+	 * Überschreibt die Eingabefelder angle und velocity mit den bei dem Spieler gespeicherten Werten
+	 * 
+	 * @param arrayIndex Index des Spielers, von dem die Daten geholt werden sollen
+	 */
+	public void restoreEnteredValues(int arrayIndex) {
+		EditField angle = (EditField) widgets.get("FORM_EDIT_ANGLE");
+		
+		String enteredAngle = gameplayState.getPlayer(arrayIndex).enteredAngle;
+		String enteredVelocity = gameplayState.getPlayer(arrayIndex).enteredVelocity;
+		if(enteredAngle != null && enteredVelocity != null) {
+			angle.setText(enteredAngle);
+			EditField velocity = (EditField) widgets.get("FORM_EDIT_VELOCITY");
+			velocity.setText(enteredVelocity);
+		}
+		
 	}
 }

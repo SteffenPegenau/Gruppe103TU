@@ -7,6 +7,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
@@ -80,7 +82,7 @@ public class GameplayState extends ExtendedTWLState {
 			skyline.setSkyline_built(true);
 		}
 	}
-
+	
 	/**
 	 * Wechselt den aktuellen Spieler. Aus 0 wird 1, aus 1 (allem anderen) wird
 	 * 0;

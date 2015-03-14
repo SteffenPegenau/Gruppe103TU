@@ -28,6 +28,9 @@ public class Player extends Owner implements java.io.Serializable{
 	private double angle;
 	private double velocity;
 	
+	public String enteredAngle = "0";
+	public String enteredVelocity = "0";
+	
 	private int arrayIndex;
 
 	//
