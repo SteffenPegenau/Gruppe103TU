@@ -8,6 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
@@ -21,9 +22,9 @@ public class GameplayState extends ExtendedTWLState {
 	public ThrowForm throwForm;
 
 	private Player[] players = new Player[2];
-	
+
 	private HashMap<String, Bullet> bullets = new HashMap<String, Bullet>();
-	
+
 	double gravity;
 	int numberOfRounds;
 	int numberOfHitsForVictory;
@@ -31,13 +32,13 @@ public class GameplayState extends ExtendedTWLState {
 	double windVelocityY;
 
 	private int currentPlayer;
-	
+
 	private Player winner = null;
 
 	/*
 	 * Setzt die Spieler
 	 */
-	public GameplayState(int sid, Player[] players) {
+	public GameplayState(int sid, Player[] players, int rounds) {
 		super(sid);
 		if (players.length != 2) {
 			System.err.println("Bad number of players: " + players.length);
@@ -47,12 +48,12 @@ public class GameplayState extends ExtendedTWLState {
 				this.players[i].setArrayIndex(i);
 				System.out.println("Started with Player " + i + ": "
 						+ players[i].getUsername());
-				this.players[i].setLifesLeft(1);
+				this.players[i].setLifesLeft(rounds);
 			}
 			skyline = new Skyline(entityManager, sid, NUMBER_OF_BUILDINGS,
 					false);
 			currentPlayer = 0;
-			
+			playersStatisticInformation();
 			throwForm = new ThrowForm(this, currentPlayer);
 		}
 	}
@@ -75,16 +76,17 @@ public class GameplayState extends ExtendedTWLState {
 			skyline.createSkyline();
 			for (int i = 0; i < players.length; i++) {
 				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
-				players[i].getPlayersFigure().setPosition(skyline.randomBuildingForPlayer(i));
+				players[i].getPlayersFigure().setPosition(
+						skyline.randomBuildingForPlayer(i));
 				entityManager.addEntity(stateID, players[i].getPlayersFigure());
 			}
 			addESCListener(Gorillas.GAMESETUPSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
-			//addAllWidgetsToRootPane(widgets);
+			// addAllWidgetsToRootPane(widgets);
 			skyline.setSkyline_built(true);
 		}
 	}
-	
+
 	/**
 	 * Wechselt den aktuellen Spieler. Aus 0 wird 1, aus 1 (allem anderen) wird
 	 * 0;
@@ -107,9 +109,7 @@ public class GameplayState extends ExtendedTWLState {
 		addAllWidgetsToRootPane(widgets);
 		return rp;
 	}
-	
-	
-	
+
 	/**
 	 * in dieser Methode des BasicTWLGameState werden die erstellten
 	 * GUI-Elemente platziert
@@ -122,6 +122,7 @@ public class GameplayState extends ExtendedTWLState {
 	public Player getCurrentPlayer() {
 		return players[currentPlayer];
 	}
+
 	/*
 	 * /** diese Methode wird bei Klick auf den Button ausgeführt, bzw. mit dem
 	 * richtigen keyboard input
@@ -137,12 +138,13 @@ public class GameplayState extends ExtendedTWLState {
 	 * System.err.println("Cannot find file assets/gorillas/banana.png!");
 	 * e.printStackTrace(); } }
 	 */
-	
+
 	public void addBullet(Bullet bullet) {
 		bullets.put(bullet.getID(), bullet);
-		System.out.println("Added bullet " + bullet.getID() + " to gameplaystate");
+		System.out.println("Added bullet " + bullet.getID()
+				+ " to gameplaystate");
 	}
-	
+
 	public void removeBullet(Bullet bullet) {
 		bullets.remove(bullet.getID());
 	}
@@ -151,50 +153,52 @@ public class GameplayState extends ExtendedTWLState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
-		if(bullets.size() == 0) {
+		if (bullets.size() == 0) {
 			throwForm.setVisibility(true);
 		}
-		
+		updatePlayersStaticInformation();
 		// Hat ein Spieler gewonnen?
 		winner = getWinner();
-		if(winner != null) {
+		if (winner != null) {
 			playerWins(winner);
 		}
-		
+
 	}
-	
+
 	public Player getPlayer(int arrayIndex) {
 		System.out.println(players[arrayIndex]);
 		return players[arrayIndex];
 	}
-	
+
 	public Player getNotCurrentPlayer() {
 		int notCurrentPlayer = (currentPlayer == 0) ? 1 : 0;
 		return getPlayer(notCurrentPlayer);
 	}
 
-	public String getPlayer1Name(){
+	public String getPlayer1Name() {
 		return players[0].getUsername();
 	}
-	
-	public String getPlayer2Name(){
+
+	public String getPlayer2Name() {
 		return players[1].getUsername();
 	}
-	
+
 	public Player getWinner() {
 		int lifesLeft;
 		for (int i = 0; i < players.length; i++) {
 			lifesLeft = players[i].getLifesLeft();
-			//System.out.println("Player " + players[i].getUsername() + " hat noch " + lifesLeft + " Leben");
-			if(lifesLeft <= 0) {
+			// System.out.println("Player " + players[i].getUsername() +
+			// " hat noch " + lifesLeft + " Leben");
+			if (lifesLeft <= 0) {
 				return players[Player.getOtherPlayersArrayIndex(players[i])];
 			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Erzeugt den Dialog, in dem dem siegreichen Spieler gratuliert wird
+	 * 
 	 * @param winner
 	 */
 	public void playerWins(Player winner) {
@@ -202,4 +206,17 @@ public class GameplayState extends ExtendedTWLState {
 		System.out.println("Spieler " + winner.getUsername() + " gewinnt!");
 		System.out.println("**********************************");
 	}
+
+	public void updatePlayersStaticInformation() {
+		Label label = (Label) widgets.get("Freie Leben");
+		label.setText(players[0].getUsername() + " Life's left: "
+				+ players[0].getLifesLeft() + "\n" + players[1].getUsername()
+				+ " Life's left: " + players[1].getLifesLeft());
+	}
+
+	public void playersStatisticInformation() {
+		widgets.put("Freie Leben",
+				createLabel("", posX.G.get(), posY.A.get(), true));
+	}
+
 }

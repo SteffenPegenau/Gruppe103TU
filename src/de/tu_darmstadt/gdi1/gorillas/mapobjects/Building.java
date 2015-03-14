@@ -84,7 +84,7 @@ public class Building extends MapObject {
 	}
 
 	/**
-	 * Gibt Gebäude as zerstörbare Entität zurück
+	 * Gibt Gebäude als zerstörbare Entität zurück
 	 * 
 	 * @return DestructibleImageEntity
 	 */

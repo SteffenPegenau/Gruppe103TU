@@ -71,7 +71,7 @@ public class GameSetupState extends ExtendedTWLState {
 			public void run() {
 				if (PlayerList.usernamesOkay(players)) {
 					GameplayState gamePlayState = new GameplayState(
-							Gorillas.GAMEPLAYSTATE, players);
+							Gorillas.GAMEPLAYSTATE, players, 2);
 					game.addState(gamePlayState);
 					StateBasedEntityManager.getInstance().addState(
 							Gorillas.GAMEPLAYSTATE);

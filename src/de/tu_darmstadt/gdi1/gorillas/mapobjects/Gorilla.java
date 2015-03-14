@@ -12,4 +12,5 @@ public class Gorilla extends FigureWithWeapon {
 		setFigureImage(FIGURE_IMAGE);
 		setWeapon(new BananaThrower());
 	}
+	
 }
