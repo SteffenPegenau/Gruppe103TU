@@ -72,11 +72,11 @@ public class GameSetupState extends ExtendedTWLState {
 
 			@Override
 			public void run() {
-//				EditField roundsEdit = (EditField) widgets.get("NUMBER_OF_ROUNDS");
-//				int rounds = Integer.cast(roundsEdit.getText());
+				EditField roundsEdit = (EditField) widgets.get("EDIT_NR_OF_ROUNDS");
+				int rounds = Integer.valueOf(roundsEdit.getText());
 				if (PlayerList.usernamesOkay(players)) {
 					GameplayState gamePlayState = new GameplayState(
-							Gorillas.GAMEPLAYSTATE, players, 2);
+							Gorillas.GAMEPLAYSTATE, players, rounds);
 					game.addState(gamePlayState);
 					StateBasedEntityManager.getInstance().addState(
 							Gorillas.GAMEPLAYSTATE);
@@ -197,7 +197,7 @@ public class GameSetupState extends ExtendedTWLState {
 		}
 		tryToRestoreSelectedPlayers();
 		// Rundenanzahl
-		widgets.put("NUMBER_OF_ROUNDS",
+		widgets.put("LABEL_NR_OF_ROUNDS",
 				createLabel("Rundenanzahl: ", BUTTON_LEFT_X, 200, true));
 		widgets.put("EDIT_NR_OF_ROUNDS",
 				createEditField(BUTTON_LEFT_X + 120, 200, true));

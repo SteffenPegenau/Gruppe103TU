@@ -228,14 +228,11 @@ public class GameplayState extends ExtendedTWLState {
 		label.setText(players[0].getUsername() + " Life's left: "
 				+ players[0].getLifesLeft() + "\n" + players[1].getUsername()
 				+ " Life's left: " + players[1].getLifesLeft());
-		Label label2 = (Label) widgets.get("Rundenanzahl");
-//		label2.setText("Rundenanzahl: " + getProjectileCounter());
 	}
 
 	public void playersStatisticInformation() {
 		widgets.put("Freie Leben",
 				createLabel("", posX.G.get(), posY.A.get(), true));
-		widgets.put("Rundenanzahl", createLabel("", posX.I.get(), posY.C.get(), true));
 	}
 
 }

@@ -213,13 +213,14 @@ public class Player extends Owner implements java.io.Serializable{
 		lifesLeft--;
 	}
 
+	public void setLifesLeft(int lifesLeft) {
+		this.lifesLeft = lifesLeft;
+	}
+	
 	public int getLifesLeft() {
 		return lifesLeft;
 	}
 
-	public void setLifesLeft(int lifesLeft) {
-		this.lifesLeft = lifesLeft;
-	}
 	
 	/**
 	 * Gibt den Array Index des jeweils anderen Spielers zurück
