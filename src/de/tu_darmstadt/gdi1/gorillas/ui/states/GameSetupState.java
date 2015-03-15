@@ -72,11 +72,11 @@ public class GameSetupState extends ExtendedTWLState {
 
 			@Override
 			public void run() {
-				EditField roundsEdit = (EditField) widgets.get("NUMBER_OF_ROUNDS");
-				int rounds = Integer.cast(roundsEdit.getText());
+//				EditField roundsEdit = (EditField) widgets.get("NUMBER_OF_ROUNDS");
+//				int rounds = Integer.cast(roundsEdit.getText());
 				if (PlayerList.usernamesOkay(players)) {
 					GameplayState gamePlayState = new GameplayState(
-							Gorillas.GAMEPLAYSTATE, players, rounds);
+							Gorillas.GAMEPLAYSTATE, players, 2);
 					game.addState(gamePlayState);
 					StateBasedEntityManager.getInstance().addState(
 							Gorillas.GAMEPLAYSTATE);
