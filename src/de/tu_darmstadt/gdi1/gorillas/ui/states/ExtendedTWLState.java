@@ -18,6 +18,7 @@ import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.Widget;
+import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import eea.engine.action.Action;
@@ -45,8 +46,7 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	public final static int BUTTON_RIGHT_X = 625;
 	public final static int BUTTON_LEFT_X = 50;
 	public final static int BUTTON_MIDDLELEFT_X = 150;
-	
-	
+
 	protected final static String DEFAULT_BACKGROUND = "/assets/gorillas/backgrounds/gorilla_face.png";
 
 	HashMap<String, Widget> widgets = new HashMap<String, Widget>();
@@ -54,24 +54,28 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	protected RootPane rootPane = null;
 	protected StateBasedGame game = null;
 	protected GameContainer container = null;
-	
+
 	public ExtendedTWLState(int sid) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
 	}
-	
+
 	/**
 	 * Returns all registered widgets
+	 * 
 	 * @return
 	 */
 	public HashMap<String, Widget> getWidgets() {
 		return widgets;
 	}
-	
+
 	/**
 	 * Erzeugt ein key-pressed-Event in Form einer Entität
-	 * @param key Taste, die gedrückt wurde
-	 * @param a Action, die bei Tastendruck ausgeführt werden soll
+	 * 
+	 * @param key
+	 *            Taste, die gedrückt wurde
+	 * @param a
+	 *            Action, die bei Tastendruck ausgeführt werden soll
 	 * @return Entität mit Event
 	 */
 	protected Entity keyPressedEvent(int key, Action a) {
@@ -81,17 +85,19 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		listener.addComponent(keyPressed);
 		return listener;
 	}
-	
+
 	/**
 	 * Erzeugt ein keyPressedEvent und fügt es dem entity manager hinzu
 	 * 
-	 * @param key Taste, die gedrückt wurde
-	 * @param a, Action die bei Tastendruck ausgeführt werden soll
+	 * @param key
+	 *            Taste, die gedrückt wurde
+	 * @param a
+	 *            , Action die bei Tastendruck ausgeführt werden soll
 	 */
 	protected void addKeyPressedEvent(int key, Action a) {
 		entityManager.addEntity(stateID, keyPressedEvent(key, a));
 	}
-	
+
 	protected Entity setESCListener(int newState) {
 		Entity escListener = new Entity("ESC_Listener");
 		KeyPressedEvent escPressed = new KeyPressedEvent(Input.KEY_ESCAPE);
@@ -99,7 +105,7 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		escListener.addComponent(escPressed);
 		return escListener;
 	}
-	
+
 	protected void addESCListener(int newState) {
 		entityManager.addEntity(stateID, setESCListener(newState));
 	}
@@ -122,7 +128,7 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		if(entityManager == null) {
+		if (entityManager == null) {
 			entityManager = StateBasedEntityManager.getInstance();
 		}
 		entityManager.updateEntities(container, game, delta);
@@ -133,7 +139,7 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	public int getID() {
 		return stateID;
 	}
-	
+
 	/**
 	 * In dieser Methode werden in einem BasicTWLGameSate alle GUI-Elemente dem
 	 * GameState mit Hilfe einer RootPane hinzugef�gt
@@ -142,14 +148,13 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		// erstelle die RootPane
 		RootPane rp = super.createRootPane();
 		rootPane = rp;
-		
+
 		return rp;
 	}
 
-
 	protected void layoutRootPane() {
-		//int paneHeight = this.getRootPane().getHeight();
-		//int paneWidth = this.getRootPane().getWidth();
+		// int paneHeight = this.getRootPane().getHeight();
+		// int paneWidth = this.getRootPane().getWidth();
 
 	}
 
@@ -187,19 +192,28 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		background.addComponent(new ImageRenderComponent(bgPicture)); // Bildkomponente
 		return background;
 	}
-	
+
 	/**
-	 * Funktion kann mit neuer StateID als Callback bspw. Buttons hinzugefuegt werden
+	 * Funktion kann mit neuer StateID als Callback bspw. Buttons hinzugefuegt
+	 * werden
 	 * 
-	 * @param sid Der State, der eintreten soll
+	 * @param sid
+	 *            Der State, der eintreten soll
 	 * @return Callback-Methode
 	 */
 	protected Runnable switchState(StateBasedGame game, int sid) {
 		class switcher implements Runnable {
 			private int nextState = -1;
 			private StateBasedGame game = null;
-			public void setNextState(int sid) { nextState = sid; }
-			public void setGame(StateBasedGame g) { game = g;}
+
+			public void setNextState(int sid) {
+				nextState = sid;
+			}
+
+			public void setGame(StateBasedGame g) {
+				game = g;
+			}
+
 			@Override
 			public void run() {
 				game.enterState(nextState);
@@ -210,9 +224,10 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		s.setNextState(sid);
 		return s;
 	}
-	
+
 	/**
 	 * Adds all registered widgets to the root pane
+	 * 
 	 * @param rp
 	 */
 	protected void addAllWidgetsToRootPane(Map<String, Widget> widgets) {
@@ -221,14 +236,14 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		}
 		System.out.println("Added " + widgets.size() + " to the root pane");
 	}
-	
+
 	public Label createLabel(String title, int posX, int posY, boolean isVisible) {
 		Label label = new Label(title);
 		label.setPosition(posX, posY);
 		label.setVisible(isVisible);
 		return label;
 	}
-	
+
 	public EditField createEditField(int posX, int posY, boolean isEnabled) {
 		EditField field = new EditField();
 		int yOffset = (posY - 20 < 0) ? 0 : -20;
@@ -237,20 +252,72 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		field.setSize(300, 30);
 		return field;
 	}
-	
-	
+
 	protected Runnable nullRun() {
 		class nothing implements Runnable {
 			@Override
 			public void run() {
 				// NOTHING
 			}
-			
+
 		}
 		return new nothing();
 	}
-	
+
 	public Widget getWidget(String name) {
 		return widgets.get(name);
 	}
+/////////////////////////////////////////////////////////////////////////
+	public void addNumberInputCheck(EditField editField, int maxValue) {
+		class NumberCheck implements Callback {
+			private EditField editField;
+			private int maxValue;
+
+			public NumberCheck(EditField editField, int maxValue) {
+				this.editField = editField;
+				this.maxValue = maxValue;
+			}
+
+			@Override
+			public void callback(int buttonPressed) {
+				numberInputCheck(buttonPressed, editField, this, maxValue);
+
+			}
+		}
+		NumberCheck cb = new NumberCheck(editField, maxValue);
+		editField.addCallback(cb);
+	}
+	public void numberInputCheck(int key, EditField editField,
+			Callback callback, int maxValue) {
+		if (key == de.matthiasmann.twl.Event.KEY_NONE) {
+			String inputText = editField.getText();
+
+			if (inputText.isEmpty()) {
+				return;
+			}
+
+			char inputChar = inputText.charAt(inputText.length() - 1);
+			addCharToEditField(inputChar, editField, callback, maxValue);
+		}
+	}
+	public static void addCharToEditField(char inputChar, EditField editField,
+			Callback callback, int maxValue) {
+		String inputText = editField.getText();
+		// System.out.println("INPUT TEXT: " + inputText);
+		if (!Character.isDigit(inputChar)
+				|| Integer.parseInt(inputText) > maxValue) {
+			// a call of setText on an EditField triggers the callback, so
+			// remove callback before and add it again after the call
+			editField.removeCallback(callback);
+
+			String newText = "";
+			if (inputText.length() - 1 >= 0) {
+				newText = inputText.substring(0, inputText.length() - 1);
+			}
+
+			editField.setText(newText);
+			editField.addCallback(callback);
+		}
+	}
+////////////////////////////////////////////////////////////////////////////
 }
