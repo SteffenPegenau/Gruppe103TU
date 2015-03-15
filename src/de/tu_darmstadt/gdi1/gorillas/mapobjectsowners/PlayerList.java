@@ -24,7 +24,7 @@ public class PlayerList implements java.io.Serializable {
 	// Fields
 	//
 
-	private HashMap<String, Player> players;
+	public HashMap<String, Player> players;
 
 	public PlayerList() {
 		players = new HashMap<String, Player>();
@@ -55,11 +55,6 @@ public class PlayerList implements java.io.Serializable {
 		return players;
 	}
 	
-//	List<Player> PlayersList = new ArrayList<Player>(players.values());
-//
-//	public List<Player> getAllPlayers() {
-//	return PlayersList;
-//	}
 	
 	/**
 	 * Gibt den Spieler mit dem Username zurück
@@ -120,14 +115,5 @@ public class PlayerList implements java.io.Serializable {
 	public int size() {
 		return players.size();
 	}
-	
-//	public void printPlayersOnConsole() {
-//		System.out.println(players.get("Steffen").getFullname());
-//	}
-//
-//	public static void main(String[] args) {
-//		PlayerList o = new PlayerList();
-//		System.out.println(o.getPlayer("Steffen").g);
-//	}
 
 }

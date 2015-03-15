@@ -16,6 +16,8 @@ import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -75,7 +77,23 @@ public class HighscoreState extends ExtendedTWLState {
 
 	}
 	
+	public  HashMap<String, Player> getPlayerList() {
+		PlayerList pl = new PlayerList();
+		return pl.getPlayersAsHashMap();
+	}
 	
+	public void playedRoundsFilter() {
+		
+	}
+	public void wonRoundsFilter() {
+		
+	}
+	public void percentageWonRoundsFilter() {
+		
+	}
+	public void throwAccuracyFilter() {
+		
+	}
 	
 
 }
