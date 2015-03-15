@@ -313,15 +313,15 @@ public class Bullet extends MapObject {
 			deltaY = y0 - y;
 		}
 		
-		System.out.println("x=" + x + "\ty=" + y + "\tx0=" + x0 + "\ty0="+y0 );
-		System.out.println("Delta X: " + deltaX +  "\tDelta Y: " + deltaY);
+		//System.out.println("x=" + x + "\ty=" + y + "\tx0=" + x0 + "\ty0="+y0 );
+		//System.out.println("Delta X: " + deltaX +  "\tDelta Y: " + deltaY);
 		double tan = Math.tan(Math.toRadians(degree));
-		System.out.println("Tan(89Grad)=" + tan);
+		//System.out.println("Tan(89Grad)=" + tan);
 		double toBeSquareRooted = 2 * (deltaY + tan * deltaX) / GRAVITY;
-		System.out.println("Wurzel:" + toBeSquareRooted);
+		//System.out.println("Wurzel:" + toBeSquareRooted);
 		double t = Math.sqrt(toBeSquareRooted);
 		
-		System.out.println("Flugzeit: " + t);
+		//System.out.println("Flugzeit: " + t);
 		
 		double cos = Math.cos(Math.toRadians(degree));
 		double v = deltaX / (cos * t);

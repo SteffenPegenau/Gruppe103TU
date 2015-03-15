@@ -8,9 +8,11 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import com.sun.org.apache.bcel.internal.generic.DCONST;
-
+import de.matthiasmann.twl.BoxLayout;
+import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.DialogLayout;
 import de.matthiasmann.twl.Label;
+import de.matthiasmann.twl.PopupWindow;
 import de.matthiasmann.twl.SimpleDialog;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.RootPane;
@@ -209,19 +211,80 @@ public class GameplayState extends ExtendedTWLState {
 	 * @param winner
 	 */
 	public void playerWins(Player winner) {
+		// Ausgabe auf Konsole
 		System.out.println("**********************************");
 		System.out.println("Spieler " + winner.getUsername() + " gewinnt!");
 		System.out.println("**********************************");
 		
+		PopupWindow popup = new PopupWindow(widgets.get("DIALOG_OWNER"));
+		
+		DialogLayout dialog = new DialogLayout();
+		
+		DialogLayout.Group horizontalGroup = dialog.createSequentialGroup();
+		DialogLayout.Group verticalGroup = dialog.createSequentialGroup();
+		
+		Label label = new Label("congrats");
+		label.setText("Herzlichen Glückwunsch, " + winner.getUsername());
+		
+		Button button = new Button("OK");
+		button.setText("OK");
+		button.setSize(120, 15);
+		
+		horizontalGroup.addWidgets(label, button);
+		verticalGroup.addWidgets(label, button);
+		
+		dialog.setHorizontalGroup(horizontalGroup);
+		dialog.setVerticalGroup(verticalGroup);
+		popup.add(dialog);
+		
+		popup.setSize(400, 200);
+		popup.setRequestCloseCallback(switchState(game, Gorillas.MAINMENUSTATE));
+		popup.setPosition(Gorillas.FRAME_WIDTH / 2 - popup.getWidth() / 2, Gorillas.FRAME_HEIGHT / 2 - popup.getHeight() / 2);
+		popup.openPopup();
+		
+		/*
 		// Erzeuge Dialog, in dem dem Sieger gratuliert wird
 		SimpleDialog dialog = new SimpleDialog();
 		dialog.setTitle("Spieler " + winner.getUsername() + " gewinnt!");
 		dialog.setMessage("Herzlichen Glückwunsch!");
 		dialog.showDialog(widgets.get("DIALOG_OWNER"));
 		
+		// Was passiert bei Click auf OK
+		dialog.setOkCallback(new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("Called!");
+				switchState(game, Gorillas.MAINMENUSTATE).run();
+				container.setPaused(false);
+			}
+		});
+		
+		// Was passiert bei Click auf Cancel?
+		dialog.setCancelCallback(closeDialog());
+		*/
+		// Pausiere das Spiel
 		container.pause();
+		
+		// Formular unsichtbar
+		throwForm.setVisibility(false);
+		
 	}
 
+	
+	public Runnable closeDialog() {
+		class close implements Runnable {
+
+			@Override
+			public void run() {
+				System.out.println("Called!");
+				switchState(game, Gorillas.MAINMENUSTATE).run();
+				container.setPaused(false);
+			}
+		}
+		Runnable c = new close();
+		return c;
+	}
+	
 	public void updatePlayersStaticInformation() {
 		Label label = (Label) widgets.get("Freie Leben");
 		label.setText(players[0].getUsername() + " Life's left: "
