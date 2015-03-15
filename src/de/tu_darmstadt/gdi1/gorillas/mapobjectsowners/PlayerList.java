@@ -44,6 +44,26 @@ public class PlayerList implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * Gibt die Playliste als HashMap<String, Player> zurück
+	 * 
+	 * @return HashMap
+	 */
+	public HashMap<String, Player> getPlayersAsHashMap() {
+		return players;
+	}
+	
+	/**
+	 * Gibt den Spieler mit dem Username zurück
+	 * 
+	 * @param username Der Username des gesuchten Spielers
+	 * @return Spieler-Objekt
+	 */
+	public Player getPlayer(String username) {
+		return players.get(username);
+	}
+	
+	
 	public ArrayList<Player> getPlayers() {
 		ArrayList<Player> list = new ArrayList<Player>();
 		for (Entry<String, Player> entry : players.entrySet()) {
@@ -92,5 +112,7 @@ public class PlayerList implements java.io.Serializable {
 	public int size() {
 		return players.size();
 	}
+	
+	
 
 }

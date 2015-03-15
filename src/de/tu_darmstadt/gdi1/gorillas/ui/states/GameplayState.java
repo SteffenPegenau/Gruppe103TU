@@ -8,7 +8,11 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import com.sun.org.apache.bcel.internal.generic.DCONST;
+
 import de.matthiasmann.twl.Label;
+import de.matthiasmann.twl.SimpleDialog;
+import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
@@ -55,6 +59,7 @@ public class GameplayState extends ExtendedTWLState {
 					false);
 			currentPlayer = 0;
 			playersStatisticInformation();
+			widgets.put("DIALOG_OWNER", new Widget());
 			throwForm = new ThrowForm(this, currentPlayer);
 		}
 	}
@@ -153,17 +158,19 @@ public class GameplayState extends ExtendedTWLState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		super.update(container, game, delta);
-		if (bullets.size() == 0) {
-			throwForm.setVisibility(true);
+		// Die pause()-Funktion scheint nicht zu funktionieren, daher dieser if-Workaround
+		if(!container.isPaused()) {
+			super.update(container, game, delta);
+			if (bullets.size() == 0) {
+				throwForm.setVisibility(true);
+			}
+			updatePlayersStaticInformation();
+			// Hat ein Spieler gewonnen?
+			winner = getWinner();
+			if (winner != null) {
+				playerWins(winner);
+			}
 		}
-		updatePlayersStaticInformation();
-		// Hat ein Spieler gewonnen?
-		winner = getWinner();
-		if (winner != null) {
-			playerWins(winner);
-		}
-
 	}
 
 	public Player getPlayer(int arrayIndex) {
@@ -206,6 +213,14 @@ public class GameplayState extends ExtendedTWLState {
 		System.out.println("**********************************");
 		System.out.println("Spieler " + winner.getUsername() + " gewinnt!");
 		System.out.println("**********************************");
+		
+		// Erzeuge Dialog, in dem dem Sieger gratuliert wird
+		SimpleDialog dialog = new SimpleDialog();
+		dialog.setTitle("Spieler " + winner.getUsername() + " gewinnt!");
+		dialog.setMessage("Herzlichen Glückwunsch!");
+		dialog.showDialog(widgets.get("DIALOG_OWNER"));
+		
+		container.pause();
 	}
 
 	public void updatePlayersStaticInformation() {
