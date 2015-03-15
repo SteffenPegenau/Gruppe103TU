@@ -3,6 +3,7 @@
  */
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +27,10 @@ import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
+import eea.engine.event.ANDEvent;
 import eea.engine.event.basicevents.KeyPressedEvent;
+import eea.engine.event.basicevents.MouseClickedEvent;
+import eea.engine.event.basicevents.MouseEnteredEvent;
 
 /**
  * @author Steffen Pegenau (steffen.pegenau@gmail.com)
@@ -267,7 +271,7 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	public Widget getWidget(String name) {
 		return widgets.get(name);
 	}
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////HINZUGEFÜGTE METHODE FÜR RUNDENBASIERTES SPIEL (aus ThrowForm Klasse)////////////////////////////////////////////
 	public void addNumberInputCheck(EditField editField, int maxValue) {
 		class NumberCheck implements Callback {
 			private EditField editField;
@@ -319,5 +323,35 @@ public class ExtendedTWLState extends BasicTWLGameState {
 			editField.addCallback(callback);
 		}
 	}
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+/////////////////////////////////////HINZUGEFÜGTE METHODE CREATE BUTTON FÜR HIGHSCORESTATE (aus MainMenuState)/////////////////////
+	
+	protected void createButton(String name, String title, Action action, int x, int y) {
+		Image menu_entry_background = null;
+		ArrayList<String> menuentries = new ArrayList<String>();
+		
+		Entity button = new Entity(name);
+		button.setPosition(new Vector2f(x, y));
+		button.setScale(0.28f);
+		
+		if(menu_entry_background == null) {
+			try {
+				menu_entry_background = new Image("assets/gorillas/button/entry.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+		button.addComponent(new ImageRenderComponent(menu_entry_background));
+
+		// Erstelle das Ausloese-Event und die zugehoerige Action
+		ANDEvent mainEventsQ = new ANDEvent(new MouseEnteredEvent(),
+				new MouseClickedEvent());
+		mainEventsQ.addAction(action);
+		button.addComponent(mainEventsQ);
+		menuentries.add(title);
+		entityManager.addEntity(stateID, button);
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 }

@@ -55,11 +55,11 @@ public class PlayerList implements java.io.Serializable {
 		return players;
 	}
 	
-	List<Player> PlayersList = new ArrayList<Player>(players.values());
-
-	public List<Player> getAllPlayers() {
-	return PlayersList;
-	}
+//	List<Player> PlayersList = new ArrayList<Player>(players.values());
+//
+//	public List<Player> getAllPlayers() {
+//	return PlayersList;
+//	}
 	
 	/**
 	 * Gibt den Spieler mit dem Username zurück
@@ -121,6 +121,13 @@ public class PlayerList implements java.io.Serializable {
 		return players.size();
 	}
 	
-	
+//	public void printPlayersOnConsole() {
+//		System.out.println(players.get("Steffen").getFullname());
+//	}
+//
+//	public static void main(String[] args) {
+//		PlayerList o = new PlayerList();
+//		System.out.println(o.getPlayer("Steffen").g);
+//	}
 
 }

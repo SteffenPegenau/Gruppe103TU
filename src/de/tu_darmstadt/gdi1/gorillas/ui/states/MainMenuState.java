@@ -33,7 +33,7 @@ public class MainMenuState extends ExtendedTWLState {
 		super(sid);
 	}
 
-	private void createButton(String name, String title, Action action, int x, int y) {
+	protected void createButton(String name, String title, Action action, int x, int y) {
 		Entity button = new Entity(name);
 		button.setPosition(new Vector2f(x, y));
 		button.setScale(0.28f);
