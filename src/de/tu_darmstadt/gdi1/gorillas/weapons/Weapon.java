@@ -58,7 +58,14 @@ public abstract class Weapon {
 		protected int getAmmunition () {
 				return ammunition;
 		}
+		
+		public void setProjectileCounter(int projectile) {
+			this.projectileCounter = projectile;
+		}
 
+		public int getProjectileCounter() {
+			return projectileCounter;
+		}
 		//
 		// Other methods
 		//
@@ -98,6 +105,7 @@ public abstract class Weapon {
 			//loop.addAction(a);
 			//projectile.addComponent(loop);
 			projectileCounter++;
+			setProjectileCounter(projectileCounter);
 			return projectile;
 		}
 }

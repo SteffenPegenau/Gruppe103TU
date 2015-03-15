@@ -14,6 +14,7 @@ import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
 
 public class GameplayState extends ExtendedTWLState {
 	private static final int NUMBER_OF_BUILDINGS = 8;
@@ -212,11 +213,14 @@ public class GameplayState extends ExtendedTWLState {
 		label.setText(players[0].getUsername() + " Life's left: "
 				+ players[0].getLifesLeft() + "\n" + players[1].getUsername()
 				+ " Life's left: " + players[1].getLifesLeft());
+		Label label2 = (Label) widgets.get("Rundenanzahl");
+//		label2.setText("Rundenanzahl: " + getProjectileCounter());
 	}
 
 	public void playersStatisticInformation() {
 		widgets.put("Freie Leben",
 				createLabel("", posX.G.get(), posY.A.get(), true));
+		widgets.put("Rundenanzahl", createLabel("", posX.I.get(), posY.C.get(), true));
 	}
 
 }

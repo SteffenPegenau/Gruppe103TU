@@ -291,7 +291,6 @@ public class PlayerSelectState extends ExtendedTWLState {
 				createLabel("Ganzer Name:", posX.A.get(), posY.F.get(), true));
 		widgets.put("EDIT_FULLNAME",
 				createEditField(posX.C.get(), posY.F.get(), false));
-
 		widgets.put(
 				"BTN_SAVE_PLAYER_TO_LIST",
 				createButton("Spieler speichern", savePlayerClick(),
