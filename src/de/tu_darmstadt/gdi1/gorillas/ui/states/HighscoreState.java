@@ -74,28 +74,11 @@ public class HighscoreState extends ExtendedTWLState {
 		g.drawString("8. ", posX.A.get() - 15, posY.A.get() + 165);
 		g.drawString("9. ", posX.A.get() - 15, posY.A.get() + 185);
 		g.drawString("10.", posX.A.get() - 15, posY.A.get() + 205);
-
 	}
 	
-	public  HashMap<String, Player> getPlayerList() {
-		PlayerList pl = new PlayerList();
-		return pl.getPlayersAsHashMap();
-	}
 	
-	public void playedRoundsFilter() {
-		
-	}
-	public void wonRoundsFilter() {
-		
-	}
-	public void percentageWonRoundsFilter() {
-		
-	}
-	public void throwAccuracyFilter() {
-		
-	}
 	
-
+	
 }
 	
 	

@@ -49,13 +49,13 @@ public class Player extends Owner implements java.io.Serializable {
 	 * @param username
 	 * @param fullname
 	 */
-	public Player(String username, String fullname) {
+	public Player(String username, String fullname, int roundsPlayed, int wonRounds, double percentageWon, double accuracy) {
 		this.username = username;
 		this.fullname = fullname;
-//		this.roundsPlayed = roundsPlayed;
-//		this.wonRounds = wonRounds;
-//		this.percentageWon = percentageWon;
-//		this.accuracy = accuracy;
+		this.roundsPlayed = roundsPlayed;
+		this.wonRounds = wonRounds;
+		this.percentageWon = percentageWon;
+		this.accuracy = accuracy;
 	}
 
 	public String getUsername() {

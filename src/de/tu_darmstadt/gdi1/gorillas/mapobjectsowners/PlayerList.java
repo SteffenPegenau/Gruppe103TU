@@ -1,9 +1,14 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+
+import com.sun.xml.internal.txw2.output.StreamSerializer;
 
 import de.matthiasmann.twl.model.SimpleChangableListModel;
 import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
@@ -11,7 +16,7 @@ import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
 /**
  * Class PlayerList
  */
-public class PlayerList implements java.io.Serializable {
+public class PlayerList extends Player implements java.io.Serializable {
 
 	/**
 	 * 
@@ -25,6 +30,7 @@ public class PlayerList implements java.io.Serializable {
 	//
 
 	public HashMap<String, Player> players;
+	public List<Player> playersAL;
 
 	public PlayerList() {
 		players = new HashMap<String, Player>();
@@ -114,6 +120,25 @@ public class PlayerList implements java.io.Serializable {
 
 	public int size() {
 		return players.size();
+	}
+	
+//Priorität beacten, erst Gewonnene Runden, dann Wurfgenauigkeit!
+	
+	public void hashMapToList(HashMap<String, Player> playersList) {
+		playersAL = new ArrayList<Player>(playersList.values());
+		
+	}
+	public void playedRoundsFilter() {
+		playersAL.stream().map(p -> p.getRoundsPlayed()).sorted();
+	}
+	public void wonRoundsFilter() {
+		playersAL.stream().map(p -> p.getWonRounds()).sorted();
+	}
+	public void percentageWonRoundsFilter() {
+		playersAL.stream().map(p -> p.getPercentageWon()).sorted();
+	}
+	public void throwAccuracyFilter() {
+		playersAL.stream().map(p -> p.getAccuracy()).sorted();
 	}
 
 }
