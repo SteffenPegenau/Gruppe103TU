@@ -193,17 +193,17 @@ public class Bullet extends MapObject {
 
 	public Vector2f calculateNewPosition() {
 		double scaledTimeOfExistence = SCALING_FACTOR * existenceTimeInms;
-<<<<<<< HEAD
+
 		double x = posX0
 				+ velocityX * scaledTimeOfExistence;
 		double y = posY0
 				- velocityY * scaledTimeOfExistence
 				+ 0.5 * GRAVITY * Math.pow(scaledTimeOfExistence, 2);
-=======
-		double x = posX0 + velocityX * scaledTimeOfExistence;
-		double y = posYO - velocityY * scaledTimeOfExistence + 0.5 * GRAVITY
+
+		double x2 = posX0 + velocityX * scaledTimeOfExistence;
+		double y2 = posY0 - velocityY * scaledTimeOfExistence + 0.5 * GRAVITY
 				* Math.pow(scaledTimeOfExistence, 2);
->>>>>>> 0dc63458a25ac404147bb3720f6192263bdc31e6
+
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
 		// System.out.println("New Position: " + newPosition);
 		return newPosition;
