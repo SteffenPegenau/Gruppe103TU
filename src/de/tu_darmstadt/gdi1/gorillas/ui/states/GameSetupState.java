@@ -72,9 +72,8 @@ public class GameSetupState extends ExtendedTWLState {
 
 			@Override
 			public void run() {
-				EditField roundsEdit = (EditField) widgets.get("EDIT_NR_OF_ROUNDS");
-				int rounds = Integer.valueOf(roundsEdit.getText());
-				if (PlayerList.usernamesOkay(players)) {
+				int rounds = getEnteredNumberOfRounds();
+				if (PlayerList.usernamesOkay(players) && rounds > 0) {
 					GameplayState gamePlayState = new GameplayState(
 							Gorillas.GAMEPLAYSTATE, players, rounds);
 					game.addState(gamePlayState);
@@ -94,6 +93,21 @@ public class GameSetupState extends ExtendedTWLState {
 		}
 		switcher s = new switcher(game, players, container);
 		return s;
+	}
+
+	/**
+	 * Ermittelt die Eingabe bei Anzahl der Runden
+	 * @return -1, wenn leer, sonst: Eingebene Zahl
+	 */
+	public int getEnteredNumberOfRounds() {
+		EditField roundsEdit = (EditField) widgets.get("EDIT_NR_OF_ROUNDS");
+		String input = roundsEdit.getText();
+		if(input.isEmpty()) {
+			return -1;
+		} else {
+			return Integer.valueOf(input);
+		}
+		
 	}
 
 	private void tryToRestoreSelectedPlayers() {
@@ -200,7 +214,7 @@ public class GameSetupState extends ExtendedTWLState {
 		widgets.put("LABEL_NR_OF_ROUNDS",
 				createLabel("Rundenanzahl: ", BUTTON_LEFT_X, 200, true));
 		widgets.put("EDIT_NR_OF_ROUNDS",
-				createEditField(BUTTON_LEFT_X + 120, 200, true));
+				createEditField(BUTTON_LEFT_X + 120, 200, true, "1"));
 		addNumberInputCheck((EditField) widgets.get("EDIT_NR_OF_ROUNDS"), 10);
 
 		widgets.put(
