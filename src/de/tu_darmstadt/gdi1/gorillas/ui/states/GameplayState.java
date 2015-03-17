@@ -154,6 +154,10 @@ public class GameplayState extends ExtendedTWLState {
 	public void removeBullet(Bullet bullet) {
 		bullets.remove(bullet.getID());
 	}
+	
+	public HashMap<String, Bullet> getBullets(){
+		return bullets;
+	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
