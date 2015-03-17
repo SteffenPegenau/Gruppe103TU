@@ -180,7 +180,7 @@ public class Bullet extends MapObject {
 	 */
 	public String fittingComment() {
 		EnumToString enumToString = new EnumToString();
-		System.out.println(getDist(player));
+		//System.out.println(getDist(player));
 		if (getDist(player) <= 150 && getDist(player) >= -150) {
 			return enumToString.printClose();
 		} 

@@ -31,7 +31,6 @@ public class GameSetupState extends ExtendedTWLState {
 			private GameSetupState state;
 			private Player player;
 			private int arrayIndex;
-			private int NrOfRounds;
 			private final static int SID = Gorillas.PLAYERSELECTSTATE;
 
 			public switcher(GameSetupState s, StateBasedGame game,

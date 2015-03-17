@@ -225,12 +225,10 @@ public class GameplayState extends ExtendedTWLState {
 		DialogLayout.Group horizontalGroup = dialog.createSequentialGroup();
 		DialogLayout.Group verticalGroup = dialog.createSequentialGroup();
 		
-		Label label = new Label("congrats");
-		label.setText("Herzlichen Glückwunsch, " + winner.getUsername());
+		Label label = createLabel("Herzlichen Glückwunsch, " + winner.getUsername(), 0, 0, true);
 		
-		Button button = new Button("OK");
-		button.setText("OK");
-		button.setSize(120, 15);
+		Button button = createButton("OK", closeDialog(dialog), 120, 15);
+		button.adjustSize();
 		
 		horizontalGroup.addWidgets(label, button);
 		verticalGroup.addWidgets(label, button);
@@ -273,17 +271,23 @@ public class GameplayState extends ExtendedTWLState {
 	}
 
 	
-	public Runnable closeDialog() {
+	public Runnable closeDialog(DialogLayout dialog) {
 		class close implements Runnable {
+			DialogLayout dialog;
+			
+			public close(DialogLayout dialog) {
+				this.dialog = dialog;
+			}
 
 			@Override
 			public void run() {
-				System.out.println("Called!");
+				dialog.setEnabled(false);
+				dialog.removeAllChildren();
 				switchState(game, Gorillas.MAINMENUSTATE).run();
 				container.setPaused(false);
 			}
 		}
-		Runnable c = new close();
+		Runnable c = new close(dialog);
 		return c;
 	}
 	
