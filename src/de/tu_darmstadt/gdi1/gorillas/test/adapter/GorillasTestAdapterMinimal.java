@@ -293,7 +293,7 @@ public class GorillasTestAdapterMinimal {
 		String name = startPosition.getX() + " " + startPosition.getY() + angle + speed + deltaTime;
 		Bullet bullet = new Bullet(name);
 		bullet.setPosX0(startPosition.x);
-		bullet.setPosYO(startPosition.y);
+		bullet.setPosY0(startPosition.y);
 		
 		Player p1 = new Player(startPosition.toString());
 		int arrayIndex = (fromLeftToRight) ? 0 : 1;

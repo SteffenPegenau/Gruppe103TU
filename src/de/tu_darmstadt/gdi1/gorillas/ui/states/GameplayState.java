@@ -22,7 +22,7 @@ import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 public class GameplayState extends ExtendedTWLState {
 	private static final int NUMBER_OF_BUILDINGS = 8;
 
-	protected Skyline skyline;
+	public Skyline skyline;
 	public ThrowForm throwForm;
 
 	private Player[] players = new Player[2];
@@ -152,6 +152,10 @@ public class GameplayState extends ExtendedTWLState {
 
 	public void removeBullet(Bullet bullet) {
 		bullets.remove(bullet.getID());
+	}
+	
+	public HashMap<String, Bullet> getBullets(){
+		return bullets;
 	}
 
 	@Override

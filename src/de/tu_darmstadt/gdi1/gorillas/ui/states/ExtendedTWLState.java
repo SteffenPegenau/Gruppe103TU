@@ -59,6 +59,7 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	protected StateBasedGame game = null;
 	protected GameContainer container = null;
 
+	//Konstruktor
 	public ExtendedTWLState(int sid) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();

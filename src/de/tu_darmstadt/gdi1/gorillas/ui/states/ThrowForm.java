@@ -66,7 +66,9 @@ public class ThrowForm {
 			@Override
 			public void update(GameContainer gc, StateBasedGame sb, int delta,
 					Component event) {
+				if (gameplayState.getBullets().size() == 0){
 				throwForm.buttonThrowClicked().run();
+				}
 			}
 		}
 		Action a = new action(this);
@@ -95,6 +97,7 @@ public class ThrowForm {
 		this.currentPlayer = currentPlayer;
 	}
 
+	
 	/**
 	 * Erzeugt alle Formular-Elemente ohne Position
 	 */

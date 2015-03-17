@@ -19,6 +19,7 @@ public class Skyline {
 	
 	protected boolean skyline_built = false;
 	
+	protected Sun sun;
 	protected Player[] players;
 	protected FigureWithWeapon[] playerFigures;
 	protected Building[] buildings;
@@ -48,6 +49,7 @@ public class Skyline {
 				
 		this.buildingsWithRandomWidth = buildingsWithRandomWidth;
 		buildings = new Building[numberOfBuildings];
+	    sun = new Sun("sun");
 	};
 	
 	
@@ -55,6 +57,10 @@ public class Skyline {
 	public void createSkyline() {
 		// Hintergrund setzen
 		entityManager.addEntity(stateID, getBackgroundEntity());
+		
+		// Sonne setzen
+		sun.setPosition(new Vector2f(400, 33));
+		entityManager.addEntity(stateID, sun);
 		
 		// alle Gebäude setzen
 		int widthUsedByBuildings = 0;
