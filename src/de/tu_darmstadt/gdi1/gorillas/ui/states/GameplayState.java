@@ -7,8 +7,14 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.sun.org.apache.bcel.internal.generic.DCONST;
+import com.sun.org.apache.xml.internal.security.c14n.Canonicalizer;
+import com.sun.org.apache.xml.internal.security.encryption.Serializer;
+import com.sun.org.apache.xml.internal.security.encryption.XMLEncryptionException;
 
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.SimpleDialog;
@@ -18,9 +24,10 @@ import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
 
-public class GameplayState extends ExtendedTWLState {
+public class GameplayState extends ExtendedTWLState implements java.io.Serializable {
 	private static final int NUMBER_OF_BUILDINGS = 8;
 
 	public Skyline skyline;
@@ -58,7 +65,7 @@ public class GameplayState extends ExtendedTWLState {
 			skyline = new Skyline(entityManager, sid, NUMBER_OF_BUILDINGS,
 					false);
 			currentPlayer = 0;
-			playersStatisticInformation();
+			//playersStatisticInformation();
 			widgets.put("DIALOG_OWNER", new Widget());
 			throwForm = new ThrowForm(this, currentPlayer);
 		}
@@ -168,7 +175,7 @@ public class GameplayState extends ExtendedTWLState {
 			if (bullets.size() == 0) {
 				throwForm.setVisibility(true);
 			}
-			updatePlayersStaticInformation();
+			//updatePlayersStaticInformation();
 			// Hat ein Spieler gewonnen?
 			winner = getWinner();
 			if (winner != null) {
@@ -199,8 +206,8 @@ public class GameplayState extends ExtendedTWLState {
 		int lifesLeft;
 		for (int i = 0; i < players.length; i++) {
 			lifesLeft = players[i].getLifesLeft();
-			// System.out.println("Player " + players[i].getUsername() +
-			// " hat noch " + lifesLeft + " Leben");
+//			 System.out.println("Player " + players[i].getUsername() +
+//			 " hat noch " + lifesLeft + " Leben");
 			if (lifesLeft <= 0) {
 				return players[Player.getOtherPlayersArrayIndex(players[i])];
 			}
@@ -214,6 +221,11 @@ public class GameplayState extends ExtendedTWLState {
 	 * @param winner
 	 */
 	public void playerWins(Player winner) {
+		PlayerList plst = PlayerList.restorePlayerList();
+		winner.setWonRounds(1);
+		plst.AddPlayer(winner);
+		plst.savePlayerList();
+		
 		System.out.println("**********************************");
 		System.out.println("Spieler " + winner.getUsername() + " gewinnt!");
 		System.out.println("**********************************");
@@ -232,11 +244,6 @@ public class GameplayState extends ExtendedTWLState {
 		label.setText(players[0].getUsername() + " Life's left: "
 				+ players[0].getLifesLeft() + "\n" + players[1].getUsername()
 				+ " Life's left: " + players[1].getLifesLeft());
-	}
-
-	public void playersStatisticInformation() {
-		widgets.put("Freie Leben",
-				createLabel("", posX.G.get(), posY.A.get(), true));
 	}
 
 }

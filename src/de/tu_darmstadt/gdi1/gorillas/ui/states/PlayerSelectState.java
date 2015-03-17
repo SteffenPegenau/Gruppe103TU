@@ -235,7 +235,7 @@ public class PlayerSelectState extends ExtendedTWLState {
 				EditField editFieldFullname = (EditField) widgets
 						.get("EDIT_FULLNAME");
 				String fullname = editFieldFullname.getText();
-				Player newPlayer = new Player(username, fullname, 0, 0, 0, 0);
+				Player newPlayer = new Player(username, fullname, GameSetupState.getRounds());
 				model.addElement(newPlayer);
 				box.setSelected(model.findElement(newPlayer));
 				PlayerList.savePlayerList(model);

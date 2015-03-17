@@ -43,17 +43,15 @@ public class PlayerList extends Player implements java.io.Serializable {
 	//
 
 	public HashMap<String, Player> players;
-	public List<Player> playersAL;
-	public ArrayList<String> hsc = new ArrayList<String>();
+	public ArrayList<Player> highscoreList;
 
 	public PlayerList() {
 		players = new HashMap<String, Player>();
 	}
-
+	
+	// Speichern der Player mit Username
 	public void AddPlayer(Player p) {
-		if (!players.containsKey(p.getUsername())) {
 			players.put(p.getUsername(), p);
-		}
 	}
 
 	public static PlayerList restorePlayerList() {
@@ -133,81 +131,13 @@ public class PlayerList extends Player implements java.io.Serializable {
 	public int size() {
 		return players.size();
 	}
-
-	// Sortiermethoden
-	// TODO Priorität beachten, erst Gewonnene Runden, dann Wurfgenauigkeit!
-	// Namen beim sortieren berücksichtigen
-
-	public void hashMapToList(HashMap<String, Player> playersList) {
-		playersAL = new ArrayList<Player>(playersList.values());
-
-	}
-
-	public void playedRoundsFilter() {
-		playersAL.stream().map(p -> p.getRoundsPlayed()).sorted();
-	}
-
-	public void wonRoundsFilter() {
-		playersAL.stream().map(p -> p.getWonRounds()).sorted();
-	}
-
-	public void percentageWonRoundsFilter() {
-		playersAL.stream().map(p -> p.getPercentageWon()).sorted();
-	}
-
-	public void throwAccuracyFilter() {
-		playersAL.stream().map(p -> p.getAccuracy()).sorted();
-	}
-
-	// Speichern der Spielerinformationen
-
-	private void readDataFromPlayer(Player p) throws IOException {
-		StringBuilder sb = new StringBuilder(100000);
-		String fullname = p.getFullname();
-		String username = p.getUsername();
-		int playedrounds = p.getRoundsPlayed();
-		double percentagewins = p.getPercentageWon();
-		double accuracy = p.getAccuracy();
-
-		String line = null;
-		String[] s = null;
-
-		try {
-			FileInputStream fis = new FileInputStream(new File(DEFAULT_FILE));
-			BufferedReader bf = new BufferedReader(new InputStreamReader(fis));
-			while ((line = bf.readLine()) != null) {
-				s = line.split(", ");
-				fullname = s[0];
-				username = s[1];
-				playedrounds = Integer.parseInt(s[1]);
-				percentagewins = Double.parseDouble(s[3]);
-				accuracy = Double.parseDouble(s[4]);
-
-				hsc.add(line);
-			}
-			bf.close();
-			fis.close();
-		} catch (IOException ioex) {
-			System.out
-					.println(ioex.getMessage() + "Error, could not read file");
-			ioex.printStackTrace();
-		}
-	}
 	
-	private void writeDataFromPlayer(ArrayList<String> entry) {
-		
-		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(DEFAULT_FILE));
-			
-			for (int i = 0; i < entry.size(); i++) {
-				bw.write(entry.get(i));
-				bw.newLine();	
-			}
-			bw.close();
-		} catch (IOException ioex) {
-			System.out.println(ioex.getMessage() + "Fehler " + ioex.toString());
-			
-		}
+	public ArrayList<Player> highscoreList (HashMap<String, Player> hmpl) {
+		highscoreList = new ArrayList<Player>(hmpl.values());
+		highscoreList.stream().map(p -> p.getWonRounds()).sorted().limit(10);
+		return highscoreList;
 	}
 	
 }
+
+	

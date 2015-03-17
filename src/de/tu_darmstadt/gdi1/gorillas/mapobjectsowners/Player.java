@@ -16,7 +16,7 @@ public class Player extends Owner implements java.io.Serializable {
 	private int highscore;
 	private int money;
 	private int roundsPlayed;
-	private int wonRounds;
+	private int wonRounds = 0;
 	private double percentageWon;
 	private int numberOfThrownObjects;
 	private int numberOfHits;
@@ -49,13 +49,13 @@ public class Player extends Owner implements java.io.Serializable {
 	 * @param username
 	 * @param fullname
 	 */
-	public Player(String username, String fullname, int roundsPlayed, int wonRounds, double percentageWon, double accuracy) {
+	public Player(String username, String fullname, int roundsPlayed) {
 		this.username = username;
 		this.fullname = fullname;
 		this.roundsPlayed = roundsPlayed;
-		this.wonRounds = wonRounds;
-		this.percentageWon = percentageWon;
-		this.accuracy = accuracy;
+//		this.wonRounds = wonRounds;
+//		this.percentageWon = percentageWon;
+//		this.accuracy = accuracy;
 	}
 
 	public String getUsername() {
@@ -111,15 +111,15 @@ public class Player extends Owner implements java.io.Serializable {
 	}
 
 	public void setWonRounds(int wonRounds) {
-		this.wonRounds = wonRounds;
+		this.wonRounds += wonRounds;
 	}
 
 	public double getPercentageWon() {
 		return percentageWon;
 	}
 
-	public void setPercentageWon(double percentageWon) {
-		this.percentageWon = percentageWon;
+	public void setPercentageWon(int wonRounds, int playedRounds) {
+		this.percentageWon = (wonRounds / playedRounds);
 	}
 
 	public int getNumberOfThrownObjects() {

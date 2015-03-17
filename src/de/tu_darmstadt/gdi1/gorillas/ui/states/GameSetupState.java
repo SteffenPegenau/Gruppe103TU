@@ -24,6 +24,14 @@ public class GameSetupState extends ExtendedTWLState {
 	public GameSetupState(int sid) {
 		super(sid);
 	}
+	static int rounds; 
+	
+	public static void setRounds(int r) {
+		rounds = r;
+	}
+	public static int getRounds() {
+		return rounds;
+	}
 
 	private Runnable switchToPlayerSelectState(Player player, int arrayIndex) {
 		class switcher implements Runnable {
@@ -72,8 +80,12 @@ public class GameSetupState extends ExtendedTWLState {
 
 			@Override
 			public void run() {
+				// HIER //
 				EditField roundsEdit = (EditField) widgets.get("EDIT_NR_OF_ROUNDS");
 				int rounds = Integer.valueOf(roundsEdit.getText());
+				PlayerList plst = PlayerList.restorePlayerList();
+			
+				setRounds(rounds);
 				if (PlayerList.usernamesOkay(players)) {
 					GameplayState gamePlayState = new GameplayState(
 							Gorillas.GAMEPLAYSTATE, players, rounds);
@@ -170,6 +182,7 @@ public class GameSetupState extends ExtendedTWLState {
 			return null;
 		}
 	}
+	
 
 	/**
 	 * In dieser Methode werden in einem BasicTWLGameSate alle GUI-Elemente dem
