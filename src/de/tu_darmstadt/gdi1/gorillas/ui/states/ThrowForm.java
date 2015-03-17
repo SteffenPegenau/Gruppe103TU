@@ -97,6 +97,7 @@ public class ThrowForm {
 		this.currentPlayer = currentPlayer;
 	}
 
+	
 	/**
 	 * Erzeugt alle Formular-Elemente ohne Position
 	 */
