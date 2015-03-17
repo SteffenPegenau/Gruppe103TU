@@ -5,7 +5,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.Label;
+import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
@@ -19,7 +21,6 @@ import eea.engine.entity.StateBasedEntityManager;
  */
 public class GameSetupState extends ExtendedTWLState {
 	private Player players[] = new Player[2];
-
 	public GameSetupState(int sid) {
 		super(sid);
 	}
@@ -30,6 +31,7 @@ public class GameSetupState extends ExtendedTWLState {
 			private GameSetupState state;
 			private Player player;
 			private int arrayIndex;
+			private int NrOfRounds;
 			private final static int SID = Gorillas.PLAYERSELECTSTATE;
 
 			public switcher(GameSetupState s, StateBasedGame game,
@@ -38,6 +40,7 @@ public class GameSetupState extends ExtendedTWLState {
 				this.player = player;
 				this.arrayIndex = arrayIndex;
 				this.state = s;
+
 			}
 
 			@Override
@@ -69,9 +72,11 @@ public class GameSetupState extends ExtendedTWLState {
 
 			@Override
 			public void run() {
+				EditField roundsEdit = (EditField) widgets.get("EDIT_NR_OF_ROUNDS");
+				int rounds = Integer.valueOf(roundsEdit.getText());
 				if (PlayerList.usernamesOkay(players)) {
 					GameplayState gamePlayState = new GameplayState(
-							Gorillas.GAMEPLAYSTATE, players, 2);
+							Gorillas.GAMEPLAYSTATE, players, rounds);
 					game.addState(gamePlayState);
 					StateBasedEntityManager.getInstance().addState(
 							Gorillas.GAMEPLAYSTATE);
@@ -191,6 +196,13 @@ public class GameSetupState extends ExtendedTWLState {
 							BUTTON_RIGHT_X, y));
 		}
 		tryToRestoreSelectedPlayers();
+		// Rundenanzahl
+		widgets.put("LABEL_NR_OF_ROUNDS",
+				createLabel("Rundenanzahl: ", BUTTON_LEFT_X, 200, true));
+		widgets.put("EDIT_NR_OF_ROUNDS",
+				createEditField(BUTTON_LEFT_X + 120, 200, true));
+		addNumberInputCheck((EditField) widgets.get("EDIT_NR_OF_ROUNDS"), 10);
+
 		widgets.put(
 				"BUTTON_BACKTOMAINMENU",
 				createButton("Zurück",

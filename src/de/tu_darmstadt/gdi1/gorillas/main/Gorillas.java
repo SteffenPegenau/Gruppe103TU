@@ -27,9 +27,8 @@ public class Gorillas extends TWLStateBasedGame {
 	public static final int HIGHSCORESTATE = 3;
 	public static final int OPTIONSTATE = 4;
 	public static final int INSTRUCTIONSSTATE = 5;
-	
 	public static final int PLAYERSELECTSTATE = 6;
-
+	
 	public static final int FRAME_WIDTH = 800;
 	public static final int FRAME_HEIGHT = 600;
 

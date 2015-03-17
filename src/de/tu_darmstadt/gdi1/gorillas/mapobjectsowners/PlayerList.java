@@ -2,6 +2,7 @@ package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import de.matthiasmann.twl.model.SimpleChangableListModel;
@@ -23,7 +24,7 @@ public class PlayerList implements java.io.Serializable {
 	// Fields
 	//
 
-	private HashMap<String, Player> players;
+	public HashMap<String, Player> players;
 
 	public PlayerList() {
 		players = new HashMap<String, Player>();
@@ -43,6 +44,7 @@ public class PlayerList implements java.io.Serializable {
 			return list;
 		}
 	}
+	
 
 	/**
 	 * Gibt die Playliste als HashMap<String, Player> zurück
@@ -52,6 +54,7 @@ public class PlayerList implements java.io.Serializable {
 	public HashMap<String, Player> getPlayersAsHashMap() {
 		return players;
 	}
+	
 	
 	/**
 	 * Gibt den Spieler mit dem Username zurück
@@ -112,7 +115,5 @@ public class PlayerList implements java.io.Serializable {
 	public int size() {
 		return players.size();
 	}
-	
-	
 
 }

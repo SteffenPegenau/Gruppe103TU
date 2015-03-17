@@ -1,15 +1,14 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 
-
 /**
  * Class Player
  */
-public class Player extends Owner implements java.io.Serializable{
+public class Player extends Owner implements java.io.Serializable {
 	/**
 	 * 
 	 */
 	public static final String ERROR_MSG_EMPTY_USERNAME = "USERNAME MUST NOT BE EMPTY!";
-	
+
 	private static final long serialVersionUID = -6462859935769741215L;
 	private String username = "";
 	private String fullname = "";
@@ -27,25 +26,25 @@ public class Player extends Owner implements java.io.Serializable{
 	private int yPos;
 	private double angle;
 	private double velocity;
-	
+
 	protected int lifesLeft = 1;
-	
+
 	public String enteredAngle = "0";
 	public String enteredVelocity = "0";
-	
+
 	private int arrayIndex;
 
 	//
 	// Constructors
 	//
-	public Player(String username) {
-		this.username = username;
-		isInitialised = true;
-	};
+	 public Player(String username) {
+	 this.username = username;
+	 isInitialised = true;
+	 };
 	
-	public Player() {
-		
-	}
+	 public Player() {
+	
+	 }
 	/**
 	 * @param username
 	 * @param fullname
@@ -53,6 +52,10 @@ public class Player extends Owner implements java.io.Serializable{
 	public Player(String username, String fullname) {
 		this.username = username;
 		this.fullname = fullname;
+//		this.roundsPlayed = roundsPlayed;
+//		this.wonRounds = wonRounds;
+//		this.percentageWon = percentageWon;
+//		this.accuracy = accuracy;
 	}
 
 	public String getUsername() {
@@ -154,33 +157,33 @@ public class Player extends Owner implements java.io.Serializable{
 	public String toString() {
 		return this.username;
 	}
-	
+
 	public int getX() {
 		return xPos;
 	}
-	
-	public int getY(){
+
+	public int getY() {
 		return yPos;
 	}
-	
-	public double getAngle(){
+
+	public double getAngle() {
 		return angle;
 	}
-	
-	public double getVelocity(){
+
+	public double getVelocity() {
 		return velocity;
 	}
-	
+
 	public boolean isUsernameEmpty() {
-		if(username.isEmpty() || username.contentEquals("")) {
+		if (username.isEmpty() || username.contentEquals("")) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public String checkUsername() {
-		if(username.isEmpty() || username.contentEquals("")) {
+		if (username.isEmpty() || username.contentEquals("")) {
 			return ERROR_MSG_EMPTY_USERNAME;
 		} else {
 			return "";
@@ -194,47 +197,53 @@ public class Player extends Owner implements java.io.Serializable{
 	public void setArrayIndex(int arrayIndex) {
 		this.arrayIndex = arrayIndex;
 	}
+
 	/**
-	 * Wird aufgerufen, wenn Spieler die Figur des anderen Spielers getroffen hat
+	 * Wird aufgerufen, wenn Spieler die Figur des anderen Spielers getroffen
+	 * hat
 	 */
 	public void hitEnemyFigure() {
-		System.out.println("Spieler " + getUsername() + " <" + getArrayIndex() + "> hat gegnerische Figur getroffen!");
+		System.out.println("Spieler " + getUsername() + " <" + getArrayIndex()
+				+ "> hat gegnerische Figur getroffen!");
 	}
-	
+
 	/**
 	 * Wird aufgerufen, wenn die Figur des Spielers getroffen wird
 	 */
 	public void figureWasHit() {
 		reduceLifesLeft();
-		System.out.println("Figur von Spieler " + getUsername() + " <" + getArrayIndex() + "> wurde getroffen!" + "Leben übrig: " + getLifesLeft());
+		System.out.println("Figur von Spieler " + getUsername() + " <"
+				+ getArrayIndex() + "> wurde getroffen!" + "Leben übrig: "
+				+ getLifesLeft());
 	}
-	
+
 	protected void reduceLifesLeft() {
 		lifesLeft--;
+	}
+
+	public void setLifesLeft(int lifesLeft) {
+		this.lifesLeft = lifesLeft;
 	}
 
 	public int getLifesLeft() {
 		return lifesLeft;
 	}
 
-	public void setLifesLeft(int lifesLeft) {
-		this.lifesLeft = lifesLeft;
-	}
-	
 	/**
 	 * Gibt den Array Index des jeweils anderen Spielers zurück
 	 * 
 	 * Beispiel: aus 0 wird 1 und umgekehrt
-	 * @param p Spieler, dessen Gegenspieler gesucht wird
+	 * 
+	 * @param p
+	 *            Spieler, dessen Gegenspieler gesucht wird
 	 * @return Array Index des anderen Spielers
 	 */
 	public static int getOtherPlayersArrayIndex(Player p) {
 		return (p.getArrayIndex() == 0) ? 1 : 0;
 	}
-	
+
 	//
 	// Other methods
 	//
-
 
 }
