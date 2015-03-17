@@ -249,12 +249,35 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		return label;
 	}
 
+	/**
+	 * Erzeugt ein EditField an posX|posY, das (de)aktiviert ist
+	 * 
+	 * @param posX X-Koordinate
+	 * @param posY Y-Koordinate
+	 * @param isEnabled Wenn false, lässt sich nichts eingeben
+	 * @return EditField
+	 */
 	public EditField createEditField(int posX, int posY, boolean isEnabled) {
 		EditField field = new EditField();
 		int yOffset = (posY - 20 < 0) ? 0 : -20;
 		field.setPosition(posX, posY + yOffset);
 		field.setEnabled(isEnabled);
 		field.setSize(300, 30);
+		return field;
+	}
+	
+	/**
+	 * Erzeugt ein EditField an posX|posY, das (de)aktiviert ist, mit eingegebem defaultText
+	 * 
+	 * @param posX X-Koordinate
+	 * @param posY Y-Koordinate
+	 * @param isEnabled Wenn false, lässt sich nichts eingeben
+	 * @param defaultText Text, der nach Erstellung in EditField stehen soll
+	 * @return EditField
+	 */
+	public EditField createEditField(int posX, int posY, boolean isEnabled, String defaultText) {
+		EditField field = createEditField(posX, posY, isEnabled);
+		field.setText(defaultText);
 		return field;
 	}
 
