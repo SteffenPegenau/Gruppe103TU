@@ -41,9 +41,10 @@ public class Bullet extends MapObject {
 	protected double velocityY;
 
 	protected float posX0;
-	protected float posYO;
+	protected float posY0;
 
 	protected Player player;
+	
 
 	public Bullet(String entityID) {
 		super(entityID);
@@ -143,7 +144,7 @@ public class Bullet extends MapObject {
 		double scaledTimeOfExistence = SCALING_FACTOR * existenceTimeInms;
 		double x = posX0
 				+ velocityX * scaledTimeOfExistence;
-		double y = posYO
+		double y = posY0
 				- velocityY * scaledTimeOfExistence
 				+ 0.5 * GRAVITY * Math.pow(scaledTimeOfExistence, 2);
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
@@ -166,12 +167,12 @@ public class Bullet extends MapObject {
 		this.posX0 = posX0;
 	}
 
-	public float getPosYO() {
-		return posYO;
+	public float getPosY0() {
+		return posY0;
 	}
 
-	public void setPosYO(float posYO) {
-		this.posYO = posYO;
+	public void setPosY0(float posY0) {
+		this.posY0 = posY0;
 	}
 
 	public long getExistenceTimeInNS() {

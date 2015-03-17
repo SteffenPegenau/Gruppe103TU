@@ -95,7 +95,7 @@ public abstract class Weapon {
 			projectile.setGameplayState(state);
 			projectile.addEvents();
 			projectile.setPosX0(fig.getPosition().x);
-			projectile.setPosYO(fig.getPosition().y);
+			projectile.setPosY0(fig.getPosition().y);
 			System.out.println("Shot with Angle " + angle + " and velocity " + velocity);
 			projectile.setVelocity(angle, velocity);
 			
