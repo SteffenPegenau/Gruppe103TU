@@ -23,7 +23,7 @@ import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
 public class GameplayState extends ExtendedTWLState {
 	private static final int NUMBER_OF_BUILDINGS = 8;
 
-	protected Skyline skyline;
+	public Skyline skyline;
 	public ThrowForm throwForm;
 
 	private Player[] players = new Player[2];
