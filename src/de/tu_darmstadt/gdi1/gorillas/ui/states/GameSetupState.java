@@ -103,10 +103,7 @@ public class GameSetupState extends ExtendedTWLState {
 
 					game.enterState(Gorillas.GAMEPLAYSTATE);
 
-				} else {
-					widgets.put("ERRMSGLABEL", createLabel("Please Check Username", 200, 400, true));
-					addAllWidgetsToRootPane(widgets);
-				}
+				} 
 			}
 		}
 		}
@@ -174,6 +171,12 @@ public class GameSetupState extends ExtendedTWLState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
+		if (!PlayerList.usernamesOkay(players)) {
+				widgets.get("ERRMSGLABEL").setVisible(true);
+		} else {
+			widgets.get("ERRMSGLABEL").setVisible(false);
+
+		}
 		// drawPlayerSelectWidgets();
 	}
 
@@ -236,11 +239,7 @@ public class GameSetupState extends ExtendedTWLState {
 		widgets.put("EDIT_NR_OF_ROUNDS",
 				createEditField(BUTTON_LEFT_X + 120, 200, true, "3"));
 		addNumberInputCheck((EditField) widgets.get("EDIT_NR_OF_ROUNDS"), 10);
-		if (!PlayerList.usernamesOkay(players)) {
-			widgets.put("ERRMSGLABEL", createLabel("Please Check Username", 200, 300, true));
-		} else {
 			widgets.put("ERRMSGLABEL", createLabel("Please Check Username", 200, 300, false));
-		}
 		widgets.put(
 				"BUTTON_BACKTOMAINMENU",
 				createButton("Zurück",
