@@ -69,7 +69,7 @@ public class Serializer {
 	public static void save(Object o, String filename) {
 		try
 	      {
-			filename = "save" + File.separator + filename + ".ser";
+			filename = "save" + File.separator + filename + ".hsc";
 			createSaveDirIfNotExisting();
 			prepareSaveFile(filename);
 	        FileOutputStream fileOut = new FileOutputStream(filename);

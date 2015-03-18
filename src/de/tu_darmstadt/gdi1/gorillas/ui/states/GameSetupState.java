@@ -171,11 +171,13 @@ public class GameSetupState extends ExtendedTWLState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
-		if (!PlayerList.usernamesOkay(players)) {
-			widgets.get("ERRMSGLABEL").setVisible(true);
-		} else {
-			widgets.get("ERRMSGLABEL").setVisible(false);
+		if(players[0] != null && players[1] != null) {
+			if (!PlayerList.usernamesOkay(players)) {
+				widgets.get("ERRMSGLABEL").setVisible(true);
+			} else {
+				widgets.get("ERRMSGLABEL").setVisible(false);
 
+			}
 		}
 		// drawPlayerSelectWidgets();
 	}

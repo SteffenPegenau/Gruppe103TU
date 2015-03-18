@@ -26,7 +26,7 @@ public class InstructionState extends ExtendedTWLState {
 		entityManager.renderEntities(container, game, g);
 		
 		g.drawString("Instruktionen", 350, 0);
-		g.drawString("1. Um das Spiel zu starten klicken auf 'Neues Spiel mit Setup'.", 5, 130);
+		g.drawString("1. Um das Spiel zu starten klicke auf 'Neues Spiel mit Setup'.", 5, 130);
 		g.drawString("2. Nach der Auswahl der Spieler und dem Eingeben der RunderAnzahl klicke auf ", 5, 155);
 		g.drawString("'Spiel starten' um zu starten.", 5, 170);
 		g.drawString("3. Oben links und Oben rechts sind jeweils zwei kästchen mit der Beschriftung  ", 5, 195);
