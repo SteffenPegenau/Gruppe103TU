@@ -80,6 +80,7 @@ public class GameplayState extends ExtendedTWLState {
 			}
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
+			// TODO: Wechsel mit TAB von Eingabefelder addKeyPressedEvent(Input.KEY_TAB, throwForm.)
 			// addAllWidgetsToRootPane(widgets);
 			skyline.setSkyline_built(true);
 		}
