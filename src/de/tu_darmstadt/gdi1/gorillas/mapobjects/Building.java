@@ -18,10 +18,10 @@ public class Building extends MapObject {
 	public final static int MAX_HEIGHT = Gorillas.FRAME_HEIGHT - 100;
 	public final static int MIN_HEIGHT = 100;
 
-	public final static Color[] BASIC_COLORS = { new Color(255, 0, 0),
-			new Color(0, 0, 255), new Color(0, 255, 0), new Color(0, 255, 120),
-			new Color(255, 255, 0), new Color(0, 255, 255),
-			new Color(255, 0, 255), new Color(255, 160, 0) };
+	public final static Color[] BASIC_COLORS = { new Color(143, 210, 90),
+			new Color(177, 115, 176), new Color(70, 70, 70), new Color(47, 183, 145),
+			new Color(240, 21, 25), new Color(10, 18, 36),
+			new Color(215, 190, 21), new Color(10, 131, 36) };
 
 	public final static String DESTRUCTION_PATH = "gorillas/destruction.png";
 	public final static boolean DEBUG = Gorillas.debug;
