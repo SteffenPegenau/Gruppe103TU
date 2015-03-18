@@ -1,13 +1,8 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -28,6 +23,8 @@ public class PlayerList extends Player implements java.io.Serializable {
 	public static final String ERROR_MSG_EQUAL_USERNAMES = "USERNAMES MUST NOT BE EQUAL!";
 
 	public static final String DEFAULT_FILE = "/assets/gorillas.playerscores/HighscoreList.hsc";
+	
+	protected static final int HIGHSCORE_SIZE = 10;
 	//
 	// Fields
 	//
@@ -158,19 +155,57 @@ public class PlayerList extends Player implements java.io.Serializable {
 	 * @return Array für Highscore
 	 */
 	public static Player[] getHighscore() {
-		Player[] highscore = new Player[10];
-		
 		// Initialisiert den Highscore leer, 
 		//falls es weniger als 10 gespeicherte Spieler gibt
+		Player[] highscore = new Player[HIGHSCORE_SIZE];
+		
 		for (int i = 0; i < highscore.length; i++) {
 			highscore[i] = new Player("leer");
 		}
 		
-		
-		
-		//PlayerList list = restorePlayerList();
+		// Alle Spieler holen und sortieren
+		PlayerList list = restorePlayerList();
+	    List<Player> allPlayers = new ArrayList<Player>(list.getPlayersAsHashMap().values());
+	    Collections.sort(allPlayers, highscoreComparator());
+	    
+	    // die ersten 10 Spieler der sortierten Liste zu Array hinzufügen
+	    int counter = 0;
+	    for (Player p : allPlayers) {
+	    	System.out.println(p);
+			if(counter < highscore.length) {
+				highscore[counter] = p;
+				counter++;
+			} else {
+				// Highscore voll => for-Schleife abbrechen
+				//break;
+			}
+		}
 		
 		return highscore;
+	}
+	
+	protected static Comparator<Player> highscoreComparator() {
+		return new Comparator<Player>() {
+			
+	        // negative int: first is less than second
+			// 0: equal
+			// positive int: first is greater than second
+			public int compare(Player p1, Player p2) {
+				if(p1.getPercentageWon() > p2.getPercentageWon()) {
+					return 1;
+				} else if(p1.getPercentageWon() < p2.getPercentageWon()) {
+					return -1;
+				} else {
+					if(p1.getThrowsForAHit() < p2.getThrowsForAHit()) {
+						return 1;
+					} else if(p1.getThrowsForAHit() > p2.getThrowsForAHit()) {
+						return -1;
+					} else {
+						return 0;
+					}
+				}
+	        }
+	    };
 	}
 	
 }

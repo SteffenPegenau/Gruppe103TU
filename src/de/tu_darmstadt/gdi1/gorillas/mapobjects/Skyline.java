@@ -59,7 +59,7 @@ public class Skyline {
 
 		this.buildingsWithRandomWidth = buildingsWithRandomWidth;
 		buildings = new Building[numberOfBuildings];
-		sun = new Sun("sun");
+		
 	};
 
 	public void createSkyline() {
@@ -67,6 +67,7 @@ public class Skyline {
 		entityManager.addEntity(stateID, getBackgroundEntity());
 
 		// Sonne setzen
+		sun = new Sun("sun");
 		sun.setPosition(new Vector2f(400, 33));
 		entityManager.addEntity(stateID, sun);
 
@@ -90,9 +91,9 @@ public class Skyline {
 		String entityName;
 		for (int i = 0; i < buildings.length; i++) {
 			entityName = buildings[i].getID();
-			entityManager.getEntity(gameplayState.getID(), entityName).setVisible(false);
-			entityManager.removeEntity(gameplayState.getID(), buildings[i]);
-			buildings[i].render(container, game, g);
+			//entityManager.getEntity(gameplayState.getID(), entityName).setVisible(false);
+			//entityManager.removeEntity(gameplayState.getID(), buildings[i]);
+			//buildings[i].render(container, game, g);
 		}
 	}
 

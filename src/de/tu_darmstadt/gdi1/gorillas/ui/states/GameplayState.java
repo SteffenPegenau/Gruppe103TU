@@ -169,7 +169,7 @@ public class GameplayState extends ExtendedTWLState {
 	}
 
 	public Player getPlayer(int arrayIndex) {
-		System.out.println(players[arrayIndex]);
+		//System.out.println(players[arrayIndex]);
 		return players[arrayIndex];
 	}
 
@@ -205,6 +205,7 @@ public class GameplayState extends ExtendedTWLState {
 	 * @param winner
 	 */
 	public void playerWins(Player winner) {
+		winner.won();
 		// Ausgabe auf Konsole
 		System.out.println("**********************************");
 		System.out.println("Spieler " + winner.getUsername() + " gewinnt!");

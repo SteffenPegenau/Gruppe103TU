@@ -7,7 +7,6 @@ import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.FigureWithWeapon;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.GameplayState;
-import eea.engine.entity.Entity;
 
 
 
@@ -15,34 +14,16 @@ import eea.engine.entity.Entity;
  * Class Weapon
  */
 public abstract class Weapon {
-
-		//
-		// Fields
-		//
-	
 		public Class<? extends Bullet> bullet;
 		
 		// Used to build the name for the bullet (it's an entity)
 		protected int projectileCounter;
-
 		protected int ammunition;
 		
-		//
-		// Constructors
-		//
 		public Weapon () {
 			projectileCounter = 0;
-		};
+		}
 		
-		//
-		// Methods
-		//
-
-
-		//
-		// Accessor methods
-		//
-
 		/**
 		 * Set the value of ammunition
 		 * @param newVar the new value of ammunition
@@ -90,6 +71,7 @@ public abstract class Weapon {
 		}
 
 		public Bullet shot(Player player, FigureWithWeapon fig, double angle, float velocity, GameplayState state) {
+			player.countANewShot();
 			Bullet projectile = newBulletAsEntity(player, fig);
 			//projectile.setPosition(fig.getPosition());
 			projectile.setGameplayState(state);

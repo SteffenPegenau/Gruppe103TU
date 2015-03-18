@@ -240,7 +240,7 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		for (Map.Entry<String, Widget> entry : widgets.entrySet()) {
 			rootPane.add(entry.getValue());
 		}
-		System.out.println("Added " + widgets.size() + " to the root pane");
+		System.out.println("Added " + widgets.size() + " Widgets to the root pane");
 	}
 
 	public Label createLabel(String title, int posX, int posY, boolean isVisible) {

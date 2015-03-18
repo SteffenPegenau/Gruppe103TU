@@ -17,6 +17,7 @@ public class Player extends Owner implements java.io.Serializable {
 	private int numberOfThrows = 0;
 	private int numberOfHits = 0;
 	private double accuracy = 0;
+	private double throwsForAHit = 0.0;
 	public boolean isInitialised = false;
 	
 	protected int lifesLeft = 1;
@@ -100,7 +101,23 @@ public class Player extends Owner implements java.io.Serializable {
 	}
 
 	public String toString() {
-		return this.username;
+		StringBuilder sb = new StringBuilder();
+		sb.append("User: " + getUsername());
+		sb.append("\t");
+		sb.append("Rounds Played: " + getRoundsPlayed());
+		sb.append("\t");
+		sb.append("Rounds Won: " + getWonRounds());
+		sb.append("\t");
+		sb.append("Ratio: " + getPercentageWon());
+		sb.append("\t");
+		sb.append("Throws: " + getNumberOfThrownObjects());
+		sb.append("\t");
+		sb.append("Hits: " + getNumberOfHits());
+		sb.append("\t");
+		sb.append("Throws for a hit: " + getThrowsForAHit());
+		sb.append("\t");
+		
+		return sb.toString();
 	}
 
 	public boolean isUsernameEmpty() {
@@ -132,6 +149,8 @@ public class Player extends Owner implements java.io.Serializable {
 	 * hat
 	 */
 	public void hitEnemyFigure() {
+		numberOfHits++;
+		updateStatistics();
 		System.out.println("Spieler " + getUsername() + " <" + getArrayIndex()
 				+ "> hat gegnerische Figur getroffen!");
 	}
@@ -169,6 +188,69 @@ public class Player extends Owner implements java.io.Serializable {
 	 */
 	public static int getOtherPlayersArrayIndex(Player p) {
 		return (p.getArrayIndex() == 0) ? 1 : 0;
+	}
+
+	public double getThrowsForAHit() {
+		return throwsForAHit;
+	}
+
+	public void setThrowsForAHit(double throwsForAHit) {
+		this.throwsForAHit = throwsForAHit;
+	}
+	
+	/**
+	 * Fügt dem Spieler eine weitere gespielte Runde hinzu
+	 */
+	public void addRoundPlayed() {
+		roundsPlayed++;
+		updateStatistics();
+	}
+	
+	/**
+	 * Wird ausgeführt, wenn Spieler gewonnen hat
+	 */
+	public void won() {
+		roundsWon++;
+		updateStatistics();
+	}
+	
+	/**
+	 * Berechnet alle Statistischen Werte neu
+	 */
+	public void updateStatistics() {
+		calculatePercentageWon();
+		calculateThrowsForHit();
+		PlayerList.savePlayer(this);
+	}
+	
+	/**
+	 * Zählt den Wurf-Zähler um 1 hoch
+	 */
+	public void countANewShot() {
+		numberOfThrows++;
+		updateStatistics();
+	}
+	
+	/**
+	 * Berechnet neu, wie viele Würfe der Spieler für einen Treffer braucht
+	 */
+	private void calculateThrowsForHit() {
+		if(numberOfHits == 0) {
+			throwsForAHit = 0;
+		} else {
+			throwsForAHit = numberOfThrows / numberOfHits;
+		}
+	}
+
+	/**
+	 * Berechnet das Verhältnis gewonnene Spiele/gespielte Spiele neu
+	 */
+	private void calculatePercentageWon() {
+		if(roundsPlayed == 0) {
+			percentageWon = 0;
+		} else {
+			percentageWon = (double) roundsWon / roundsPlayed;
+		}
 	}
 
 	//

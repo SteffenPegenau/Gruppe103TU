@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.EditField;
@@ -127,14 +126,6 @@ public class ThrowForm {
 		addNumberInputCheck((EditField) widgets.get("FORM_EDIT_VELOCITY"), 200);
 	}
 
-	private String getCurrentPlayerName() {
-		if (currentPlayer == 0) {
-			return gameplayState.getPlayer1Name();
-		} else {
-			return gameplayState.getPlayer2Name();
-		}
-	}
-
 	/**
 	 * Überprüft, ob der Übergebene Charakter eine Zahl ist und ob
 	 * 
@@ -231,7 +222,6 @@ public class ThrowForm {
 					Weapon weapon = fig.getWeapon();
 					Bullet bullet = weapon
 							.shot(player, fig, angle, velocity, state);
-
 					entityManager.addEntity(state.getID(), bullet);
 					state.addBullet(bullet);
 					throwForm.saveEnteredValues(throwForm.currentPlayer);
@@ -276,7 +266,6 @@ public class ThrowForm {
 		EditField editAngle = (EditField) widgets.get("FORM_EDIT_ANGLE");
 		String input = editAngle.getText();
 		if (input.isEmpty()) {
-			System.out.println("Empty angle!");
 			return -1.0;
 		} else {
 			return Double.parseDouble(input);
