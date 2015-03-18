@@ -6,7 +6,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -16,16 +18,25 @@ import com.sun.org.apache.xml.internal.security.c14n.Canonicalizer;
 import com.sun.org.apache.xml.internal.security.encryption.Serializer;
 import com.sun.org.apache.xml.internal.security.encryption.XMLEncryptionException;
 
+
+import org.newdawn.slick.state.transition.Transition;
+
+import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.DialogLayout;
+
 import de.matthiasmann.twl.Label;
-import de.matthiasmann.twl.SimpleDialog;
+import de.matthiasmann.twl.PopupWindow;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
+//=======
+//>>>>>>> 843ae3314d23e3585482ce247f1c2d241d30d25d
 
 public class GameplayState extends ExtendedTWLState implements java.io.Serializable {
 	private static final int NUMBER_OF_BUILDINGS = 8;
@@ -44,7 +55,7 @@ public class GameplayState extends ExtendedTWLState implements java.io.Serializa
 	double windVelocityY;
 
 	private int currentPlayer;
-
+	boolean gameOver = false;
 	private Player winner = null;
 
 	/*
@@ -52,23 +63,19 @@ public class GameplayState extends ExtendedTWLState implements java.io.Serializa
 	 */
 	public GameplayState(int sid, Player[] players, int rounds) {
 		super(sid);
-		if (players.length != 2) {
-			System.err.println("Bad number of players: " + players.length);
-		} else {
-			for (int i = 0; i < players.length; i++) {
-				this.players[i] = players[i];
-				this.players[i].setArrayIndex(i);
-				System.out.println("Started with Player " + i + ": "
-						+ players[i].getUsername());
-				this.players[i].setLifesLeft(rounds);
-			}
-			skyline = new Skyline(entityManager, sid, NUMBER_OF_BUILDINGS,
-					false);
-			currentPlayer = 0;
-			//playersStatisticInformation();
-			widgets.put("DIALOG_OWNER", new Widget());
-			throwForm = new ThrowForm(this, currentPlayer);
+
+		for (int i = 0; i < players.length; i++) {
+			this.players[i] = players[i];
+			this.players[i].setArrayIndex(i);
+			System.out.println("Started with Player " + i + ": "
+					+ players[i].getUsername());
+			this.players[i].setLifesLeft(rounds);
 		}
+		skyline = new Skyline(entityManager, sid, NUMBER_OF_BUILDINGS, false);
+		currentPlayer = 0;
+		//playersStatisticInformation();
+		widgets.put("DIALOG_OWNER", new Widget());
+		throwForm = new ThrowForm(this, currentPlayer);
 	}
 
 	@Override
@@ -86,6 +93,10 @@ public class GameplayState extends ExtendedTWLState implements java.io.Serializa
 			throws SlickException {
 		entityManager.renderEntities(container, game, g);
 		if (!skyline.isSkyline_built()) {
+			skyline.setContainer(container);
+			skyline.setGame(game);
+			skyline.setG(g);
+			skyline.setGameplayState(this);
 			skyline.createSkyline();
 			for (int i = 0; i < players.length; i++) {
 				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
@@ -107,7 +118,7 @@ public class GameplayState extends ExtendedTWLState implements java.io.Serializa
 	public void toggleActivePlayer() {
 		currentPlayer = (currentPlayer == 0) ? 1 : 0;
 		throwForm.setCurrentPlayer(currentPlayer);
-		System.out.println("Aktiver Spieler ist nun: " + currentPlayer);
+		//System.out.println("Aktiver Spieler ist nun: " + currentPlayer);
 		Bullet.perfectDegreeShot(80, getCurrentPlayer(), getNotCurrentPlayer());
 	}
 
@@ -154,38 +165,39 @@ public class GameplayState extends ExtendedTWLState implements java.io.Serializa
 
 	public void addBullet(Bullet bullet) {
 		bullets.put(bullet.getID(), bullet);
-		System.out.println("Added bullet " + bullet.getID()
-				+ " to gameplaystate");
+		//System.out.println("Added bullet " + bullet.getID()
+		//		+ " to gameplaystate");
 	}
 
 	public void removeBullet(Bullet bullet) {
 		bullets.remove(bullet.getID());
 	}
-	
-	public HashMap<String, Bullet> getBullets(){
+
+	public HashMap<String, Bullet> getBullets() {
 		return bullets;
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		// Die pause()-Funktion scheint nicht zu funktionieren, daher dieser if-Workaround
-		if(!container.isPaused()) {
+		// Die pause()-Funktion scheint nicht zu funktionieren, daher dieser
+		// if-Workaround
+		if (!container.isPaused()) {
 			super.update(container, game, delta);
 			if (bullets.size() == 0) {
 				throwForm.setVisibility(true);
 			}
 			//updatePlayersStaticInformation();
 			// Hat ein Spieler gewonnen?
-			winner = getWinner();
-			if (winner != null) {
-				playerWins(winner);
+			if (!gameOver && getWinner() != null) {
+				gameOver = true;
+				playerWins(getWinner());
 			}
 		}
 	}
 
 	public Player getPlayer(int arrayIndex) {
-		System.out.println(players[arrayIndex]);
+		//System.out.println(players[arrayIndex]);
 		return players[arrayIndex];
 	}
 
@@ -221,22 +233,93 @@ public class GameplayState extends ExtendedTWLState implements java.io.Serializa
 	 * @param winner
 	 */
 	public void playerWins(Player winner) {
+
 		PlayerList plst = PlayerList.restorePlayerList();
 		winner.setWonRounds(1);
 		plst.AddPlayer(winner);
 		plst.savePlayerList();
 		
+
+		// Ausgabe auf Konsole
 		System.out.println("**********************************");
 		System.out.println("Spieler " + winner.getUsername() + " gewinnt!");
 		System.out.println("**********************************");
-		
-		// Erzeuge Dialog, in dem dem Sieger gratuliert wird
-		SimpleDialog dialog = new SimpleDialog();
-		dialog.setTitle("Spieler " + winner.getUsername() + " gewinnt!");
-		dialog.setMessage("Herzlichen Glückwunsch!");
-		dialog.showDialog(widgets.get("DIALOG_OWNER"));
-		
+
+		PopupWindow popup = new PopupWindow(widgets.get("DIALOG_OWNER"));
+
+		DialogLayout dialog = new DialogLayout();
+
+		DialogLayout.Group horizontalGroup = dialog.createSequentialGroup();
+		DialogLayout.Group verticalGroup = dialog.createSequentialGroup();
+
+		Label label = createLabel(
+				"Herzlichen Glückwunsch, " + winner.getUsername(), 0, 0, true);
+
+		Button button = createButton("OK", closeDialog(dialog), 120, 15);
+		button.adjustSize();
+
+		horizontalGroup.addWidgets(label, button);
+		verticalGroup.addWidgets(label, button);
+
+		dialog.setHorizontalGroup(horizontalGroup);
+		dialog.setVerticalGroup(verticalGroup);
+		popup.add(dialog);
+
+		popup.setSize(400, 200);
+		popup.setRequestCloseCallback(switchState(game, Gorillas.MAINMENUSTATE));
+		popup.setPosition(Gorillas.FRAME_WIDTH / 2 - popup.getWidth() / 2,
+				Gorillas.FRAME_HEIGHT / 2 - popup.getHeight() / 2);
+		popup.openPopup();
+
+		/*
+		 * // Erzeuge Dialog, in dem dem Sieger gratuliert wird SimpleDialog
+		 * dialog = new SimpleDialog(); dialog.setTitle("Spieler " +
+		 * winner.getUsername() + " gewinnt!");
+		 * dialog.setMessage("Herzlichen Glückwunsch!");
+		 * dialog.showDialog(widgets.get("DIALOG_OWNER"));
+		 * 
+		 * // Was passiert bei Click auf OK dialog.setOkCallback(new Runnable()
+		 * {
+		 * 
+		 * @Override public void run() { System.out.println("Called!");
+		 * switchState(game, Gorillas.MAINMENUSTATE).run();
+		 * container.setPaused(false); } });
+		 * 
+		 * // Was passiert bei Click auf Cancel?
+		 * dialog.setCancelCallback(closeDialog());
+		 */
+		// Pausiere das Spiel
 		container.pause();
+
+		// Formular unsichtbar
+		throwForm.setVisibility(false);
+
+	}
+
+	public Runnable closeDialog(DialogLayout dialog) {
+		class close implements Runnable {
+			DialogLayout dialog;
+			GameplayState gameplayState;
+
+			public close(DialogLayout dialog, GameplayState gameplayState) {
+				this.dialog = dialog;
+				this.gameplayState = gameplayState;
+			}
+
+			@Override
+			public void run() {
+				System.out.println("Back to MainMenuState");
+				dialog.setEnabled(false);
+				dialog.removeAllChildren();
+				game.enterState(Gorillas.MAINMENUSTATE);
+				//switchState(game, Gorillas.MAINMENUSTATE).run();
+				//container.setPaused(true);
+				//rootPane.destroy();
+			}
+		}
+		Runnable c = new close(dialog, this);
+		
+		return c;
 	}
 
 	public void updatePlayersStaticInformation() {

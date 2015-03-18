@@ -93,6 +93,8 @@ public class Serializer {
 	 * save/<<Klassenname>>.ser
 	 * ab, stellt aus der Datei das Objekt wieder her und gibt es zurueck
 	 * 
+	 * Siehe auch Doku zu restore Funktion
+	 * 
 	 * @param Object o, muss die Schnittstelle 'java.io.Serializable' implementieren
 	 */
 	public static Object restore(Object o) {
@@ -104,6 +106,8 @@ public class Serializer {
 	 * Stellt ein gespeichertes Objekt aus der Datei
 	 * save/FILENAME.ser
 	 * wieder her und gibt es zurueck
+	 * 
+	 * Beispiel: PlayerList list = Serializer.restore(new PlayerList(), "Dateiname");
 	 * 
 	 * @param Object o, muss die Schnittstelle 'java.io.Serializable' implementieren
 	 */

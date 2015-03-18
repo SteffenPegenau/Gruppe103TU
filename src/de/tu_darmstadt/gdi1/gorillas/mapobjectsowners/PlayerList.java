@@ -1,29 +1,19 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 
-import java.awt.FileDialog;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import com.sun.xml.internal.txw2.output.StreamSerializer;
-
 import de.matthiasmann.twl.model.SimpleChangableListModel;
 import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
-import de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState;
 
 /**
  * Class PlayerList

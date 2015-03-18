@@ -24,6 +24,7 @@ import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import eea.engine.action.Action;
 import eea.engine.action.basicactions.ChangeStateAction;
+import eea.engine.component.Component;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
@@ -249,6 +250,14 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		return label;
 	}
 
+	/**
+	 * Erzeugt ein EditField an posX|posY, das (de)aktiviert ist
+	 * 
+	 * @param posX X-Koordinate
+	 * @param posY Y-Koordinate
+	 * @param isEnabled Wenn false, lässt sich nichts eingeben
+	 * @return EditField
+	 */
 	public EditField createEditField(int posX, int posY, boolean isEnabled) {
 		EditField field = new EditField();
 		int yOffset = (posY - 20 < 0) ? 0 : -20;
@@ -257,6 +266,21 @@ public class ExtendedTWLState extends BasicTWLGameState {
 		field.setSize(300, 30);
 		return field;
 	}
+	
+	/**
+	 * Erzeugt ein EditField an posX|posY, das (de)aktiviert ist, mit eingegebem defaultText
+	 * 
+	 * @param posX X-Koordinate
+	 * @param posY Y-Koordinate
+	 * @param isEnabled Wenn false, lässt sich nichts eingeben
+	 * @param defaultText Text, der nach Erstellung in EditField stehen soll
+	 * @return EditField
+	 */
+	public EditField createEditField(int posX, int posY, boolean isEnabled, String defaultText) {
+		EditField field = createEditField(posX, posY, isEnabled);
+		field.setText(defaultText);
+		return field;
+	}	
 
 	protected Runnable nullRun() {
 		class nothing implements Runnable {

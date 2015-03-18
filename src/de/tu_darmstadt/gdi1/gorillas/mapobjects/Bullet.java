@@ -180,7 +180,7 @@ public class Bullet extends MapObject {
 	 */
 	public String fittingComment() {
 		EnumToString enumToString = new EnumToString();
-		System.out.println(getDist(player));
+		//System.out.println(getDist(player));
 		if (getDist(player) <= 150 && getDist(player) >= -150) {
 			return enumToString.printClose();
 		} 
@@ -200,9 +200,9 @@ public class Bullet extends MapObject {
 				- velocityY * scaledTimeOfExistence
 				+ 0.5 * GRAVITY * Math.pow(scaledTimeOfExistence, 2);
 
-		double x2 = posX0 + velocityX * scaledTimeOfExistence;
-		double y2 = posY0 - velocityY * scaledTimeOfExistence + 0.5 * GRAVITY
-				* Math.pow(scaledTimeOfExistence, 2);
+		//double x2 = posX0 + velocityX * scaledTimeOfExistence;
+		//double y2 = posY0 - velocityY * scaledTimeOfExistence + 0.5 * GRAVITY
+		//		* Math.pow(scaledTimeOfExistence, 2);
 
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
 		// System.out.println("New Position: " + newPosition);
@@ -313,6 +313,9 @@ public class Bullet extends MapObject {
 						System.out.println("Gegner getroffen");
 						enemyPlayer.figureWasHit();
 						player.hitEnemyFigure();
+						if(enemyPlayer.getLifesLeft() > 0) {
+							gameplayState.skyline.rebuildSkyline();
+						}
 						System.out.println(enumToString.printHit());
 					} else if (entity.getID().contentEquals("sun")) {
 						gameplayState.skyline.sun.changeImage();
@@ -388,17 +391,16 @@ public class Bullet extends MapObject {
 			deltaX = x0 - x;
 			deltaY = y0 - y;
 		}
-
-		System.out.println("x=" + x + "\ty=" + y + "\tx0=" + x0 + "\ty0=" + y0);
-		System.out.println("Delta X: " + deltaX + "\tDelta Y: " + deltaY);
+		
+		//System.out.println("x=" + x + "\ty=" + y + "\tx0=" + x0 + "\ty0="+y0 );
+		//System.out.println("Delta X: " + deltaX +  "\tDelta Y: " + deltaY);
 		double tan = Math.tan(Math.toRadians(degree));
-		System.out.println("Tan(89Grad)=" + tan);
+		//System.out.println("Tan(89Grad)=" + tan);
 		double toBeSquareRooted = 2 * (deltaY + tan * deltaX) / GRAVITY;
-		System.out.println("Wurzel:" + toBeSquareRooted);
+		//System.out.println("Wurzel:" + toBeSquareRooted);
 		double t = Math.sqrt(toBeSquareRooted);
-
-		System.out.println("Flugzeit: " + t);
-
+		
+		//System.out.println("Flugzeit: " + t);
 		double cos = Math.cos(Math.toRadians(degree));
 		double v = deltaX / (cos * t);
 

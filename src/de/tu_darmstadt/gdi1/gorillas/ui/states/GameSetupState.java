@@ -7,10 +7,10 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.Label;
-import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
 import eea.engine.entity.StateBasedEntityManager;
@@ -39,7 +39,6 @@ public class GameSetupState extends ExtendedTWLState {
 			private GameSetupState state;
 			private Player player;
 			private int arrayIndex;
-			private int NrOfRounds;
 			private final static int SID = Gorillas.PLAYERSELECTSTATE;
 
 			public switcher(GameSetupState s, StateBasedGame game,
@@ -80,15 +79,18 @@ public class GameSetupState extends ExtendedTWLState {
 
 			@Override
 			public void run() {
-				// HIER //
+	// HIER //
 				EditField roundsEdit = (EditField) widgets.get("EDIT_NR_OF_ROUNDS");
 				int rounds = Integer.valueOf(roundsEdit.getText());
 				PlayerList plst = PlayerList.restorePlayerList();
 			
 				setRounds(rounds);
 				if (PlayerList.usernamesOkay(players)) {
+
+				int rounds1 = getEnteredNumberOfRounds();
+				if (PlayerList.usernamesOkay(players) && rounds1 > 0) {
 					GameplayState gamePlayState = new GameplayState(
-							Gorillas.GAMEPLAYSTATE, players, rounds);
+							Gorillas.GAMEPLAYSTATE, players, rounds1);
 					game.addState(gamePlayState);
 					StateBasedEntityManager.getInstance().addState(
 							Gorillas.GAMEPLAYSTATE);
@@ -104,8 +106,24 @@ public class GameSetupState extends ExtendedTWLState {
 				}
 			}
 		}
+		}
 		switcher s = new switcher(game, players, container);
 		return s;
+	}
+
+	/**
+	 * Ermittelt die Eingabe bei Anzahl der Runden
+	 * @return -1, wenn leer, sonst: Eingebene Zahl
+	 */
+	public int getEnteredNumberOfRounds() {
+		EditField roundsEdit = (EditField) widgets.get("EDIT_NR_OF_ROUNDS");
+		String input = roundsEdit.getText();
+		if(input.isEmpty()) {
+			return -1;
+		} else {
+			return Integer.valueOf(input);
+		}
+		
 	}
 
 	private void tryToRestoreSelectedPlayers() {
@@ -146,7 +164,7 @@ public class GameSetupState extends ExtendedTWLState {
 			throws SlickException {
 		super.render(container, game, g);
 		entityManager.addEntity(stateID, setBackground(DEFAULT_BACKGROUND));
-
+		addESCListener(Gorillas.GAMEPLAYSTATE);
 	}
 
 	@Override
@@ -213,7 +231,7 @@ public class GameSetupState extends ExtendedTWLState {
 		widgets.put("LABEL_NR_OF_ROUNDS",
 				createLabel("Rundenanzahl: ", BUTTON_LEFT_X, 200, true));
 		widgets.put("EDIT_NR_OF_ROUNDS",
-				createEditField(BUTTON_LEFT_X + 120, 200, true));
+				createEditField(BUTTON_LEFT_X + 120, 200, true, "3"));
 		addNumberInputCheck((EditField) widgets.get("EDIT_NR_OF_ROUNDS"), 10);
 
 		widgets.put(
