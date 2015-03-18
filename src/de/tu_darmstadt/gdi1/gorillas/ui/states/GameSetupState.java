@@ -7,7 +7,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.Label;
-import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
@@ -214,7 +213,7 @@ public class GameSetupState extends ExtendedTWLState {
 		widgets.put("LABEL_NR_OF_ROUNDS",
 				createLabel("Rundenanzahl: ", BUTTON_LEFT_X, 200, true));
 		widgets.put("EDIT_NR_OF_ROUNDS",
-				createEditField(BUTTON_LEFT_X + 120, 200, true, "1"));
+				createEditField(BUTTON_LEFT_X + 120, 200, true, "3"));
 		addNumberInputCheck((EditField) widgets.get("EDIT_NR_OF_ROUNDS"), 10);
 
 		widgets.put(

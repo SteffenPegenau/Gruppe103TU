@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.EditField;
