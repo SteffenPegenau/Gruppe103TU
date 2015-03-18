@@ -1,6 +1,7 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -32,6 +33,12 @@ public class GameplayState extends ExtendedTWLState {
 	double windVelocityY;
 	private int currentPlayer;
 	private Player winner = null;
+	public static Random r = new Random();
+	public static int low = -15;
+	public static int high = 15;
+	public static int wind = r.nextInt(high - low) + low; // Wind zwischen -15 bis 15
+	
+	
 	/*
 	 * Setzt die Spieler
 	 */

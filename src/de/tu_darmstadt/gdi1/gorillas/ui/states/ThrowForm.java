@@ -127,6 +127,7 @@ public class ThrowForm {
 		// Setze callback für Eingabefelder zur Kontrolle der Eingabe
 		addNumberInputCheck((EditField) widgets.get("FORM_EDIT_ANGLE"), 360);
 		addNumberInputCheck((EditField) widgets.get("FORM_EDIT_VELOCITY"), 200);
+		
 	}
 
 	/**

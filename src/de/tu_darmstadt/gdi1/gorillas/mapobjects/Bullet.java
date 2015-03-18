@@ -24,13 +24,15 @@ import eea.engine.interfaces.IDestructible;
  */
 public class Bullet extends MapObject {
 	public final static double SCALING_FACTOR = (double) 1 / 100;
-	public final static double GRAVITY = 10.0;
+	public static double GRAVITY = 10.0;
 
 	protected GameplayState gameplayState;
 
 	// Radiant, nicht in Grad!
 	protected double angle;
 
+	public static float windS = 0.5f * 0.1f * GameplayState.wind;
+	
 	protected float accelerationX;
 	protected float accelerationY;
 
@@ -67,6 +69,13 @@ public class Bullet extends MapObject {
 
 	public double getVelocity() {
 		return velocity;
+	}
+	
+	public static float setwindSOn() {
+		return windS;
+	}
+	public static float setwindSOff() {
+		return windS = 0;
 	}
 
 	/**
@@ -192,16 +201,27 @@ public class Bullet extends MapObject {
 	}
 
 	public Vector2f calculateNewPosition() {
+		
 		double scaledTimeOfExistence = SCALING_FACTOR * existenceTimeInms;
-
+		// TODO wind an aus
 		double x = posX0
-				+ velocityX * scaledTimeOfExistence;
+				+ velocityX * scaledTimeOfExistence + windS;
+		System.out.println("Windstärke: " + windS);
 		double y = posY0
 				- velocityY * scaledTimeOfExistence
-				+ 0.5 * GRAVITY * Math.pow(scaledTimeOfExistence, 2);
-
+				+ 0.5 * getGravity() * Math.pow(scaledTimeOfExistence, 2) + windS;
+		System.out.println("Gravitation: " + getGravity());
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
 		// System.out.println("New Position: " + newPosition);
+		// TODO: Umsetzen des Dotzen:
+		/*
+		 * Beispielcode:
+		 * if (y == 700 && bullet.spped < 25) {
+		 *     alles auf null setzen 
+		 *     return newPosition;
+		 * 
+		 */
+		
 		return newPosition;
 	}
 
@@ -393,7 +413,7 @@ public class Bullet extends MapObject {
 		//System.out.println("Delta X: " + deltaX +  "\tDelta Y: " + deltaY);
 		double tan = Math.tan(Math.toRadians(degree));
 		//System.out.println("Tan(89Grad)=" + tan);
-		double toBeSquareRooted = 2 * (deltaY + tan * deltaX) / GRAVITY;
+		double toBeSquareRooted = 2 * (deltaY + tan * deltaX) / getGravity();
 		//System.out.println("Wurzel:" + toBeSquareRooted);
 		double t = Math.sqrt(toBeSquareRooted);
 		
@@ -405,6 +425,13 @@ public class Bullet extends MapObject {
 				+ " Degree shot: " + v);
 
 		System.out.println("<<<<<<<<<<<<<<<<<");
+	}
+	
+	public static void setGravity(double g) {
+		GRAVITY = g;
+	}
+	public static double getGravity() {
+		return GRAVITY;
 	}
 
 }

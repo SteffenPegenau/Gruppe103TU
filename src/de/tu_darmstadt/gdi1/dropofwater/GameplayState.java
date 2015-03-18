@@ -156,7 +156,6 @@ public class GameplayState extends BasicTWLGameState {
 				handleEditFieldInput(key, xInput, this, 1000);
 			}
 		});
-
 		// analog zu einer Eingabem�glichkeit f�r x-Werte wird auch eine f�r
 		// y-Werte kreiert
 		yLabel = new Label("y:");
@@ -247,6 +246,7 @@ public class GameplayState extends BasicTWLGameState {
 			Callback callback, int maxValue) {
 
 		if (key == de.matthiasmann.twl.Event.KEY_NONE) {
+			System.out.println("Key pressed");
 			String inputText = editField.getText();
 
 			if (inputText.isEmpty()) {
