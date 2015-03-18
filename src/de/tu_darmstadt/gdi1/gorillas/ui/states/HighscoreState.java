@@ -1,107 +1,85 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
-import java.util.List;
-
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-
-import de.matthiasmann.twl.Label;
-import de.matthiasmann.twl.Widget;
-import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
-import eea.engine.action.Action;
-import eea.engine.action.basicactions.ChangeStateAction;
-import eea.engine.action.basicactions.QuitAction;
-import eea.engine.component.render.ImageRenderComponent;
-import eea.engine.entity.Entity;
-import eea.engine.entity.StateBasedEntityManager;
-import eea.engine.event.ANDEvent;
-import eea.engine.event.basicevents.MouseClickedEvent;
-import eea.engine.event.basicevents.MouseEnteredEvent;
 
 /**
  * @author Steffen Pegenau (steffen.pegenau@gmail.com)
  *
  */
 public class HighscoreState extends ExtendedTWLState {
+	
+	// Definiert die X-Positionen der einzelnen Spalten der Tabelle
+	private final static int COLUMN_RANKING = posX.A.get();
+	private final static int COLUMN_USERNAME = posX.B.get();
+	private final static int COLUMN_ROUNDS_PLAYED = posX.E.get();
+	private final static int COLUMN_ROUNDS_WON = posX.H.get();
+	private final static int COLUMN_PLAYED_WON_RATIO = posX.K.get();
+	private final static int COLUMN_ACCURACY = posX.M.get();
+	
+	private final static int ROW_HEIGHT = 30;
+	
 
 	public HighscoreState(int sid) {
 		super(sid);
-	}
-
-	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException {
-		entityManager.addEntity(stateID, setBackground(DEFAULT_BACKGROUND));
-		entityManager.renderEntities(container, game, g);
-		g.drawString("Exit vs. Warum werde ich angezeigt?", 500, 530); // Grau
-																		// hinterlegen
-																		// +
-																		// Anzeigename
-		Action action = new ChangeStateAction(Gorillas.MAINMENUSTATE);
-		createButton("exit", "Warum werde ich nicht angezeigt?", action, 500,
-				530);
-		entityManager
-				.addEntity(stateID, setESCListener(Gorillas.MAINMENUSTATE));
-
-		PlayerList pl = new PlayerList();
-		ArrayList<Player> hl = new ArrayList<Player>();
-		hl = pl.highscoreList(PlayerList.restorePlayerList()
-				.getPlayersAsHashMap());
-		StringBuilder sb = new StringBuilder(100);
-
 	}
 	
 	protected RootPane createRootPane() {
 		// erstelle die RootPane
 		RootPane rp = super.createRootPane();
-		
-		PlayerList pl = new PlayerList();
-		ArrayList<Player> hl = new ArrayList<Player>();
-		hl = pl.highscoreList(PlayerList.restorePlayerList()
-				.getPlayersAsHashMap());
-		StringBuilder sb = new StringBuilder(500);
-
-		widgets.put(
-				"FIRST_HIGHSCORE_LABEL",
-				createLabel(
-						"1. "
-								+ hl.get(0).getUsername() + "   " 
-								+ sb.append(hl.get(0).getWonRounds())
-										.toString(), 50, 50, true));
-		widgets.put(
-				"SECOND_HIGHSCORE_LABEL",
-				createLabel(
-						"2. "
-								+ hl.get(1).getUsername() + "    "
-								+ sb.append(hl.get(0).getWonRounds())
-										.toString(), 50, 150, true));
-		widgets.put(
-				"THIRD_HIGHSCORE_LABEL",
-				createLabel(
-						"3. "
-								+ hl.get(2).getUsername() + "    "
-								+ sb.append(hl.get(0).getWonRounds())
-										.toString(), 50, 250, true));
-		
-		
+		createTableHeader();
+		createTableContent();
 		addAllWidgetsToRootPane(widgets);
 		return rp;
 		
+	}
+
+	protected void createTableHeader() {
+		String prefix = "LABEL_CAPTION";
+		widgets.put(prefix + "_RANKING", createLabel("Platz", COLUMN_RANKING, posY.A.get(), true));
+		widgets.put(prefix + "_USERNAME", createLabel("Name", COLUMN_USERNAME, posY.A.get(), true));
+		widgets.put(prefix + "_ROUNDS_PLAYED", createLabel("Runden gespielt", COLUMN_ROUNDS_PLAYED, posY.A.get(), true));
+		widgets.put(prefix + "_ROUNDS_WON", createLabel("Runden gewonnen", COLUMN_ROUNDS_WON, posY.A.get(), true));
+		widgets.put(prefix + "_PLAYED_WON_RATIO", createLabel("Verhältnis", COLUMN_PLAYED_WON_RATIO, posY.A.get(), true));
+		widgets.put(prefix + "_ACCURACY", createLabel("Würfe/Treffer", COLUMN_ACCURACY, posY.A.get(), true));
+	}
+	
+	protected void createTableContent() {
+		Player[] highscore = PlayerList.getHighscore();
+		
+		int y = posY.C.get();
+		for (int i = 0; i < highscore.length; i++) {
+			Player p = highscore[i];
+			String rank = String.valueOf(i + 1);
+			String roundsPlayed = String.valueOf(p.getRoundsPlayed());
+			String roundsWon = String.valueOf(p.getWonRounds());
+			String ratio = String.valueOf(p.getPercentageWon());
+			String accuracy = String.valueOf(p.getAccuracy());
+			
+			
+			String prefix = "LABEL_RANK" + i;
+			widgets.put(prefix + "_RANKING", createLabel(rank, COLUMN_RANKING, y, true));
+			widgets.put(prefix + "_USERNAME", createLabel(p.getUsername(), COLUMN_USERNAME, y, true));
+			widgets.put(prefix + "_ROUNDS_PLAYED", createLabel(roundsPlayed, COLUMN_ROUNDS_PLAYED, y, true));
+			widgets.put(prefix + "_ROUNDS_WON", createLabel(roundsWon, COLUMN_ROUNDS_WON, y, true));
+			widgets.put(prefix + "_PLAYED_WON_RATIO", createLabel(ratio, COLUMN_PLAYED_WON_RATIO, y, true));
+			widgets.put(prefix + "_ACCURACY", createLabel(accuracy, COLUMN_ACCURACY, y, true));
+			y += ROW_HEIGHT;
+		}
+	}
+	
+	@Override
+	public void init(GameContainer container, StateBasedGame game)
+			throws SlickException {
+		super.init(container, game);
+		
+		entityManager.addEntity(stateID, setBackground(DEFAULT_BACKGROUND));
+		addESCListener(Gorillas.MAINMENUSTATE);
 	}
 }

@@ -153,6 +153,24 @@ public class PlayerList extends Player implements java.io.Serializable {
 		return highscoreList;
 	}
 	
+	/**
+	 * Erzeugt die für den Highscore sortiere PlayerList als Array der Länghe 10
+	 * @return Array für Highscore
+	 */
+	public static Player[] getHighscore() {
+		Player[] highscore = new Player[10];
+		
+		// Initialisiert den Highscore leer, 
+		//falls es weniger als 10 gespeicherte Spieler gibt
+		for (int i = 0; i < highscore.length; i++) {
+			highscore[i] = new Player("leer");
+		}
+		
+		//PlayerList list = restorePlayerList();
+		
+		return highscore;
+	}
+	
 }
 
 	
