@@ -16,7 +16,7 @@ import eea.engine.entity.StateBasedEntityManager;
 
 public class Skyline {
 	// TODO Anderes Hintergrundbild, nicht das von Drop of Water...
-	protected final static String BACKGROUND = "/assets/dropofwater/background.png";
+	protected final static String BACKGROUND = "/assets/gorillas/backgrounds/himmel.png";
 
 	protected StateBasedEntityManager entityManager;
 	protected int stateID;
