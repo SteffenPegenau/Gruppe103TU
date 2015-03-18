@@ -6,24 +6,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import com.sun.org.apache.bcel.internal.generic.DCONST;
-import com.sun.org.apache.xml.internal.security.c14n.Canonicalizer;
-import com.sun.org.apache.xml.internal.security.encryption.Serializer;
-import com.sun.org.apache.xml.internal.security.encryption.XMLEncryptionException;
-
-
-import org.newdawn.slick.state.transition.Transition;
 
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.DialogLayout;
-
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.PopupWindow;
 import de.matthiasmann.twl.Widget;
@@ -32,9 +18,7 @@ import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
-
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
-import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
 //=======
 //>>>>>>> 843ae3314d23e3585482ce247f1c2d241d30d25d
 
@@ -233,11 +217,8 @@ public class GameplayState extends ExtendedTWLState implements java.io.Serializa
 	 * @param winner
 	 */
 	public void playerWins(Player winner) {
-
-		PlayerList plst = PlayerList.restorePlayerList();
 		winner.setWonRounds(1);
-		plst.AddPlayer(winner);
-		plst.savePlayerList();
+		PlayerList.savePlayer(winner);
 		
 
 		// Ausgabe auf Konsole

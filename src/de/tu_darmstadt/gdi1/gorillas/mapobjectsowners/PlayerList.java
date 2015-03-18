@@ -39,11 +39,29 @@ public class PlayerList extends Player implements java.io.Serializable {
 		players = new HashMap<String, Player>();
 	}
 	
-	// Speichern der Player mit Username
-	public void AddPlayer(Player p) {
-			players.put(p.getUsername(), p);
+	/**
+	 * Ergänzt/Ändert Spieler in der Liste und speichert
+	 * 
+	 * Statisch => kann ohne jede Initialisierung genutzt werden
+	 * 
+	 * Beispiel:
+	 * PlayerList.AddPlayer(player);
+	 * 
+	 * @param player Zu speichernder/ändernder Spieler
+	 */
+	public static void savePlayer(Player player) {
+			PlayerList list = (PlayerList) Serializer.restore(new PlayerList());
+			list.players.put(player.getUsername(), player);
+			list.savePlayerList();
 	}
 
+	/**
+	 * Lädt die gespeicherte Liste aus Datei und gibt sie zurück
+	 * 
+	 * Beispiel: PlayerList list = PlayerList.restorePlayerList();
+	 * 
+	 * @return PlayerList als Objekt
+	 */
 	public static PlayerList restorePlayerList() {
 		PlayerList list = (PlayerList) Serializer.restore(new PlayerList());
 		if (list == null) {
@@ -80,11 +98,18 @@ public class PlayerList extends Player implements java.io.Serializable {
 		}
 		return list;
 	}
+	
+	
+	public void addPlayer(Player player) {
+		String username = player.getUsername();
+		players.put(username, player);
+	}
+	
 
 	public static void savePlayerList(SimpleChangableListModel<Player> model) {
 		PlayerList list = new PlayerList();
 		for (int i = 0; i < model.getNumEntries(); i++) {
-			list.AddPlayer(model.getEntry(i));
+			list.addPlayer(model.getEntry(i));
 		}
 		Serializer.save(list);
 	}
