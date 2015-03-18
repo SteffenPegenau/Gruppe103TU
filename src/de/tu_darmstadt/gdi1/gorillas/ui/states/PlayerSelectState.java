@@ -178,7 +178,7 @@ public class PlayerSelectState extends ExtendedTWLState {
 							.get("EDIT_FULLNAME");
 
 					editUsername.setText(player.getUsername());
-					editFullname.setText(player.getFullname());
+					editFullname.setText("");
 				}
 			}
 		}
@@ -234,8 +234,7 @@ public class PlayerSelectState extends ExtendedTWLState {
 				String username = editFieldUsername.getText();
 				EditField editFieldFullname = (EditField) widgets
 						.get("EDIT_FULLNAME");
-				String fullname = editFieldFullname.getText();
-				Player newPlayer = new Player(username, fullname, GameSetupState.getRounds());
+				Player newPlayer = new Player(username);
 				model.addElement(newPlayer);
 				box.setSelected(model.findElement(newPlayer));
 				PlayerList.savePlayerList(model);
