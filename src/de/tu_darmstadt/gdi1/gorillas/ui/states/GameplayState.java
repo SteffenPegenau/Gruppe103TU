@@ -104,7 +104,7 @@ public class GameplayState extends ExtendedTWLState implements java.io.Serializa
 						skyline.randomBuildingForPlayer(i));
 				entityManager.addEntity(stateID, players[i].getPlayersFigure());
 			}
-			addESCListener(Gorillas.GAMESETUPSTATE);
+			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			// addAllWidgetsToRootPane(widgets);
 			skyline.setSkyline_built(true);

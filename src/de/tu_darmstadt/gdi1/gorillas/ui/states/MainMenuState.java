@@ -113,6 +113,8 @@ public class MainMenuState extends ExtendedTWLState {
 		drawMenu();
 		drawButtonLabels(g);
 		g.drawString("Exit", 500, 530);
+		addKeyPressedEvent(Input.KEY_N, new ChangeStateAction(Gorillas.GAMESETUPSTATE));
+		addKeyPressedEvent(Input.KEY_ESCAPE, new ChangeStateAction(Gorillas.GAMEPLAYSTATE));
 		
 	}
 	
