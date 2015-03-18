@@ -36,8 +36,8 @@ public class Sun extends MapObject{
 		// Accessor methods
 		//
 	
-	public void getImage() {
-		return;
+	public void changeBackImage() {
+		setFigureImage(FIGURE_IMAGE);
 	}
 
 		//

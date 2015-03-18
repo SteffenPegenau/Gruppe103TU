@@ -45,7 +45,7 @@ public class Bullet extends MapObject {
 	protected float posY0;
 
 	protected Player player;
-	
+	protected Boolean sunhit = false;
 
 	public Bullet(String entityID) {
 		super(entityID);
@@ -180,11 +180,11 @@ public class Bullet extends MapObject {
 	 */
 	public String fittingComment() {
 		EnumToString enumToString = new EnumToString();
-		//System.out.println(getDist(player));
+		// System.out.println(getDist(player));
 		if (getDist(player) <= 150 && getDist(player) >= -150) {
 			return enumToString.printClose();
-		} 
-		if(getDist(player) >= 150) {
+		}
+		if (getDist(player) >= 150) {
 			return enumToString.printToShort();
 		} else {
 			return enumToString.printFarOff();
@@ -194,11 +194,9 @@ public class Bullet extends MapObject {
 	public Vector2f calculateNewPosition() {
 		double scaledTimeOfExistence = SCALING_FACTOR * existenceTimeInms;
 
-		double x = posX0
-				+ velocityX * scaledTimeOfExistence;
-		double y = posY0
-				- velocityY * scaledTimeOfExistence
-				+ 0.5 * GRAVITY * Math.pow(scaledTimeOfExistence, 2);
+		double x = posX0 + velocityX * scaledTimeOfExistence;
+		double y = posY0 - velocityY * scaledTimeOfExistence + 0.5 * GRAVITY
+				* Math.pow(scaledTimeOfExistence, 2);
 
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
 		// System.out.println("New Position: " + newPosition);
@@ -262,7 +260,7 @@ public class Bullet extends MapObject {
 					removeEntityFromState(sb, gameplayState, entity);
 					System.out.println("Removed " + entity.getID()
 							+ " at Position " + x + " | " + y);
-					System.out.println(enumToString .printFarOff());
+					System.out.println(enumToString.printFarOff());
 				}
 
 			}
@@ -294,22 +292,22 @@ public class Bullet extends MapObject {
 				CollisionEvent collider = (CollisionEvent) event;
 				Entity entity = collider.getCollidedEntity();
 				EnumToString enumToString = new EnumToString();
+				gameplayState.skyline.sun.changeBackImage();
 				if (!entity.getID().contentEquals("background")) {
 					System.out.println("COLLIDED WITH " + entity.getID());
 					// wenn diese durch ein Pattern zerst�rt werden kann, dann
 					// caste
 					// zu IDestructible
 					// ansonsten passiert bei der Kollision nichts
-
 					IDestructible destructible = null;
-					System.out.println(fittingComment());
+					//System.out.println(fittingComment());
 					if (entity.getID().contentEquals(
 							enemyPlayer.getPlayersFigure().getID())) {
 						// Gegner getroffen!
-						//System.out.println("Gegner getroffen");
+						// System.out.println("Gegner getroffen");
 						enemyPlayer.figureWasHit();
 						player.hitEnemyFigure();
-						if(enemyPlayer.getLifesLeft() > 0) {
+						if (enemyPlayer.getLifesLeft() > 0) {
 							gameplayState.skyline.rebuildSkyline();
 						}
 						System.out.println(enumToString.printHit());
@@ -388,16 +386,17 @@ public class Bullet extends MapObject {
 			deltaX = x0 - x;
 			deltaY = y0 - y;
 		}
-		
-		//System.out.println("x=" + x + "\ty=" + y + "\tx0=" + x0 + "\ty0="+y0 );
-		//System.out.println("Delta X: " + deltaX +  "\tDelta Y: " + deltaY);
+
+		// System.out.println("x=" + x + "\ty=" + y + "\tx0=" + x0 + "\ty0="+y0
+		// );
+		// System.out.println("Delta X: " + deltaX + "\tDelta Y: " + deltaY);
 		double tan = Math.tan(Math.toRadians(degree));
-		//System.out.println("Tan(89Grad)=" + tan);
+		// System.out.println("Tan(89Grad)=" + tan);
 		double toBeSquareRooted = 2 * (deltaY + tan * deltaX) / GRAVITY;
-		//System.out.println("Wurzel:" + toBeSquareRooted);
+		// System.out.println("Wurzel:" + toBeSquareRooted);
 		double t = Math.sqrt(toBeSquareRooted);
-		
-		//System.out.println("Flugzeit: " + t);
+
+		// System.out.println("Flugzeit: " + t);
 		double cos = Math.cos(Math.toRadians(degree));
 		double v = deltaX / (cos * t);
 
