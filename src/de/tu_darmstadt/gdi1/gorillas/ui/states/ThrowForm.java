@@ -28,6 +28,8 @@ public class ThrowForm {
 
 	// private boolean isVisible = true;
 	private int currentPlayer;
+	
+	private boolean visible;
 
 	public ThrowForm(GameplayState state, int currentPlayer) {
 		widgets = state.getWidgets();
@@ -82,6 +84,7 @@ public class ThrowForm {
 	 */
 	public void setVisibility(boolean visibility) {
 		// this.isVisible = visibility;
+		visible = visibility;
 		for (Map.Entry<String, Widget> entry : getFormWidgets().entrySet()) {
 			entry.getValue().setVisible(visibility);
 		}
@@ -348,4 +351,9 @@ public class ThrowForm {
 		}
 
 	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
 }

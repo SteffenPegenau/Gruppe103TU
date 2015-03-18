@@ -32,7 +32,6 @@ public class GameplayState extends ExtendedTWLState {
 	double windVelocityY;
 	private int currentPlayer;
 	private Player winner = null;
-
 	/*
 	 * Setzt die Spieler
 	 */
