@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55c40a66a5412c06f58d4e59adc5f0649ae1a05a
 package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 
 import java.math.BigDecimal;
@@ -435,6 +438,7 @@ public class Bullet extends MapObject {
 		return GRAVITY;
 	}
 
+<<<<<<< HEAD
 }
 
 //package de.tu_darmstadt.gdi1.gorillas.mapobjects;
@@ -846,3 +850,6 @@ public class Bullet extends MapObject {
 //	}
 //
 //}
+=======
+}
+>>>>>>> 55c40a66a5412c06f58d4e59adc5f0649ae1a05a

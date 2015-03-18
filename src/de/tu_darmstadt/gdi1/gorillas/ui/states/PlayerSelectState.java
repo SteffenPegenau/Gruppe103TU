@@ -54,12 +54,6 @@ public class PlayerSelectState extends ExtendedTWLState {
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		super.init(container, game);
-		entityManager.addEntity(stateID, setBackground(null));
-		System.out.println("Hello World!!!");
-		widgets.put("LABEL_HELLOWORLD",
-				createLabel("Hello WOrld", 400, 400, true));
-
-		System.out.println("SIZE: " + widgets.size());
 	}
 
 	@Override
@@ -68,26 +62,12 @@ public class PlayerSelectState extends ExtendedTWLState {
 		super.render(container, game, g);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.newdawn.slick.state.GameState#update(org.newdawn.slick.GameContainer,
-	 * org.newdawn.slick.state.StateBasedGame, int)
-	 */
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
-
 	}
 
-	protected void layoutRootPane() {
-
-		// int paneHeight = this.getRootPane().getHeight();
-		// int paneWidth = this.getRootPane().getWidth();
-
-	}
 
 	private Runnable choosePlayer() {
 		class Choose implements Runnable {
@@ -134,13 +114,8 @@ public class PlayerSelectState extends ExtendedTWLState {
 
 	}
 
-	private ArrayList<Player> getPlayers() {
-		PlayerList playerList = PlayerList.restorePlayerList();
-		return playerList.getPlayers();
-	}
-
 	private Widget createComboBox(int posX, int posY) {
-		model = new SimpleChangableListModel<Player>(getPlayers());
+		model = new SimpleChangableListModel<Player>(PlayerList.getPlayers());
 		box = new ComboBox<Player>(model);
 		box.setDisplayTextNoSelection("Spieler wählen:");
 		box.setPosition(posX, posY);
@@ -174,11 +149,7 @@ public class PlayerSelectState extends ExtendedTWLState {
 					player = model.getEntry(boxSelection);
 					EditField editUsername = (EditField) widgets
 							.get("EDIT_USERNAME");
-					EditField editFullname = (EditField) widgets
-							.get("EDIT_FULLNAME");
-
 					editUsername.setText(player.getUsername());
-					editFullname.setText("");
 				}
 			}
 		}
@@ -232,8 +203,6 @@ public class PlayerSelectState extends ExtendedTWLState {
 						.get("EDIT_USERNAME");
 				editFieldUsername.setEnabled(false);
 				String username = editFieldUsername.getText();
-				EditField editFieldFullname = (EditField) widgets
-						.get("EDIT_FULLNAME");
 				Player newPlayer = new Player(username);
 				model.addElement(newPlayer);
 				box.setSelected(model.findElement(newPlayer));
@@ -286,13 +255,9 @@ public class PlayerSelectState extends ExtendedTWLState {
 				createLabel("Username:", posX.A.get(), posY.D.get(), true));
 		widgets.put("EDIT_USERNAME",
 				createEditField(posX.C.get(), posY.D.get(), false));
-		widgets.put("LABEL_FULLNAME",
-				createLabel("Ganzer Name:", posX.A.get(), posY.F.get(), true));
-		widgets.put("EDIT_FULLNAME",
-				createEditField(posX.C.get(), posY.F.get(), false));
 		widgets.put(
 				"BTN_SAVE_PLAYER_TO_LIST",
-				createButton("Spieler speichern", savePlayerClick(),
+				createButton("in Liste speichern", savePlayerClick(),
 						posX.M.get(), posY.C.get()));
 		widgets.put(
 				"BTN_DELETE_PLAYER",

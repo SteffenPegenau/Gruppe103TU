@@ -57,7 +57,6 @@ public class GameSetupState extends ExtendedTWLState {
 			public void run() {
 				PlayerSelectState selectState = new PlayerSelectState(state,
 						SID, player, arrayIndex, game);
-				// game.init(container);
 				game.addState(selectState);
 				StateBasedEntityManager.getInstance().addState(SID);
 				game.enterState(SID);
@@ -82,7 +81,7 @@ public class GameSetupState extends ExtendedTWLState {
 
 			@Override
 			public void run() {
-				if (PlayerList.usernamesOkay(players)) {
+				if (players[0] != null && players[1] != null && PlayerList.usernamesOkay(players)) {
 					int rounds = getEnteredNumberOfRounds();
 					if (PlayerList.usernamesOkay(players) && rounds > 0) {
 						players[0].addRoundPlayed();
