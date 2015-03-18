@@ -77,7 +77,7 @@ public class Serializer {
 	        out.writeObject(o.getClass().cast(o));
 	        out.close();
 	        fileOut.close();
-	        //System.out.println("Serialized object is saved in " + filename);
+	        System.out.println("Serialized object is saved in " + filename);
 	      }catch(NotSerializableException e) {
 	    	  System.out.println("Object to be saved does not implement java.io.Serializable!");
 	    	  e.printStackTrace();
@@ -116,7 +116,7 @@ public class Serializer {
 		Class<?> clazz = o.getClass();
 	      try
 	      {
-	         FileInputStream fileIn = new FileInputStream("save" + File.separator + filename + ".ser");
+	         FileInputStream fileIn = new FileInputStream("save" + File.separator + filename + ".hsc");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         restored = clazz.cast(in.readObject());
 	         in.close();

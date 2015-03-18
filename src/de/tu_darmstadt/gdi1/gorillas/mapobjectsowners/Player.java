@@ -111,6 +111,7 @@ public class Player extends Owner implements java.io.Serializable, Comparable<Pl
 	}
 
 	public String toString() {
+		/*
 		StringBuilder sb = new StringBuilder();
 		sb.append("User: " + getUsername());
 		sb.append("\t");
@@ -128,6 +129,8 @@ public class Player extends Owner implements java.io.Serializable, Comparable<Pl
 		sb.append("\t");
 
 		return sb.toString();
+		*/
+		return getUsername();
 	}
 
 	public boolean isUsernameEmpty() {

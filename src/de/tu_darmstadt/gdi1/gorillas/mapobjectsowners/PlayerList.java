@@ -90,17 +90,17 @@ public class PlayerList extends Player implements java.io.Serializable {
 		return list.players.get(username);
 	}
 
-	public ArrayList<Player> getPlayers() {
+	public static ArrayList<Player> getPlayers() {
+		PlayerList playerList = PlayerList.restorePlayerList();
 		ArrayList<Player> list = new ArrayList<Player>();
-		for (Entry<String, Player> entry : players.entrySet()) {
+		for (Entry<String, Player> entry : playerList.players.entrySet()) {
 			list.add((Player) entry.getValue());
 		}
 		return list;
 	}
 
 	public void addPlayer(Player player) {
-		String username = player.getUsername();
-		players.put(username, player);
+		players.put(player.getUsername(), player);
 	}
 
 	public static void savePlayerList(SimpleChangableListModel<Player> model) {
