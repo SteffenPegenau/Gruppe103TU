@@ -11,22 +11,14 @@ public class Player extends Owner implements java.io.Serializable {
 
 	private static final long serialVersionUID = -6462859935769741215L;
 	private String username = "";
-	private String fullname = "";
-	private String password;
-	private int highscore;
-	private int money;
-	private int roundsPlayed;
-	private int wonRounds = 0;
-	private double percentageWon;
-	private int numberOfThrownObjects;
-	private int numberOfHits;
-	private double accuracy;
+	private int roundsPlayed = 0;
+	private int roundsWon = 0;
+	private double percentageWon = 0;
+	private int numberOfThrows = 0;
+	private int numberOfHits = 0;
+	private double accuracy = 0;
 	public boolean isInitialised = false;
-	private int xPos;
-	private int yPos;
-	private double angle;
-	private double velocity;
-
+	
 	protected int lifesLeft = 1;
 
 	public String enteredAngle = "0";
@@ -34,9 +26,6 @@ public class Player extends Owner implements java.io.Serializable {
 
 	private int arrayIndex;
 
-	//
-	// Constructors
-	//
 	 public Player(String username) {
 	 this.username = username;
 	 isInitialised = true;
@@ -45,18 +34,6 @@ public class Player extends Owner implements java.io.Serializable {
 	 public Player() {
 	
 	 }
-	/**
-	 * @param username
-	 * @param fullname
-	 */
-	public Player(String username, String fullname, int roundsPlayed) {
-		this.username = username;
-		this.fullname = fullname;
-		this.roundsPlayed = roundsPlayed;
-//		this.wonRounds = wonRounds;
-//		this.percentageWon = percentageWon;
-//		this.accuracy = accuracy;
-	}
 
 	public String getUsername() {
 		return username;
@@ -64,38 +41,6 @@ public class Player extends Owner implements java.io.Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getFullname() {
-		return fullname;
-	}
-
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public int getHighscore() {
-		return highscore;
-	}
-
-	public void setHighscore(int highscore) {
-		this.highscore = highscore;
-	}
-
-	public int getMoney() {
-		return money;
-	}
-
-	public void setMoney(int money) {
-		this.money = money;
 	}
 
 	public int getRoundsPlayed() {
@@ -107,11 +52,11 @@ public class Player extends Owner implements java.io.Serializable {
 	}
 
 	public int getWonRounds() {
-		return wonRounds;
+		return roundsWon;
 	}
 
 	public void setWonRounds(int wonRounds) {
-		this.wonRounds += wonRounds;
+		this.roundsWon += wonRounds;
 	}
 
 	public double getPercentageWon() {
@@ -123,11 +68,11 @@ public class Player extends Owner implements java.io.Serializable {
 	}
 
 	public int getNumberOfThrownObjects() {
-		return numberOfThrownObjects;
+		return numberOfThrows;
 	}
 
 	public void setNumberOfThrownObjects(int numberOfThrownObjects) {
-		this.numberOfThrownObjects = numberOfThrownObjects;
+		this.numberOfThrows = numberOfThrownObjects;
 	}
 
 	public int getNumberOfHits() {
@@ -156,22 +101,6 @@ public class Player extends Owner implements java.io.Serializable {
 
 	public String toString() {
 		return this.username;
-	}
-
-	public int getX() {
-		return xPos;
-	}
-
-	public int getY() {
-		return yPos;
-	}
-
-	public double getAngle() {
-		return angle;
-	}
-
-	public double getVelocity() {
-		return velocity;
 	}
 
 	public boolean isUsernameEmpty() {

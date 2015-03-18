@@ -103,10 +103,6 @@ public class ThrowForm {
 	 */
 	private void initiallyDrawInputForm() {
 		// Fügt erst alle Elemente ohne Position hinzu
-		widgets.put("PLAYER_1_NAME", gameplayState.createLabel(
-				gameplayState.getPlayer1Name(), 0, 0, true));
-		widgets.put("PLAYER_2_NAME", gameplayState.createLabel(
-				gameplayState.getPlayer2Name(), 0, 0, true));
 		widgets.put("FORM_BUTTON_THROW",
 				gameplayState.createButton("Wurf!", buttonThrowClicked(), 0, 0));
 		widgets.put("FORM_LABEL_ANGLE",
@@ -259,8 +255,6 @@ public class ThrowForm {
 		adjustOffset();
 		int posX = formOffsetX;
 		int posY = FORM_OFFSET_Y;
-		widgets.get("PLAYER_1_NAME").setPosition(posX, posY - 30);
-		widgets.get("PLAYER_2_NAME").setPosition(posX + 500, posY - 30);
 		widgets.get("FORM_LABEL_ANGLE").setPosition(posX, posY);
 		widgets.get("FORM_EDIT_ANGLE").setPosition(posX + FORM_DISTANCE_X,
 				posY - 20);
