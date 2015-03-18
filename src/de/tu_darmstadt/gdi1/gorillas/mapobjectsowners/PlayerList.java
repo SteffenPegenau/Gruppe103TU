@@ -46,9 +46,11 @@ public class PlayerList extends Player implements java.io.Serializable {
 	 *            Zu speichernder/ändernder Spieler
 	 */
 	public static void savePlayer(Player player) {
-		PlayerList list = (PlayerList) Serializer.restore(new PlayerList());
-		list.players.put(player.getUsername(), player);
-		list.savePlayerList();
+		if(player != null) {
+			PlayerList list = (PlayerList) Serializer.restore(new PlayerList());
+			list.players.put(player.getUsername(), player);
+			list.savePlayerList();
+		}	
 	}
 
 	/**
