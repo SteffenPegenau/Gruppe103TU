@@ -42,7 +42,8 @@ public class GameplayState extends ExtendedTWLState {
 	/*
 	 * Setzt die Spieler
 	 */
-	public GameplayState(int sid, Player[] players, int rounds) {
+	// TODO: WINDPFEIL!!!
+	public GameplayState(int sid, Player[] players, int rounds, double gravity) {
 		super(sid);
 		if (players.length != 2) {
 			System.err.println("Bad number of players: " + players.length);
@@ -60,6 +61,7 @@ public class GameplayState extends ExtendedTWLState {
 			playersStatisticInformation();
 			widgets.put("DIALOG_OWNER", new Widget());
 			throwForm = new ThrowForm(this, currentPlayer);
+			this.gravity = gravity;
 		}
 	}
 
@@ -80,6 +82,7 @@ public class GameplayState extends ExtendedTWLState {
 			skyline.createSkyline();
 			for (int i = 0; i < players.length; i++) {
 				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
+				players[i].getPlayersFigure().getWeapon().setGravityInput(gravity);
 				players[i].getPlayersFigure().setPosition(
 						skyline.randomBuildingForPlayer(i));
 				entityManager.addEntity(stateID, players[i].getPlayersFigure());

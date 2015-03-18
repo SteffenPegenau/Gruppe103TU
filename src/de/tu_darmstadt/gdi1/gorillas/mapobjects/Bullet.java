@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> 55c40a66a5412c06f58d4e59adc5f0649ae1a05a
 package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 
 import java.math.BigDecimal;
@@ -213,14 +210,14 @@ public class Bullet extends MapObject {
 		System.out.println("Windstärke: " + windS);
 		double y = posY0
 				- velocityY * scaledTimeOfExistence
-				+ 0.5 * getGravity() * Math.pow(scaledTimeOfExistence, 2) + windS;
+				+ 0.5 * getGravity() * Math.pow(scaledTimeOfExistence, 2);
 		System.out.println("Gravitation: " + getGravity());
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
 		// System.out.println("New Position: " + newPosition);
 		// TODO: Umsetzen des Dotzen:
 		/*
 		 * Beispielcode:
-		 * if (y == 700 && bullet.spped < 25) {
+		 * if (y == 600 && bullet.spped < 25) {
 		 *     alles auf null setzen 
 		 *     return newPosition;
 		 * 
@@ -437,9 +434,8 @@ public class Bullet extends MapObject {
 	public static double getGravity() {
 		return GRAVITY;
 	}
-
-<<<<<<< HEAD
 }
+
 
 //package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 //
@@ -850,6 +846,3 @@ public class Bullet extends MapObject {
 //	}
 //
 //}
-=======
-}
->>>>>>> 55c40a66a5412c06f58d4e59adc5f0649ae1a05a

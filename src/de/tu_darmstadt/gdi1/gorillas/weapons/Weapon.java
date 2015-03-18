@@ -19,10 +19,12 @@ public abstract class Weapon {
 		// Used to build the name for the bullet (it's an entity)
 		protected int projectileCounter;
 		protected int ammunition;
+		protected double gravityInput;
 		
 		public Weapon () {
 			projectileCounter = 0;
 		}
+		
 		
 		/**
 		 * Set the value of ammunition
@@ -74,6 +76,7 @@ public abstract class Weapon {
 			player.countANewShot();
 			Bullet projectile = newBulletAsEntity(player, fig);
 			//projectile.setPosition(fig.getPosition());
+			projectile.setGravity(getGravityInput());
 			projectile.setGameplayState(state);
 			projectile.addEvents();
 			projectile.setPosX0(fig.getPosition().x);
@@ -89,5 +92,15 @@ public abstract class Weapon {
 			projectileCounter++;
 			setProjectileCounter(projectileCounter);
 			return projectile;
+		}
+
+
+		public double getGravityInput() {
+			return gravityInput;
+		}
+
+
+		public void setGravityInput(double gravityInput) {
+			this.gravityInput = gravityInput;
 		}
 }

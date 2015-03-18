@@ -83,12 +83,13 @@ public class GameSetupState extends ExtendedTWLState {
 			public void run() {
 				if (players[0] != null && players[1] != null && PlayerList.usernamesOkay(players)) {
 					int rounds = getEnteredNumberOfRounds();
-					if (PlayerList.usernamesOkay(players) && rounds > 0) {
+					double gravityInput = getEnteredGravity();
+					if (PlayerList.usernamesOkay(players) && rounds > 0 && gravityInput >= 0) {
 						players[0].addRoundPlayed();
 						players[1].addRoundPlayed();
 						
 						GameplayState gamePlayState = new GameplayState(
-								Gorillas.GAMEPLAYSTATE, players, rounds);
+								Gorillas.GAMEPLAYSTATE, players, rounds, gravityInput);
 						game.addState(gamePlayState);
 						StateBasedEntityManager.getInstance().addState(
 								Gorillas.GAMEPLAYSTATE);
@@ -117,6 +118,22 @@ public class GameSetupState extends ExtendedTWLState {
 	public int getEnteredNumberOfRounds() {
 		EditField roundsEdit = (EditField) widgets.get("EDIT_NR_OF_ROUNDS");
 		String input = roundsEdit.getText();
+		if (input.isEmpty()) {
+			return -1;
+		} else {
+			return Integer.valueOf(input);
+		}
+
+	}
+	
+	/**
+	 * Ermittelt die Eingabe bei Anzahl der Gravitation
+	 * 
+	 * @return -1, wenn leer, sonst: Eingebene Zahl
+	 */
+	public double getEnteredGravity() {
+		EditField gravityEdit = (EditField) widgets.get("EDITGRAVITY");
+		String input = gravityEdit.getText();
 		if (input.isEmpty()) {
 			return -1;
 		} else {
