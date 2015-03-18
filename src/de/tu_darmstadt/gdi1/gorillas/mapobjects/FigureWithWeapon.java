@@ -36,7 +36,7 @@ public class FigureWithWeapon extends MapObject {
 			float posX = positionBuilding.getX();
 			float posY = positionBuilding.getY();
 			posY -= building.getHeight() / 2 + image.getHeight() / 2;
-			System.out.println("Set position: " + posX + " | " + posY);
+			//System.out.println("Set position: " + posX + " | " + posY);
 			return new Vector2f(posX, posY);
 			
 		}

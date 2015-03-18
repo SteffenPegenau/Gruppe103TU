@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.EditField;
@@ -29,6 +28,8 @@ public class ThrowForm {
 
 	// private boolean isVisible = true;
 	private int currentPlayer;
+	
+	private boolean visible;
 
 	public ThrowForm(GameplayState state, int currentPlayer) {
 		widgets = state.getWidgets();
@@ -83,6 +84,7 @@ public class ThrowForm {
 	 */
 	public void setVisibility(boolean visibility) {
 		// this.isVisible = visibility;
+		visible = visibility;
 		for (Map.Entry<String, Widget> entry : getFormWidgets().entrySet()) {
 			entry.getValue().setVisible(visibility);
 		}
@@ -125,14 +127,6 @@ public class ThrowForm {
 		// Setze callback für Eingabefelder zur Kontrolle der Eingabe
 		addNumberInputCheck((EditField) widgets.get("FORM_EDIT_ANGLE"), 360);
 		addNumberInputCheck((EditField) widgets.get("FORM_EDIT_VELOCITY"), 200);
-	}
-
-	private String getCurrentPlayerName() {
-		if (currentPlayer == 0) {
-			return gameplayState.getPlayer1Name();
-		} else {
-			return gameplayState.getPlayer2Name();
-		}
 	}
 
 	/**
@@ -231,7 +225,6 @@ public class ThrowForm {
 					Weapon weapon = fig.getWeapon();
 					Bullet bullet = weapon
 							.shot(player, fig, angle, velocity, state);
-
 					entityManager.addEntity(state.getID(), bullet);
 					state.addBullet(bullet);
 					throwForm.saveEnteredValues(throwForm.currentPlayer);
@@ -276,7 +269,6 @@ public class ThrowForm {
 		EditField editAngle = (EditField) widgets.get("FORM_EDIT_ANGLE");
 		String input = editAngle.getText();
 		if (input.isEmpty()) {
-			System.out.println("Empty angle!");
 			return -1.0;
 		} else {
 			return Double.parseDouble(input);
@@ -359,4 +351,9 @@ public class ThrowForm {
 		}
 
 	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
 }

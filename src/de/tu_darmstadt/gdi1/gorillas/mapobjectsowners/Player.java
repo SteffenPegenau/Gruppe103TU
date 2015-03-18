@@ -3,7 +3,7 @@ package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 /**
  * Class Player
  */
-public class Player extends Owner implements java.io.Serializable {
+public class Player extends Owner implements java.io.Serializable, Comparable<Player> {
 	/**
 	 * 
 	 */
@@ -17,8 +17,9 @@ public class Player extends Owner implements java.io.Serializable {
 	private int numberOfThrows = 0;
 	private int numberOfHits = 0;
 	private double accuracy = 0;
+	private double throwsForAHit = 0.0;
 	public boolean isInitialised = false;
-	
+
 	protected int lifesLeft = 1;
 
 	public String enteredAngle = "0";
@@ -26,14 +27,14 @@ public class Player extends Owner implements java.io.Serializable {
 
 	private int arrayIndex;
 
-	 public Player(String username) {
-	 this.username = username;
-	 isInitialised = true;
-	 };
-	
-	 public Player() {
-	
-	 }
+	public Player(String username) {
+		this.username = username;
+		isInitialised = true;
+	};
+
+	public Player() {
+
+	}
 
 	public String getUsername() {
 		return username;
@@ -41,6 +42,7 @@ public class Player extends Owner implements java.io.Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+		updateStatistics();
 	}
 
 	public int getRoundsPlayed() {
@@ -49,6 +51,7 @@ public class Player extends Owner implements java.io.Serializable {
 
 	public void setRoundsPlayed(int roundsPlayed) {
 		this.roundsPlayed = roundsPlayed;
+		updateStatistics();
 	}
 
 	public int getWonRounds() {
@@ -57,14 +60,19 @@ public class Player extends Owner implements java.io.Serializable {
 
 	public void setWonRounds(int wonRounds) {
 		this.roundsWon += wonRounds;
+		updateStatistics();
 	}
 
-	public double getPercentageWon() {
-		return percentageWon;
+	public int getPercentageWon() {
+		int percentage = (int) Math.round(percentageWon * 100);
+		//System.out.println("getPercentageWon(): " + percentageWon + " => "
+		//		+ percentage);
+		return percentage;
 	}
 
 	public void setPercentageWon(int wonRounds, int playedRounds) {
 		this.percentageWon = (wonRounds / playedRounds);
+		updateStatistics();
 	}
 
 	public int getNumberOfThrownObjects() {
@@ -73,6 +81,7 @@ public class Player extends Owner implements java.io.Serializable {
 
 	public void setNumberOfThrownObjects(int numberOfThrownObjects) {
 		this.numberOfThrows = numberOfThrownObjects;
+		updateStatistics();
 	}
 
 	public int getNumberOfHits() {
@@ -81,6 +90,7 @@ public class Player extends Owner implements java.io.Serializable {
 
 	public void setNumberOfHits(int numberOfHits) {
 		this.numberOfHits = numberOfHits;
+		updateStatistics();
 	}
 
 	public double getAccuracy() {
@@ -89,6 +99,7 @@ public class Player extends Owner implements java.io.Serializable {
 
 	public void setAccuracy(double accuracy) {
 		this.accuracy = accuracy;
+		updateStatistics();
 	}
 
 	public boolean isInitialised() {
@@ -100,7 +111,23 @@ public class Player extends Owner implements java.io.Serializable {
 	}
 
 	public String toString() {
-		return this.username;
+		StringBuilder sb = new StringBuilder();
+		sb.append("User: " + getUsername());
+		sb.append("\t");
+		sb.append("Rounds Played: " + getRoundsPlayed());
+		sb.append("\t");
+		sb.append("Rounds Won: " + getWonRounds());
+		sb.append("\t");
+		sb.append("Ratio: " + getPercentageWon());
+		sb.append("\t");
+		sb.append("Throws: " + getNumberOfThrownObjects());
+		sb.append("\t");
+		sb.append("Hits: " + getNumberOfHits());
+		sb.append("\t");
+		sb.append("Throws for a hit: " + getThrowsForAHit());
+		sb.append("\t");
+
+		return sb.toString();
 	}
 
 	public boolean isUsernameEmpty() {
@@ -132,6 +159,8 @@ public class Player extends Owner implements java.io.Serializable {
 	 * hat
 	 */
 	public void hitEnemyFigure() {
+		numberOfHits++;
+		updateStatistics();
 		System.out.println("Spieler " + getUsername() + " <" + getArrayIndex()
 				+ "> hat gegnerische Figur getroffen!");
 	}
@@ -171,8 +200,102 @@ public class Player extends Owner implements java.io.Serializable {
 		return (p.getArrayIndex() == 0) ? 1 : 0;
 	}
 
-	//
-	// Other methods
-	//
+	public double getThrowsForAHit() {
+		return throwsForAHit;
+	}
+
+	/**
+	 * Fügt dem Spieler eine weitere gespielte Runde hinzu
+	 */
+	public void addRoundPlayed() {
+		roundsPlayed++;
+		updateStatistics();
+	}
+
+	/**
+	 * Wird ausgeführt, wenn Spieler gewonnen hat
+	 */
+	public void won() {
+		roundsWon++;
+		updateStatistics();
+	}
+
+	/**
+	 * Berechnet alle Statistischen Werte neu
+	 */
+	public void updateStatistics() {
+		calculatePercentageWon();
+		calculateThrowsForHit();
+		PlayerList.savePlayer(this);
+	}
+
+	/**
+	 * Zählt den Wurf-Zähler um 1 hoch
+	 */
+	public void countANewShot() {
+		numberOfThrows++;
+		updateStatistics();
+	}
+
+	/**
+	 * Berechnet neu, wie viele Würfe der Spieler für einen Treffer braucht
+	 */
+	private void calculateThrowsForHit() {
+		if (getRoundsWon() == 0) {
+			throwsForAHit = 0;
+		} else {
+			throwsForAHit = numberOfThrows / getRoundsWon();
+		}
+	}
+
+	/**
+	 * Berechnet das Verhältnis gewonnene Spiele/gespielte Spiele neu
+	 */
+	private void calculatePercentageWon() {
+		if (roundsPlayed == 0) {
+			percentageWon = 0;
+		} else {
+			percentageWon = (double) roundsWon / roundsPlayed;
+		}
+	}
+
+	public int getRoundsWon() {
+		return roundsWon;
+	}
+
+	public void setRoundsWon(int roundsWon) {
+		this.roundsWon = roundsWon;
+	}
+
+	public int getNumberOfThrows() {
+		return numberOfThrows;
+	}
+
+	public void setNumberOfThrows(int numberOfThrows) {
+		this.numberOfThrows = numberOfThrows;
+	}
+
+	public void setPercentageWon(double percentageWon) {
+		this.percentageWon = percentageWon;
+	}
+
+	@Override
+	public int compareTo(Player o) {
+		if(getPercentageWon() > o.getPercentageWon()) {
+			return -1;
+		} else if(getPercentageWon() < o.getPercentageWon()) {
+			return 1;
+		} else if(getPercentageWon() == o.getPercentageWon()) {
+			if(getThrowsForAHit() < o.getThrowsForAHit()) {
+				return -1;
+			} else if(getThrowsForAHit() > o.getThrowsForAHit()) {
+				return 1;
+			} else if(getThrowsForAHit() == o.getThrowsForAHit()){
+				return 0;
+			}
+		}
+		return -1;
+	}
+
 
 }

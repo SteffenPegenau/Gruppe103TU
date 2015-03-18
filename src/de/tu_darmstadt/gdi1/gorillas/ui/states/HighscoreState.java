@@ -33,6 +33,11 @@ public class HighscoreState extends ExtendedTWLState {
 	protected RootPane createRootPane() {
 		// erstelle die RootPane
 		RootPane rp = super.createRootPane();
+		
+
+		entityManager.addEntity(stateID, setBackground(DEFAULT_BACKGROUND));
+		addESCListener(Gorillas.MAINMENUSTATE);
+		
 		createTableHeader();
 		createTableContent();
 		addAllWidgetsToRootPane(widgets);
@@ -47,7 +52,7 @@ public class HighscoreState extends ExtendedTWLState {
 		widgets.put(prefix + "_ROUNDS_PLAYED", createLabel("Runden gespielt", COLUMN_ROUNDS_PLAYED, posY.A.get(), true));
 		widgets.put(prefix + "_ROUNDS_WON", createLabel("Runden gewonnen", COLUMN_ROUNDS_WON, posY.A.get(), true));
 		widgets.put(prefix + "_PLAYED_WON_RATIO", createLabel("Verhältnis", COLUMN_PLAYED_WON_RATIO, posY.A.get(), true));
-		widgets.put(prefix + "_ACCURACY", createLabel("Würfe/Treffer", COLUMN_ACCURACY, posY.A.get(), true));
+		widgets.put(prefix + "_THROWS_FOR_HIT", createLabel("Würfe/Treffer", COLUMN_ACCURACY, posY.A.get(), true));
 	}
 	
 	protected void createTableContent() {
@@ -60,7 +65,7 @@ public class HighscoreState extends ExtendedTWLState {
 			String roundsPlayed = String.valueOf(p.getRoundsPlayed());
 			String roundsWon = String.valueOf(p.getWonRounds());
 			String ratio = String.valueOf(p.getPercentageWon());
-			String accuracy = String.valueOf(p.getAccuracy());
+			String throwsForHit = String.valueOf(p.getThrowsForAHit());
 			
 			
 			String prefix = "LABEL_RANK" + i;
@@ -69,7 +74,7 @@ public class HighscoreState extends ExtendedTWLState {
 			widgets.put(prefix + "_ROUNDS_PLAYED", createLabel(roundsPlayed, COLUMN_ROUNDS_PLAYED, y, true));
 			widgets.put(prefix + "_ROUNDS_WON", createLabel(roundsWon, COLUMN_ROUNDS_WON, y, true));
 			widgets.put(prefix + "_PLAYED_WON_RATIO", createLabel(ratio, COLUMN_PLAYED_WON_RATIO, y, true));
-			widgets.put(prefix + "_ACCURACY", createLabel(accuracy, COLUMN_ACCURACY, y, true));
+			widgets.put(prefix + "_THROWS_FOR_HIT", createLabel(throwsForHit, COLUMN_ACCURACY, y, true));
 			y += ROW_HEIGHT;
 		}
 	}
@@ -79,7 +84,5 @@ public class HighscoreState extends ExtendedTWLState {
 			throws SlickException {
 		super.init(container, game);
 		
-		entityManager.addEntity(stateID, setBackground(DEFAULT_BACKGROUND));
-		addESCListener(Gorillas.MAINMENUSTATE);
 	}
 }

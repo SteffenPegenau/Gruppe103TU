@@ -1,13 +1,7 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -28,6 +22,8 @@ public class PlayerList extends Player implements java.io.Serializable {
 	public static final String ERROR_MSG_EQUAL_USERNAMES = "USERNAMES MUST NOT BE EQUAL!";
 
 	public static final String DEFAULT_FILE = "/assets/gorillas.playerscores/HighscoreList.hsc";
+
+	protected static final int HIGHSCORE_SIZE = 10;
 	//
 	// Fields
 	//
@@ -38,21 +34,21 @@ public class PlayerList extends Player implements java.io.Serializable {
 	public PlayerList() {
 		players = new HashMap<String, Player>();
 	}
-	
+
 	/**
 	 * Ergänzt/Ändert Spieler in der Liste und speichert
 	 * 
 	 * Statisch => kann ohne jede Initialisierung genutzt werden
 	 * 
-	 * Beispiel:
-	 * PlayerList.AddPlayer(player);
+	 * Beispiel: PlayerList.AddPlayer(player);
 	 * 
-	 * @param player Zu speichernder/ändernder Spieler
+	 * @param player
+	 *            Zu speichernder/ändernder Spieler
 	 */
 	public static void savePlayer(Player player) {
-			PlayerList list = (PlayerList) Serializer.restore(new PlayerList());
-			list.players.put(player.getUsername(), player);
-			list.savePlayerList();
+		PlayerList list = (PlayerList) Serializer.restore(new PlayerList());
+		list.players.put(player.getUsername(), player);
+		list.savePlayerList();
 	}
 
 	/**
@@ -87,8 +83,9 @@ public class PlayerList extends Player implements java.io.Serializable {
 	 *            Der Username des gesuchten Spielers
 	 * @return Spieler-Objekt
 	 */
-	public Player getPlayer(String username) {
-		return players.get(username);
+	public static Player getPlayer(String username) {
+		PlayerList list = PlayerList.restorePlayerList();
+		return list.players.get(username);
 	}
 
 	public ArrayList<Player> getPlayers() {
@@ -98,13 +95,11 @@ public class PlayerList extends Player implements java.io.Serializable {
 		}
 		return list;
 	}
-	
-	
+
 	public void addPlayer(Player player) {
 		String username = player.getUsername();
 		players.put(username, player);
 	}
-	
 
 	public static void savePlayerList(SimpleChangableListModel<Player> model) {
 		PlayerList list = new PlayerList();
@@ -146,33 +141,51 @@ public class PlayerList extends Player implements java.io.Serializable {
 	public int size() {
 		return players.size();
 	}
-	
-	public ArrayList<Player> highscoreList (HashMap<String, Player> hmpl) {
-		highscoreList = new ArrayList<Player>(hmpl.values());
-		highscoreList.stream().map(p -> p.getWonRounds()).sorted().limit(10);
-		return highscoreList;
+
+	public static void deleteAllPlayers() {
+		PlayerList list = new PlayerList();
+		list.savePlayerList();
 	}
-	
+
 	/**
 	 * Erzeugt die für den Highscore sortiere PlayerList als Array der Länghe 10
+	 * 
 	 * @return Array für Highscore
 	 */
 	public static Player[] getHighscore() {
-		Player[] highscore = new Player[10];
-		
-		// Initialisiert den Highscore leer, 
-		//falls es weniger als 10 gespeicherte Spieler gibt
-		for (int i = 0; i < highscore.length; i++) {
-			highscore[i] = new Player("leer");
+
+		// Alle Spieler holen und sortieren
+		PlayerList list = restorePlayerList();
+		Player[] highscore = new Player[list.size()];
+		List<Player> allPlayers = new ArrayList<Player>(list
+				.getPlayersAsHashMap().values());
+		Collections.sort(allPlayers);
+
+		// die ersten 10 Spieler der sortierten Liste zu Array hinzufügen
+		int counter = 0;
+		for (Player p : allPlayers) {
+			highscore[counter] = p;
+			counter++;
 		}
-		
-		
-		
-		//PlayerList list = restorePlayerList();
-		
+
 		return highscore;
 	}
-	
-}
 
-	
+	/**
+	 * Gibt den Spieler zurück, der im Highscore an i-ter Stelle steht, null,
+	 * wenn i ungültig
+	 * 
+	 * @param i
+	 *            Stelle des Spielers, bei 0 beginnend
+	 * @return Spieler, wenn i gültig. Sonst: null
+	 */
+	public static Player getPositionOfHighscore(int i) {
+		Player[] players = PlayerList.getHighscore();
+		if (i < 0 || i >= players.length) {
+			return null;
+		} else {
+			return players[i];
+		}
+	}
+
+}
