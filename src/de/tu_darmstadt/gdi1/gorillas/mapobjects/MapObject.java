@@ -5,6 +5,7 @@ import java.util.Random;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 
@@ -21,13 +22,15 @@ public class MapObject extends Entity {
 
 	
 	public void setFigureImage(String pathToImage) {
-		try {
-			//System.out.println("Figure Image: " + pathToImage);
-			image = new Image(pathToImage);
-		} catch (SlickException e) {
-			e.printStackTrace();
+		if(!TestGorillas.debug) {
+			try {
+				//System.out.println("Figure Image: " + pathToImage);
+				image = new Image(pathToImage);
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			this.addComponent(new ImageRenderComponent(image));
 		}
-		this.addComponent(new ImageRenderComponent(image));
 	}
 	
 	/**

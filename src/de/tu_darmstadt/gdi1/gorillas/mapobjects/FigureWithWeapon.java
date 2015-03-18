@@ -26,6 +26,9 @@ public class FigureWithWeapon extends MapObject {
 		public final static boolean DEBUG = Gorillas.debug;
 		Graphics2D building;
 		
+		int imageHeight = 0;
+		int imageWidth = 0;
+		
 		public FigureWithWeapon(String entityID) {
 			super(entityID);
 			
@@ -35,7 +38,10 @@ public class FigureWithWeapon extends MapObject {
 			Vector2f positionBuilding = building.getPosition();
 			float posX = positionBuilding.getX();
 			float posY = positionBuilding.getY();
-			posY -= building.getHeight() / 2 + image.getHeight() / 2;
+			if(imageHeight == 0) {
+				imageHeight = image.getHeight();
+			}
+			posY -= building.getHeight() / 2 + imageHeight / 2;
 			//System.out.println("Set position: " + posX + " | " + posY);
 			return new Vector2f(posX, posY);
 			
@@ -43,6 +49,10 @@ public class FigureWithWeapon extends MapObject {
 		
 		public void setPosition(Building building) {
 			super.setPosition(positionOnBuilding(building));
+		}
+		
+		public void setPostion(Vector2f position) {
+			super.setPosition(position);
 		}
 		//
 		// Methods
@@ -90,5 +100,21 @@ public class FigureWithWeapon extends MapObject {
 
 		public void setOwner(Player owner) {
 			this.owner = owner;
+		}
+
+		public int getImageHeight() {
+			return imageHeight;
+		}
+
+		public void setImageHeight(int imageHeight) {
+			this.imageHeight = imageHeight;
+		}
+
+		public int getImageWidth() {
+			return imageWidth;
+		}
+
+		public void setImageWidth(int imageWidth) {
+			this.imageWidth = imageWidth;
 		}
 }

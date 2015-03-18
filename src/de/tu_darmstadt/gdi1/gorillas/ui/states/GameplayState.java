@@ -288,4 +288,12 @@ public class GameplayState extends ExtendedTWLState {
 		widgets.put("Leben2",
 				createLabel("", posX.K.get() + 125, posY.A.get() - 30, true));
 	}
+
+	public Skyline getSkyline() {
+		return skyline;
+	}
+
+	public void setSkyline(Skyline skyline) {
+		this.skyline = skyline;
+	}
 }

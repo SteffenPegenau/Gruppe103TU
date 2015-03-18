@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.Gorilla;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.GameplayState;
+import eea.engine.entity.StateBasedEntityManager;
 
 public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
+	public Skyline skyline;
 
 	public GorillasTestAdapterExtended1() {
 		super();
@@ -62,8 +66,30 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 */
 	public void createRandomMap(int frameWidth, int frameHeight,
 			int gorillaWidth, int gorillaHeight) {
-
-		// TODO: Implement
+		StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
+		skyline = new Skyline(entityManager, Gorillas.GAMEPLAYSTATE, 8, false);
+		skyline.setFrameHeight(frameHeight);
+		skyline.setFrameWidth(frameWidth);
+		skyline.setGorillaWidth(gorillaWidth);
+		skyline.setGorillaWidth(gorillaWidth);
+		
+		Gorilla g1 = new Gorilla("g1");
+		g1.setImageHeight(gorillaHeight);
+		g1.setImageWidth(gorillaWidth);
+		
+		Gorilla g2 = new Gorilla("g2");
+		g2.setImageHeight(gorillaHeight);
+		g2.setImageWidth(gorillaWidth);
+				
+		skyline.createSkyline();
+		
+		g1.setPosition(skyline.randomBuildingForPlayer(0));
+		//entityManager.addEntity(Gorillas.GAMEPLAYSTATE, g1);
+		skyline.setFigureWithWeapon(0, g1);
+		
+		g2.setPosition(skyline.randomBuildingForPlayer(1));
+		//entityManager.addEntity(Gorillas.GAMEPLAYSTATE, g2);
+		skyline.setFigureWithWeapon(1, g2);
 	}
 
 	/**
@@ -85,8 +111,22 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	public void createCustomMap(int paneWidth, int paneHeight, int yOffsetCity,
 			ArrayList<Vector2f> buildingCoordinates,
 			Vector2f leftGorillaCoordinate, Vector2f rightGorillaCoordinate) {
-
-		// TODO: Implement
+		StateBasedEntityManager entityManager = StateBasedEntityManager.getInstance();
+		skyline = new Skyline(entityManager, Gorillas.GAMEPLAYSTATE, buildingCoordinates.size(), false);
+		skyline.setFrameHeight(paneHeight);
+		skyline.setFrameWidth(paneWidth);
+		skyline.createSkyline(buildingCoordinates);
+		
+		Gorilla g1 = new Gorilla("g1");
+		Gorilla g2 = new Gorilla("g2");
+		
+		g1.setPosition(leftGorillaCoordinate);
+		entityManager.addEntity(Gorillas.GAMEPLAYSTATE, g1);
+		skyline.setFigureWithWeapon(0, g1);
+		
+		g2.setPosition(rightGorillaCoordinate);
+		entityManager.addEntity(Gorillas.GAMEPLAYSTATE, g2);
+		skyline.setFigureWithWeapon(1, g2);
 	}
 
 	/**
@@ -95,7 +135,10 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * should be set as current map in the game, if the game is in GamePlayState
 	 */
 	public void startCurrrentMap() {
-		// TODO: Implement
+		if(gorillas.getCurrentStateID() == Gorillas.GAMEPLAYSTATE) {
+			GameplayState state = (GameplayState) gorillas.getCurrentState();
+			state.setSkyline(skyline);
+		} 
 	}
 
 	/**
@@ -105,8 +148,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         current map, ordered from left to right
 	 */
 	public ArrayList<Vector2f> getBuildingCoordinates() {
-		// TODO: Implement
-		return null;
+		return skyline.getBuildingCoordinate();
 	}
 
 	/**
@@ -115,8 +157,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the center coordinate of the left gorilla
 	 */
 	public Vector2f getLeftGorillaCoordinate() {
-		// TODO: Implement
-		return null;
+		return skyline.getFigureWithWeapon(0).getPosition();
 	}
 
 	/**
@@ -125,8 +166,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the center coordinate of the right gorilla
 	 */
 	public Vector2f getRightGorillaCoordinate() {
-		// TODO: Implement
-		return null;
+		return skyline.getFigureWithWeapon(1).getPosition();
 	}
 
 	/**
@@ -135,8 +175,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the frameWidth which was used to create the current map
 	 */
 	public float getMapFrameWidth() {
-		// TODO: Implement
-		return -1;
+		return skyline.getFrameWidth();
 	}
 
 	/**
@@ -145,8 +184,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the frameHeight which was used to create the current map
 	 */
 	public float getMapFrameHeight() {
-		// TODO: Implement
-		return -1;
+		return skyline.getFrameHeight();
 	}
 
 	/**
@@ -156,8 +194,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the gorillaHeight which was used to create the current map
 	 */
 	public float getGorillaHeight() {
-		// TODO: Implement
-		return -1;
+		return skyline.getGorillaHeight();
 	}
 
 	/**
@@ -166,8 +203,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the gorillaWidth which was used to create the current map
 	 */
 	public float getGorillaWidth() {
-		// TODO: Implement
-		return -1;
+		return skyline.getGorillaWidth();
 	}
 
 	/**
