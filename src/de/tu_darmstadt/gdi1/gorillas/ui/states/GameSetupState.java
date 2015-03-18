@@ -10,6 +10,7 @@ import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
 import eea.engine.entity.StateBasedEntityManager;
@@ -240,6 +241,26 @@ public class GameSetupState extends ExtendedTWLState {
 		addNumberInputCheck((EditField) widgets.get("EDIT_NR_OF_ROUNDS"), 10);
 		widgets.put("ERRMSGLABEL",
 				createLabel("Please Check Username", 200, 300, false));
+		widgets.put("GRAVITYLABEL", createLabel("Gravity: ", BUTTON_LEFT_X, 250, true));
+		widgets.put("EDITGRAVITY", createEditField(BUTTON_LEFT_X + 120, 250, true, "10"));
+		// TODO: Gravity wird nicht genommen, was passiert wenn Gravity = 0? ARITHMETIC EXCEPTION!
+		addNumberInputCheck((EditField) widgets.get("EDITGRAVITY"), 30);
+		EditField gravityInput = (EditField) widgets.get("EDITGRAVITY");
+		String gI = gravityInput.getText();
+		Bullet.setGravity(Integer.valueOf(gI));
+		
+		// TODO: Wind ein aus
+		widgets.put("WINDLABEL", createLabel("Wind Off/0 On/1: ", BUTTON_LEFT_X, 400, true));
+		widgets.put("EDITWIND", createEditField(BUTTON_LEFT_X + 150, 400, true, "0"));
+		addNumberInputCheck((EditField) widgets.get("EDITWIND"), 1);
+		EditField windInput = (EditField) widgets.get("EDITWIND");
+		String wI = windInput.getText();
+		if (Integer.valueOf(wI) == 0) {
+			Bullet.setwindSOff();
+		} else {
+			Bullet.setwindSOn();
+		}
+		
 		widgets.put(
 				"BUTTON_BACKTOMAINMENU",
 				createButton("Zurück",

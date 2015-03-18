@@ -1,6 +1,7 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -32,6 +33,12 @@ public class GameplayState extends ExtendedTWLState {
 	double windVelocityY;
 	private int currentPlayer;
 	private Player winner = null;
+	public static Random r = new Random();
+	public static int low = -15;
+	public static int high = 15;
+	public static int wind = r.nextInt(high - low) + low; // Wind zwischen -15 bis 15
+	
+	
 	/*
 	 * Setzt die Spieler
 	 */
@@ -79,7 +86,7 @@ public class GameplayState extends ExtendedTWLState {
 			}
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
-			// TODO: Wechsel mit TAB von Eingabefelder addKeyPressedEvent(Input.KEY_TAB, throwForm.)
+			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
 			// addAllWidgetsToRootPane(widgets);
 			skyline.setSkyline_built(true);
 		}
@@ -119,21 +126,6 @@ public class GameplayState extends ExtendedTWLState {
 		return players[currentPlayer];
 	}
 
-	/*
-	 * /** diese Methode wird bei Klick auf den Button ausgeführt, bzw. mit dem
-	 * richtigen keyboard input
-	 * 
-	 * // TODO Methode für keyboard input anpassen und andere Wurfgegenstände //
-	 * vgl. Zeile 272ff. GamplayState Drop of Water void inputFinished() {
-	 * Entity banana = new Entity("banana"); banana.setPosition(new
-	 * Vector2f((Integer) player.getX(), (Integer) player.getY()));
-	 * 
-	 * try { // Bild laden und zuweisen banana.addComponent(new
-	 * ImageRenderComponent(new Image( "assets/gorillas/banana.png"))); } catch
-	 * (SlickException e) {
-	 * System.err.println("Cannot find file assets/gorillas/banana.png!");
-	 * e.printStackTrace(); } }
-	 */
 	public void addBullet(Bullet bullet) {
 		bullets.put(bullet.getID(), bullet);
 		System.out.println("Added bullet " + bullet.getID()
