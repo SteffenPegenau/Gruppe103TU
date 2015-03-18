@@ -24,8 +24,9 @@ import eea.engine.interfaces.IDestructible;
  * Class Bullet
  */
 public class Bullet extends MapObject {
+	
 	public final static double SCALING_FACTOR = (double) 1 / 100;
-	public static double GRAVITY = 10.0;
+	public double gravity = 10.0;
 
 	protected GameplayState gameplayState;
 
@@ -206,8 +207,8 @@ public class Bullet extends MapObject {
 		double scaledTimeOfExistence = SCALING_FACTOR * existenceTimeInms;
 		// TODO wind an aus
 		double x = posX0
-				+ velocityX * scaledTimeOfExistence + windS;
-		System.out.println("Windstärke: " + windS);
+				+ velocityX * scaledTimeOfExistence;
+		//System.out.println("Windstärke: " + windS);
 		double y = posY0
 				- velocityY * scaledTimeOfExistence
 				+ 0.5 * getGravity() * Math.pow(scaledTimeOfExistence, 2);
@@ -386,7 +387,7 @@ public class Bullet extends MapObject {
 	}
 
 	public static void perfectDegreeShot(double degree, Player player,
-			Player victim) {
+			Player victim, double gravity) {
 		System.out
 				.println(">>>>>>>>>>>>>>>>> Berechnung der perfekten Geschwindigkeit für den Winkel "
 						+ degree + " Grad");
@@ -414,7 +415,7 @@ public class Bullet extends MapObject {
 		//System.out.println("Delta X: " + deltaX +  "\tDelta Y: " + deltaY);
 		double tan = Math.tan(Math.toRadians(degree));
 		//System.out.println("Tan(89Grad)=" + tan);
-		double toBeSquareRooted = 2 * (deltaY + tan * deltaX) / getGravity();
+		double toBeSquareRooted = 2 * (deltaY + tan * deltaX) / gravity;
 		//System.out.println("Wurzel:" + toBeSquareRooted);
 		double t = Math.sqrt(toBeSquareRooted);
 		
@@ -428,11 +429,11 @@ public class Bullet extends MapObject {
 		System.out.println("<<<<<<<<<<<<<<<<<");
 	}
 	
-	public static void setGravity(double g) {
-		GRAVITY = g;
+	public void setGravity(double g) {
+		gravity = g;
 	}
-	public static double getGravity() {
-		return GRAVITY;
+	public double getGravity() {
+		return gravity;
 	}
 }
 
