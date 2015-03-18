@@ -11,6 +11,7 @@ import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.main.Serializer;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
 import eea.engine.entity.StateBasedEntityManager;
@@ -147,7 +148,7 @@ public class GameSetupState extends ExtendedTWLState {
 			throws SlickException {
 		super.render(container, game, g);
 		entityManager.addEntity(stateID, setBackground(DEFAULT_BACKGROUND));
-
+		addESCListener(Gorillas.GAMEPLAYSTATE);
 	}
 
 	@Override
