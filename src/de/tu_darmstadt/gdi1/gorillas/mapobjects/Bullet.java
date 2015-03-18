@@ -200,9 +200,9 @@ public class Bullet extends MapObject {
 				- velocityY * scaledTimeOfExistence
 				+ 0.5 * GRAVITY * Math.pow(scaledTimeOfExistence, 2);
 
-		double x2 = posX0 + velocityX * scaledTimeOfExistence;
-		double y2 = posY0 - velocityY * scaledTimeOfExistence + 0.5 * GRAVITY
-				* Math.pow(scaledTimeOfExistence, 2);
+		//double x2 = posX0 + velocityX * scaledTimeOfExistence;
+		//double y2 = posY0 - velocityY * scaledTimeOfExistence + 0.5 * GRAVITY
+		//		* Math.pow(scaledTimeOfExistence, 2);
 
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
 		// System.out.println("New Position: " + newPosition);
@@ -313,6 +313,9 @@ public class Bullet extends MapObject {
 						System.out.println("Gegner getroffen");
 						enemyPlayer.figureWasHit();
 						player.hitEnemyFigure();
+						if(enemyPlayer.getLifesLeft() > 0) {
+							gameplayState.skyline.rebuildSkyline();
+						}
 						System.out.println(enumToString.printHit());
 					} else if (entity.getID().contentEquals("sun")) {
 						gameplayState.skyline.sun.changeImage();
