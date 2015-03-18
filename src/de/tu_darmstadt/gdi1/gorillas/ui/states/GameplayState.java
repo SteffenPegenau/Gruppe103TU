@@ -80,7 +80,7 @@ public class GameplayState extends ExtendedTWLState {
 			}
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
-			// TODO: Wechsel mit TAB von Eingabefelder addKeyPressedEvent(Input.KEY_TAB, throwForm.)
+			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
 			// addAllWidgetsToRootPane(widgets);
 			skyline.setSkyline_built(true);
 		}
@@ -120,21 +120,6 @@ public class GameplayState extends ExtendedTWLState {
 		return players[currentPlayer];
 	}
 
-	/*
-	 * /** diese Methode wird bei Klick auf den Button ausgeführt, bzw. mit dem
-	 * richtigen keyboard input
-	 * 
-	 * // TODO Methode für keyboard input anpassen und andere Wurfgegenstände //
-	 * vgl. Zeile 272ff. GamplayState Drop of Water void inputFinished() {
-	 * Entity banana = new Entity("banana"); banana.setPosition(new
-	 * Vector2f((Integer) player.getX(), (Integer) player.getY()));
-	 * 
-	 * try { // Bild laden und zuweisen banana.addComponent(new
-	 * ImageRenderComponent(new Image( "assets/gorillas/banana.png"))); } catch
-	 * (SlickException e) {
-	 * System.err.println("Cannot find file assets/gorillas/banana.png!");
-	 * e.printStackTrace(); } }
-	 */
 	public void addBullet(Bullet bullet) {
 		bullets.put(bullet.getID(), bullet);
 		System.out.println("Added bullet " + bullet.getID()
