@@ -166,6 +166,8 @@ public class PlayerList extends Player implements java.io.Serializable {
 			highscore[i] = new Player("leer");
 		}
 		
+		
+		
 		//PlayerList list = restorePlayerList();
 		
 		return highscore;
