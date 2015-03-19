@@ -12,6 +12,7 @@ public class Sun extends MapObject{
 
 	protected final static String FIGURE_IMAGE = "/assets/gorillas/sun/sun_smiling.png";
 	protected final static String COLLISION_IMAGE = "/assets/gorillas/sun/sun_astonished.png";
+	boolean astonished = false;
 
 		
 		//
@@ -29,6 +30,7 @@ public class Sun extends MapObject{
 	
 	public void changeImage(){
 			setFigureImage(COLLISION_IMAGE);
+			astonished = true;
 		}
 	
 
@@ -38,10 +40,15 @@ public class Sun extends MapObject{
 	
 	public void changeBackImage() {
 		setFigureImage(FIGURE_IMAGE);
+		astonished = false;
 	}
 
 		//
 		// Other methods
 		//
+	
+	public Boolean getAstonished() {
+		return astonished;
+	}
 
 }
