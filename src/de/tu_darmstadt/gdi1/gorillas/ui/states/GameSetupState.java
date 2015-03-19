@@ -296,7 +296,7 @@ public class GameSetupState extends ExtendedTWLState {
 		addNumberInputCheck((EditField) widgets.get("EDITGRAVITY"), 30);
 
 		widgets.put("BTN_WINDON", createButton("Wind On", setWindOnOff(true), BUTTON_LEFT_X + 150, 400));
-		//widgets.put("BTN_WINDOFF", createButton("wind Off", setWindOnOff(false), BUTTON_LEFT_X + 250, 400));
+		widgets.put("BTN_WINDOFF", createButton("wind Off", setWindOnOff(false), BUTTON_LEFT_X + 350, 400));
 		
 		// TODO: Wind ein aus
 //		widgets.put("EDITWIND",
