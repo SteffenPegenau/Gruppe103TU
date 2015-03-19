@@ -335,7 +335,9 @@ public class Bullet extends MapObject {
 								.getPosition());
 						
 						if(gameplayState.getListOfBullets().size()>0) {
+			
 							
+							 
 						
 							if (!commentAlreadyVisible()) {
 								{

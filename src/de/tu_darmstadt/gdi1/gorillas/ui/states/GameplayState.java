@@ -286,6 +286,8 @@ public class GameplayState extends ExtendedTWLState {
 	public ArrayList<Bullet> getListOfBullets(){
 		return listOfBullets;
 		
+		 
+		
 	}
 
 	@Override
