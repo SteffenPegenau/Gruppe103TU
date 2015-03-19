@@ -40,6 +40,14 @@ public class Skyline {
 	}
 
 	protected Sun sun;
+	public Sun getSun() {
+		return sun;
+	}
+
+	public void setSun(Sun sun) {
+		this.sun = sun;
+	}
+
 	protected Player[] players;
 	protected FigureWithWeapon[] playerFigures = new FigureWithWeapon[2];
 	protected Building[] buildings;

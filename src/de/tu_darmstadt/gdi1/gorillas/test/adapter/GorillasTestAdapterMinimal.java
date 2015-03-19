@@ -261,6 +261,28 @@ public class GorillasTestAdapterMinimal {
 			state.throwForm.buttonThrowClicked(state).run();
 		}
 	}
+	
+	
+	public Bullet getNewTestBullet(Vector2f startPosition, int angle,
+			int speed, boolean fromLeftToRight, int deltaTime) {
+		String name = startPosition.getX() + " " + startPosition.getY() + angle + speed + deltaTime;
+		Bullet bullet = new Bullet(name);
+		bullet.setPosX0(startPosition.x);
+		bullet.setPosY0(startPosition.y);
+		
+		Player p1 = new Player(startPosition.toString());
+		int arrayIndex = (fromLeftToRight) ? 0 : 1;
+		p1.setArrayIndex(arrayIndex);
+		bullet.setPlayer(p1);
+		//GameplayState state = (GameplayState) gorillas.getCurrentState();
+		//bullet.setGameplayState(state);
+		bullet.setVelocity(angle, speed);	
+		//long delta = (long) (deltaTime);
+		//System.out.println("deltaTime " + deltaTime +  " => delta " + delta);
+		bullet.addExistenceTime(deltaTime); 
+		return bullet;
+	}
+	
 
 	/**
 	 * 
@@ -290,21 +312,7 @@ public class GorillasTestAdapterMinimal {
 	 */
 	public Vector2f getNextShotPosition(Vector2f startPosition, int angle,
 			int speed, boolean fromLeftToRight, int deltaTime) {
-		String name = startPosition.getX() + " " + startPosition.getY() + angle + speed + deltaTime;
-		Bullet bullet = new Bullet(name);
-		bullet.setPosX0(startPosition.x);
-		bullet.setPosY0(startPosition.y);
-		
-		Player p1 = new Player(startPosition.toString());
-		int arrayIndex = (fromLeftToRight) ? 0 : 1;
-		p1.setArrayIndex(arrayIndex);
-		bullet.setPlayer(p1);
-		//GameplayState state = (GameplayState) gorillas.getCurrentState();
-		//bullet.setGameplayState(state);
-		bullet.setVelocity(angle, speed);	
-		//long delta = (long) (deltaTime);
-		//System.out.println("deltaTime " + deltaTime +  " => delta " + delta);
-		bullet.addExistenceTime(deltaTime); 
+		Bullet bullet = getNewTestBullet(startPosition, angle, speed, fromLeftToRight, deltaTime);
 		return bullet.calculateNewPosition();
 	}
 
