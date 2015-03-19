@@ -188,7 +188,6 @@ public class Bullet extends MapObject {
 	}
 
 	public Vector2f calculateNewPosition() {
-
 		// scaledTimeOfExistence
 		double t = SCALING_FACTOR * existenceTimeInms;
 		// TODO wind an aus
@@ -200,7 +199,7 @@ public class Bullet extends MapObject {
 				* getGravity() * Math.pow(t, 2);
 		//System.out.println("Gravitation: " + getGravity());
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
-		System.out.println("New Position: " + newPosition + "\tVx=" + velocityX + "\tVy"+ velocityY + "\tg=" + gravity);
+		//System.out.println("New Position: " + newPosition + "\tVx=" + velocityX + "\tVy"+ velocityY + "\tg=" + gravity);
 		// TODO: Umsetzen des Dotzen:
 		/*
 		 * Beispielcode: if (y == 600 && bullet.spped < 25) { alles auf null
@@ -309,6 +308,7 @@ public class Bullet extends MapObject {
 				CollisionEvent collider = (CollisionEvent) event;
 				Entity entity = collider.getCollidedEntity();
 				EnumToString enumToString = new EnumToString();
+				System.out.println("COLLIDED WITH " + entity.getID());
 				if (!entity.getID().contentEquals("background")) {
 					System.out.println("COLLIDED WITH " + entity.getID());
 					gameplayState.getSkyline().sun.changeBackImage();

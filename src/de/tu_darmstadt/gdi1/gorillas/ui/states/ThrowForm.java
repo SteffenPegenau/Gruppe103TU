@@ -270,11 +270,13 @@ public class ThrowForm {
 					Player player = gameplayState.getCurrentPlayer();
 					
 					if(skyline.getFigureWithWeapon(player.getArrayIndex()) != null) {
+						// Spieler 1 Figur aus Skyline
 						int index = player.getArrayIndex();
 						FigureWithWeapon figure1SavedInSkyline = skyline.getFigureWithWeapon(index);
 						figure1SavedInSkyline.setOwner(player);
 						player.setPlayersFigure(figure1SavedInSkyline);
 						
+						// Spieler 2 Figur aus Skyline
 						Player otherPlayer = gameplayState.getNotCurrentPlayer();
 						index = otherPlayer.getArrayIndex();
 						FigureWithWeapon figure2SavedInSkyline = skyline.getFigureWithWeapon(index);
