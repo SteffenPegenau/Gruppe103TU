@@ -88,9 +88,7 @@ public class GameplayState extends ExtendedTWLState {
 			throws SlickException {
 		entityManager.renderEntities(container, game, g);
 		if (!skyline.isSkyline_built()) {
-			skyline.createSkyline();
-			addESCListener(Gorillas.MAINMENUSTATE);
-			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
+			createNewSkyline();
 			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
 			// addAllWidgetsToRootPane(widgets);
 			skyline.setSkyline_built(true);

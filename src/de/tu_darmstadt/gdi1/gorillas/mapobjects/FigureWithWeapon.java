@@ -40,7 +40,7 @@ public class FigureWithWeapon extends MapObject {
 				imageHeight = image.getHeight();
 			}
 
-			float newPosY = posY - building.getHeight() / 2 + imageHeight / 2;
+			float newPosY = posY - (building.getHeight() /2 + imageHeight / 2);
 			System.out.println("Setze G auf Gebaeude: "
 					+ "gebX=" + posX
 					+ " gebY=" + posY
