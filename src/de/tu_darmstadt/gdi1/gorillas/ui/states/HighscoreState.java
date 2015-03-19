@@ -12,6 +12,8 @@ import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
+import eea.engine.action.Action;
+import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 
@@ -42,6 +44,10 @@ public class HighscoreState extends ExtendedTWLState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		super.render(container, game, g);
+
+		
+		Action action = new ChangeStateAction(Gorillas.MAINMENUSTATE);
+		createButton("exit", "Exit", action, 600, 540);
 		
 		g.setColor(Color.red);
 		g.scale(1.5f, 1.5f);
