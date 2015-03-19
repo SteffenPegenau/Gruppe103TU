@@ -21,6 +21,9 @@ import eea.engine.entity.StateBasedEntityManager;
  */
 public class GameSetupState extends ExtendedTWLState {
 	private Player players[] = new Player[2];
+	
+	// true um Wind anzuschalten
+	private boolean windOn = false;
 
 	public GameSetupState(int sid) {
 		super(sid);
@@ -84,8 +87,8 @@ public class GameSetupState extends ExtendedTWLState {
 				if (players[0] != null && players[1] != null
 						&& PlayerList.usernamesOkay(players)) {
 					int rounds = getEnteredNumberOfRounds();
-					boolean windOnOff = getWindOnOffInput();
 					double gravityInput = getEnteredGravity();
+					boolean windState = isWindOn();
 					if (PlayerList.usernamesOkay(players) && rounds > 0
 							&& gravityInput >= 0) {
 						players[0].addRoundPlayed();
@@ -93,7 +96,7 @@ public class GameSetupState extends ExtendedTWLState {
 
 						GameplayState gamePlayState = new GameplayState(
 								Gorillas.GAMEPLAYSTATE, players, rounds,
-								gravityInput, windOnOff);
+								gravityInput, windState);
 						game.addState(gamePlayState);
 						StateBasedEntityManager.getInstance().addState(
 								Gorillas.GAMEPLAYSTATE);
@@ -128,21 +131,13 @@ public class GameSetupState extends ExtendedTWLState {
 			return Integer.valueOf(input);
 		}
 	}
-
-	public boolean getWindOnOffInput() {
-		EditField windEdit = (EditField) widgets.get("EDITWIND");
-		String windInput = windEdit.getText();
-		if (windInput.isEmpty()) {
-			return false;
-		} else {
-			if (Integer.valueOf(windInput) == 0) {
-				return false;
-			} else {
-				return true;
-			}
-		}
+// TODO : 
+	public boolean windOn() {
+		return true;
 	}
-
+	public boolean windOff() {
+		return false;
+	}
 	/**
 	 * Ermittelt die Eingabe bei Anzahl der Gravitation
 	 * 
@@ -210,13 +205,6 @@ public class GameSetupState extends ExtendedTWLState {
 			} else {
 				widgets.get("ERRMSGLABEL").setVisible(false);
 			}
-			EditField windInput = (EditField) widgets.get("EDITWIND");
-			String windInputString = windInput.getText();
-			if (Integer.parseInt(windInputString) == 0) {
-				Bullet.setWindSOff();
-			} else {
-				Bullet.setWindSOn();
-			}
 
 		}
 		// drawPlayerSelectWidgets();
@@ -247,6 +235,25 @@ public class GameSetupState extends ExtendedTWLState {
 		} else {
 			return null;
 		}
+	}
+	
+	public Runnable setWindOnOff(boolean windSetter) {
+		class changer implements Runnable {
+			boolean windSetter;
+
+			public changer(boolean windSetter) {
+				this.windSetter = windSetter;
+			}
+
+			@Override
+			public void run() {
+				windOn = windSetter;
+				System.out.println("set wind to " + windSetter);
+			}
+			
+		}
+		Runnable c = new changer(windSetter);
+		return c;
 	}
 
 	/**
@@ -288,12 +295,13 @@ public class GameSetupState extends ExtendedTWLState {
 				createEditField(BUTTON_LEFT_X + 120, 250, true, "10"));
 		addNumberInputCheck((EditField) widgets.get("EDITGRAVITY"), 30);
 
+		widgets.put("BTN_WINDON", createButton("Wind On", setWindOnOff(true), BUTTON_LEFT_X + 150, 400));
+		//widgets.put("BTN_WINDOFF", createButton("wind Off", setWindOnOff(false), BUTTON_LEFT_X + 250, 400));
+		
 		// TODO: Wind ein aus
-		widgets.put("WINDLABEL",
-				createLabel("Wind Off/0 On/1: ", BUTTON_LEFT_X, 400, true));
-		widgets.put("EDITWIND",
-				createEditField(BUTTON_LEFT_X + 150, 400, true, "0"));
-		addNumberInputCheck((EditField) widgets.get("EDITWIND"), 1);
+//		widgets.put("EDITWIND",
+//				createEditField(BUTTON_LEFT_X + 150, 400, true, "0"));
+//		addNumberInputCheck((EditField) widgets.get("EDITWIND"), 1);
 		// EditField windInput = (EditField) widgets.get("EDITWIND");
 		// String windInputString = windInput.getText();
 		// if (Integer.parseInt(windInputString) == 0) {
@@ -313,5 +321,13 @@ public class GameSetupState extends ExtendedTWLState {
 						BUTTON_LAST_LINE_Y));
 		addAllWidgetsToRootPane(widgets);
 		return rp;
+	}
+
+	public boolean isWindOn() {
+		return windOn;
+	}
+
+	public void setWindOn(boolean windState) {
+		this.windOn = windState;
 	}
 }

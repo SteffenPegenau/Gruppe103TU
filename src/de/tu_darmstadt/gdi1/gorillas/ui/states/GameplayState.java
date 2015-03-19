@@ -72,6 +72,9 @@ public class GameplayState extends ExtendedTWLState {
 			throwForm = new ThrowForm(this, currentPlayer);
 			this.gravity = gravity;
 			this.windOnOff = wind;
+			Bullet b = new Bullet(null);
+			b.setWindSOnOff(wind);
+			System.out.println("Wind an? " + wind);
 		}
 	}
 
@@ -90,7 +93,6 @@ public class GameplayState extends ExtendedTWLState {
 		entityManager.renderEntities(container, game, g);
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
-<<<<<<< HEAD
 			for (int i = 0; i < players.length; i++) {
 				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
 				players[i].getPlayersFigure().getWeapon()
@@ -99,9 +101,9 @@ public class GameplayState extends ExtendedTWLState {
 						skyline.randomBuildingForPlayer(i));
 				entityManager.addEntity(stateID, players[i].getPlayersFigure());
 			}
-=======
+
 			positionPlayer();
->>>>>>> c61648e4f7195019f7e4fa89307b99f66c4e8595
+
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);

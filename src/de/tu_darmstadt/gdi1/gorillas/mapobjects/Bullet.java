@@ -32,8 +32,7 @@ public class Bullet extends MapObject {
 	// Radiant, nicht in Grad!
 	protected double angle;
 
-	public static float windS;
-	public static boolean windSetting = false;
+	public float windS;
 
 	protected float accelerationX;
 	protected float accelerationY;
@@ -114,6 +113,7 @@ public class Bullet extends MapObject {
 	 * @param velocity
 	 */
 	public void setVelocity(double angleInDegree, float velocity) {
+		
 		this.velocity = velocity;
 		// System.out.println("ArrayIndex=" + player.getArrayIndex());
 		// System.out.print("Winkel=" + angleInDegree + " wird zu ");
@@ -202,7 +202,7 @@ public class Bullet extends MapObject {
 				+ velocityX
 				* scaledTimeOfExistence
 				+ (0.5f *  GameplayState.wind
-						* (scaledTimeOfExistence * scaledTimeOfExistence) * getWindS());
+						* (scaledTimeOfExistence * scaledTimeOfExistence) * windS);
 		System.out.println("Windstärke: " + GameplayState.wind);
 		double y = posY0 - velocityY * scaledTimeOfExistence + 0.5
 				* getGravity() * Math.pow(scaledTimeOfExistence, 2);
@@ -431,26 +431,13 @@ public class Bullet extends MapObject {
 		return gravity;
 	}
 
-	public static void setWindSOn() {
-		Bullet.windS = 1;
-	}
-
-	public static void setWindSOff() {
-		Bullet.windS = 0;
-	}
-	
-	public static float getWindS() {
-		return windS;
-	}
-	public static boolean getWindSetting() {
-		if (getWindS() == 1) {
-			windSetting = true;
+	public void setWindSOnOff(boolean b) {
+		if ( b == true) {
+			windS = 1;
 		} else {
-			windSetting = false;
+			windS = 0;
 		}
-		return windSetting;
 	}
-
 }
 
 // package de.tu_darmstadt.gdi1.gorillas.mapobjects;
