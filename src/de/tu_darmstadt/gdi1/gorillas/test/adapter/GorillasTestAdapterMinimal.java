@@ -299,7 +299,8 @@ public class GorillasTestAdapterMinimal {
 		int arrayIndex = (fromLeftToRight) ? 0 : 1;
 		p1.setArrayIndex(arrayIndex);
 		bullet.setPlayer(p1);
-		
+		//GameplayState state = (GameplayState) gorillas.getCurrentState();
+		//bullet.setGameplayState(state);
 		bullet.setVelocity(angle, speed);	
 		//long delta = (long) (deltaTime);
 		//System.out.println("deltaTime " + deltaTime +  " => delta " + delta);

@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import de.tu_darmstadt.gdi1.gorillas.comments.EnumToString;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.GameplayState;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
@@ -27,7 +28,7 @@ public class Bullet extends MapObject {
 	public final static double SCALING_FACTOR = (double) 1 / 100;
 	public double gravity = 10.0;
 
-	protected GameplayState gameplayState;
+	protected GameplayState gameplayState = null;
 
 	// Radiant, nicht in Grad!
 	protected double angle;
@@ -423,6 +424,10 @@ public class Bullet extends MapObject {
 	}
 
 	public int setWindSOnOff() {
+		if(TestGorillas.debug || gameplayState == null) {
+			return 0;
+		}
+		
 		if (gameplayState.isWindOnOff() == true) {
 			System.out.println("setWindSOnOff in der Bullet Klasse, STATUS: " + gameplayState.isWindOnOff());
 			windS = 1;
