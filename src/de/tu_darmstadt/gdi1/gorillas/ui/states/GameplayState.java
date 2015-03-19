@@ -27,7 +27,7 @@ import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 
 public class GameplayState extends ExtendedTWLState {
 	private static final int NUMBER_OF_BUILDINGS = 8;
-	public Skyline skyline;
+	private Skyline skyline;
 	public ThrowForm throwForm;
 	private Player[] players = new Player[2];
 	private HashMap<String, Bullet> bullets = new HashMap<String, Bullet>();
