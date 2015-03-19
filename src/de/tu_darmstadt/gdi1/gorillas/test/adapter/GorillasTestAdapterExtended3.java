@@ -61,9 +61,8 @@ public class GorillasTestAdapterExtended3 extends GorillasTestAdapterExtended2 {
 		Bullet bullet = getNewTestBullet(startPosition, angle, speed,
 				fromLeftToRight, deltaTime);
 
-		// TODO Setze Windstaerke (-15 bis 15)
-		// ungefaehr so:
-		// bullet.setWindSpeed(wind);
+		bullet.windS = 1;
+		bullet.setWindSpeed(wind);
 		
 		bullet.setGravity(gravity);
 
