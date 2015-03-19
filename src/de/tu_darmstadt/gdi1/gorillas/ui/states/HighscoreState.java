@@ -36,7 +36,9 @@ public class HighscoreState extends ExtendedTWLState {
 
 	public HighscoreState(int sid) {
 		super(sid);
-	}	@Override
+	}	
+	
+	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		super.render(container, game, g);

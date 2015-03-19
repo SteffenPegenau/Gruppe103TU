@@ -25,7 +25,6 @@ import eea.engine.event.basicevents.MouseEnteredEvent;
  
 public class InstructionState extends ExtendedTWLState {
 	
-	UnicodeFont uFont;
 	Image  layer_underneath = null;
 	Image menu_entry_background = null;
 	

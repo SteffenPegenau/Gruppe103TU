@@ -308,6 +308,7 @@ public class Bullet extends MapObject {
 				EnumToString enumToString = new EnumToString();
 				if (!entity.getID().contentEquals("background")) {
 					System.out.println("COLLIDED WITH " + entity.getID());
+					gameplayState.skyline.sun.changeBackImage();
 					// wenn diese durch ein Pattern zerst�rt werden kann, dann
 					// caste
 					// zu IDestructible
