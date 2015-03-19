@@ -92,6 +92,11 @@ public class Player extends Owner implements java.io.Serializable, Comparable<Pl
 		this.numberOfHits = numberOfHits;
 		updateStatistics();
 	}
+	
+	public void addHit() {
+		numberOfHits++;
+		updateStatistics();
+	}
 
 	public double getAccuracy() {
 		return accuracy;
@@ -162,8 +167,7 @@ public class Player extends Owner implements java.io.Serializable, Comparable<Pl
 	 * hat
 	 */
 	public void hitEnemyFigure() {
-		numberOfHits++;
-		updateStatistics();
+		addHit();
 		System.out.println("Spieler " + getUsername() + " <" + getArrayIndex()
 				+ "> hat gegnerische Figur getroffen!");
 	}

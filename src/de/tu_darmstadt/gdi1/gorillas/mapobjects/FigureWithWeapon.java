@@ -1,14 +1,12 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
-import eea.engine.entity.DestructibleImageEntity;
 
 
 
@@ -41,9 +39,17 @@ public class FigureWithWeapon extends MapObject {
 			if(imageHeight == 0) {
 				imageHeight = image.getHeight();
 			}
-			posY -= building.getHeight() / 2 + imageHeight / 2;
+
+			float newPosY = posY - building.getHeight() / 2 + imageHeight / 2;
+			System.out.println("Setze G auf Gebaeude: "
+					+ "gebX=" + posX
+					+ " gebY=" + posY
+					+ "\t=>\t"
+					+ "G.x=" + posX
+					+ " G.y=" + newPosY
+					);
 			//System.out.println("Set position: " + posX + " | " + posY);
-			return new Vector2f(posX, posY);
+			return new Vector2f(posX, newPosY);
 			
 		}
 		

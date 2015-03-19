@@ -70,12 +70,11 @@ public class MapGenerationTest {
 
 		float forthBuildingX = buildingCoordinates.get(3).x;
 		float thirdLastBuildingX = buildingCoordinates.get(thirdLastIndex).x;
-
 		assertTrue(
-				"The left gorilla should be placed on either the first, second or third building.",
+				"The left gorilla should be placed on either the first, second or third building. Gorilla.x=" + leftGorillaCoordinate.x + " Building.x=" + forthBuildingX,
 				leftGorillaCoordinate.x < forthBuildingX);
 		assertTrue(
-				"The right gorilla should be placed on either the first, second or third building from the right.",
+				"The right gorilla should be placed on either the first, second or third building from the right. Gorilla.x=" + rightGorillaCoordinate.x + " Building.x=" + thirdLastBuildingX,
 				rightGorillaCoordinate.x > thirdLastBuildingX);
 
 		int leftGorillaBuilding = 0;
@@ -100,11 +99,12 @@ public class MapGenerationTest {
 				rightGorillaBuilding = i - 1;
 			}
 		}
-
 		// this tests whether the gorillas really stand on their buildings;
 		// there must'nt be a gap between the gorilla and the building.
 		assertTrue(
-				"The left gorilla should really stand on a building.",
+				"The left gorilla should really stand on a building. Gorilla.y=" + leftGorillaCoordinate.y
+				+ " Building.y=" + buildingCoordinates.get(leftGorillaBuilding).y
+				+ " Gorilla.height/2=" + adapter.getGorillaHeight() / 2,
 				leftGorillaCoordinate.y == buildingCoordinates
 						.get(leftGorillaBuilding).y
 						- adapter.getGorillaHeight() / 2);
