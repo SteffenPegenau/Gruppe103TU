@@ -25,6 +25,9 @@ public class ThrowForm {
 
 	private GameplayState gameplayState;
 	private HashMap<String, Widget> widgets;
+	
+	private EditField angleField;
+	private EditField velocityField;
 
 	// private boolean isVisible = true;
 	private int currentPlayer;
@@ -89,6 +92,23 @@ public class ThrowForm {
 			entry.getValue().setVisible(visibility);
 		}
 	}
+	
+	protected Action tabController() {
+		class action implements Action {
+
+			@Override
+			public void update(GameContainer gc, StateBasedGame sb, int delta,
+					Component event) {
+				if (angleField.hasKeyboardFocus()){
+					velocityField.requestKeyboardFocus();
+				} else {
+					angleField.requestKeyboardFocus();
+				}
+			}
+		}
+		Action a = new action();
+		return a;
+	}
 
 	/**
 	 * Setzt den aktuellen Spieler
@@ -105,16 +125,18 @@ public class ThrowForm {
 	 */
 	private void initiallyDrawInputForm() {
 		// Fügt erst alle Elemente ohne Position hinzu
+		angleField = gameplayState.createEditField(0, 0, true, "0");
+		velocityField = gameplayState.createEditField(0, 0, true, "0");
 		widgets.put("FORM_BUTTON_THROW",
 				gameplayState.createButton("Wurf!", buttonThrowClicked(gameplayState), 0, 0));
 		widgets.put("FORM_LABEL_ANGLE",
 				gameplayState.createLabel("Winkel:", 0, 0, true));
 		widgets.put("FORM_EDIT_ANGLE",
-				gameplayState.createEditField(0, 0, true, "0"));
+				angleField);
 		widgets.put("FORM_LABEL_VELOCITY",
 				gameplayState.createLabel("Geschwindigkeit:", 0, 0, true));
 		widgets.put("FORM_EDIT_VELOCITY",
-				gameplayState.createEditField(0, 0, true, "0"));
+				velocityField);
 
 		// Setze Breite der Eingabefelder
 		int edit_width = 40;
