@@ -90,6 +90,7 @@ public class GameplayState extends ExtendedTWLState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		entityManager.renderEntities(container, game, g);
+<<<<<<< HEAD
 
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
@@ -112,6 +113,14 @@ public class GameplayState extends ExtendedTWLState {
 //			// addAllWidgetsToRootPane(widgets);
 //			skyline.setSkyline_built(true);
 //			
+=======
+		if (!skyline.isSkyline_built()) {
+			createNewSkyline();
+			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
+			// addAllWidgetsToRootPane(widgets);
+			skyline.setSkyline_built(true);
+			
+>>>>>>> 21cb8ed827ac04d8996921ef2cabbf6fc75481f3
 			if (windOnOff) {
 				Entity arrow = new Entity("arrow");
 				arrow.addComponent(new ImageRenderComponent(new Image("assets/gorillas/button/arrow.png")));
