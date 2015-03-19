@@ -203,8 +203,8 @@ public class GameplayState extends ExtendedTWLState {
 		currentPlayer = (currentPlayer == 0) ? 1 : 0;
 		throwForm.setCurrentPlayer(currentPlayer);
 		System.out.println("Aktiver Spieler ist nun: " + currentPlayer);
-		Bullet.perfectDegreeShot(80, getCurrentPlayer(), getNotCurrentPlayer(),
-				gravity);
+		//Bullet.perfectDegreeShot(80, getCurrentPlayer(), getNotCurrentPlayer(),
+		//		gravity);
 	}
 
 	public void farOff() {
