@@ -1,12 +1,7 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.HashMap;
 import java.util.Random;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -90,18 +85,7 @@ public class GameplayState extends ExtendedTWLState {
 		entityManager.renderEntities(container, game, g);
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
-<<<<<<< HEAD
-			for (int i = 0; i < players.length; i++) {
-				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
-				players[i].getPlayersFigure().getWeapon()
-						.setGravityInput(gravity);
-				players[i].getPlayersFigure().setPosition(
-						skyline.randomBuildingForPlayer(i));
-				entityManager.addEntity(stateID, players[i].getPlayersFigure());
-			}
-=======
 			positionPlayer();
->>>>>>> c61648e4f7195019f7e4fa89307b99f66c4e8595
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
