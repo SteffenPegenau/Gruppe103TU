@@ -31,7 +31,7 @@ import eea.engine.entity.Entity;
 
 public class GameplayState extends ExtendedTWLState {
 	private static final int NUMBER_OF_BUILDINGS = 8;
-	public Skyline skyline;
+	private Skyline skyline;
 	public ThrowForm throwForm;
 	private Player[] players = new Player[2];
 	private HashMap<String, Bullet> bullets = new HashMap<String, Bullet>();
@@ -49,7 +49,7 @@ public class GameplayState extends ExtendedTWLState {
 															// bis 15
 	boolean windOnOff;
 	/*
-	 * Setzt die Spieler
+	 * Setzt die Spieler ins Array
 	 */
 	// TODO: WINDPFEIL!!!
 	public GameplayState(int sid, Player[] players, int rounds, double gravity, boolean wind) {
@@ -90,6 +90,7 @@ public class GameplayState extends ExtendedTWLState {
 		entityManager.renderEntities(container, game, g);
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
+<<<<<<< HEAD
 			for (int i = 0; i < players.length; i++) {
 				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
 				players[i].getPlayersFigure().getWeapon()
@@ -98,6 +99,9 @@ public class GameplayState extends ExtendedTWLState {
 						skyline.randomBuildingForPlayer(i));
 				entityManager.addEntity(stateID, players[i].getPlayersFigure());
 			}
+=======
+			positionPlayer();
+>>>>>>> c61648e4f7195019f7e4fa89307b99f66c4e8595
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
@@ -119,6 +123,19 @@ public class GameplayState extends ExtendedTWLState {
 		}
 	}
 
+	/**
+	 * Setzt die Spieler auf die Gebäude
+	 */
+	public void positionPlayer(){
+		for (int i = 0; i < players.length; i++) {
+			players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
+			players[i].getPlayersFigure().getWeapon().setGravityInput(gravity);
+			players[i].getPlayersFigure().setPosition(
+					skyline.randomBuildingForPlayer(i));
+			entityManager.addEntity(stateID, players[i].getPlayersFigure());
+		}
+	}
+	
 	/**
 	 * Wechselt den aktuellen Spieler. Aus 0 wird 1, aus 1 (allem anderen) wird
 	 * 0;

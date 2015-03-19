@@ -309,6 +309,7 @@ public class Bullet extends MapObject {
 				EnumToString enumToString = new EnumToString();
 				if (!entity.getID().contentEquals("background")) {
 					System.out.println("COLLIDED WITH " + entity.getID());
+					gameplayState.getSkyline().sun.changeBackImage();
 					// wenn diese durch ein Pattern zerst�rt werden kann, dann
 					// caste
 					// zu IDestructible
@@ -323,11 +324,12 @@ public class Bullet extends MapObject {
 						enemyPlayer.figureWasHit();
 						player.hitEnemyFigure();
 						if (enemyPlayer.getLifesLeft() > 0) {
-							gameplayState.skyline.rebuildSkyline();
+							gameplayState.getSkyline().createSkyline();
+							gameplayState.positionPlayer();
 						}
 						System.out.println(enumToString.printHit());
 					} else if (entity.getID().contentEquals("sun")) {
-						gameplayState.skyline.sun.changeImage();
+						gameplayState.getSkyline().sun.changeImage();
 						return;
 					} else if (entity instanceof IDestructible) {
 						// Etwas anderes getroffen, zB Gebäude
