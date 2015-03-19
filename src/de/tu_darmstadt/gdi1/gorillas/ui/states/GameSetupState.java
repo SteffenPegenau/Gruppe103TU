@@ -88,7 +88,7 @@ public class GameSetupState extends ExtendedTWLState {
 						&& PlayerList.usernamesOkay(players)) {
 					int rounds = getEnteredNumberOfRounds();
 					double gravityInput = getEnteredGravity();
-					boolean windState = isWindOn();
+					boolean windState = windOn;
 					if (PlayerList.usernamesOkay(players) && rounds > 0
 							&& gravityInput >= 0) {
 						players[0].addRoundPlayed();
@@ -249,7 +249,7 @@ public class GameSetupState extends ExtendedTWLState {
 		Runnable c = new changer(windSetter);
 		return c;
 	}
-
+	
 	/**
 	 * In dieser Methode werden in einem BasicTWLGameSate alle GUI-Elemente dem
 	 * GameState mit Hilfe einer RootPane hinzugef�gt
@@ -315,9 +315,5 @@ public class GameSetupState extends ExtendedTWLState {
 						BUTTON_LAST_LINE_Y));
 		addAllWidgetsToRootPane(widgets);
 		return rp;
-	}
-
-	public void setWindOn(boolean windState) {
-		this.windOn = windState;
 	}
 }

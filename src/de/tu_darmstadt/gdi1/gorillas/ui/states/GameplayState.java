@@ -69,8 +69,7 @@ public class GameplayState extends ExtendedTWLState {
 			throwForm = new ThrowForm(this, currentPlayer);
 			this.gravity = gravity;
 			this.windOnOff = wind;
-			Bullet b = new Bullet(null);
-			b.setWindSOnOff(wind);
+			System.out.println("Wind: " + wind);
 			System.out.println("Wind an? " + wind);
 		}
 	}
@@ -361,4 +360,14 @@ public class GameplayState extends ExtendedTWLState {
 	public void setSkyline(Skyline skyline) {
 		this.skyline = skyline;
 	}
+
+
+	public void setWindOnOff(boolean windOnOff) {
+		this.windOnOff = windOnOff;
+	}
+	
+	public boolean isWindOnOff() {
+		return windOnOff;
+	}
+
 }
