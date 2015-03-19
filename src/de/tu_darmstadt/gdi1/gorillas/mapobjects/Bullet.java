@@ -33,6 +33,7 @@ public class Bullet extends MapObject {
 	protected double angle;
 
 	public static float windS;
+	public static boolean windSetting = false;
 
 	protected float accelerationX;
 	protected float accelerationY;
@@ -438,6 +439,14 @@ public class Bullet extends MapObject {
 	
 	public static float getWindS() {
 		return windS;
+	}
+	public static boolean getWindSetting() {
+		if (getWindS() == 1) {
+			windSetting = true;
+		} else {
+			windSetting = false;
+		}
+		return windSetting;
 	}
 
 }
