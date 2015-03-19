@@ -434,7 +434,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	public boolean isPlayer2Turn() {
 		if(gorillas.getCurrentStateID() == Gorillas.GAMEPLAYSTATE) {
 			GameplayState state = (GameplayState) gorillas.getCurrentState();
-			if(state.getCurrentPlayer().getArrayIndex() == 1 && state.throwForm.isVisible()) {
+			if(state.currentPlayer == 1) {
 				return true;
 			} else {
 				return false;

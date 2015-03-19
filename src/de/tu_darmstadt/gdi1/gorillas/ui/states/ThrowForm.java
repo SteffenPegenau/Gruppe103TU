@@ -69,7 +69,7 @@ public class ThrowForm {
 			public void update(GameContainer gc, StateBasedGame sb, int delta,
 					Component event) {
 				if (gameplayState.getBullets().size() == 0) {
-					throwForm.buttonThrowClicked().run();
+					throwForm.buttonThrowClicked(gameplayState).run();
 				}
 			}
 		}
@@ -106,7 +106,7 @@ public class ThrowForm {
 	private void initiallyDrawInputForm() {
 		// Fügt erst alle Elemente ohne Position hinzu
 		widgets.put("FORM_BUTTON_THROW",
-				gameplayState.createButton("Wurf!", buttonThrowClicked(), 0, 0));
+				gameplayState.createButton("Wurf!", buttonThrowClicked(gameplayState), 0, 0));
 		widgets.put("FORM_LABEL_ANGLE",
 				gameplayState.createLabel("Winkel:", 0, 0, true));
 		widgets.put("FORM_EDIT_ANGLE",
@@ -202,18 +202,20 @@ public class ThrowForm {
 	 * 
 	 * @return
 	 */
-	public Runnable buttonThrowClicked() {
+	public Runnable buttonThrowClicked(GameplayState state) {
 		class event implements Runnable {
-			private GameplayState state;
+			GameplayState gameplayState;
 			StateBasedEntityManager entityManager;
 			ThrowForm throwForm;
 			double angle;
 			float velocity;
-
-			public event(GameplayState gameplayState, ThrowForm throwForm) {
-				this.state = gameplayState;
-				entityManager = StateBasedEntityManager.getInstance();
-				this.throwForm = throwForm;
+			/**
+			 * @param p
+			 */
+			public event(GameplayState gameplayState) {
+				this.gameplayState = gameplayState;
+				entityManager = gameplayState.entityManager;
+				throwForm = gameplayState.throwForm;
 			}
 
 			@Override
@@ -221,7 +223,7 @@ public class ThrowForm {
 				angle = throwForm.getAngle();
 				velocity = throwForm.getVelocity();
 				if(angle >= 0 && velocity >= 0) {
-					Player player = state.getCurrentPlayer();
+					Player player = gameplayState.getCurrentPlayer();
 					FigureWithWeapon fig = player.getPlayersFigure();
 					Weapon weapon = fig.getWeapon();
 					Bullet bullet = weapon
@@ -237,7 +239,8 @@ public class ThrowForm {
 				}
 			}
 		}
-		Runnable c = new event(gameplayState, this);
+		Runnable c = new event(state);
+		//Runnable c = new event(gameplayState, this);
 		return c;
 	}
 

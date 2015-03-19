@@ -1,8 +1,8 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjectsowners;
 
-import de.tu_darmstadt.gdi1.gorillas.mapobjects.Building;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.FigureWithWeapon;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Gorilla;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.MapObject;
 
 
 
@@ -10,9 +10,12 @@ import de.tu_darmstadt.gdi1.gorillas.mapobjects.Gorilla;
  * Class Owner
  */
 public class Owner {
-	protected FigureWithWeapon playersFigure;
+	protected FigureWithWeapon playersFigure = null;
 
 	public FigureWithWeapon getPlayersFigure() {
+		if(playersFigure == null) {
+			setPlayersFigureToDefaultGorilla(String.valueOf(MapObject.randomInt(1, 99999999)));
+		}
 		return playersFigure;
 	}
 
