@@ -30,8 +30,8 @@ public class Building extends MapObject {
 
 	private Vector2f position;
 
-	private int height;
-	private int width;
+	private float height;
+	private float width;
 
 	private Color color;
 
@@ -52,7 +52,7 @@ public class Building extends MapObject {
 	 *            , Farbe der Klasse Color. Falls keine Farbe übergeben wird,
 	 *            wird Farbe zufällig gewählt
 	 */
-	public Building(String entityID, int posX, int height, int width,
+	public Building(String entityID, float posX, float height, float width,
 			Color color) {
 		super(entityID);
 
@@ -75,15 +75,15 @@ public class Building extends MapObject {
 
 		// Koordinatensystem des Vektors hat in der oberen, linken Ecke den
 		// Ursprung
-		posX = posX + (int) (width / 2);
-		int posY = Gorillas.FRAME_HEIGHT - (int) (height / 2);
+		float posXNew = posX + width / 2;
+		float posYNew = Gorillas.FRAME_HEIGHT - height / 2;
 
-		position = new Vector2f(posX, posY);
+		position = new Vector2f(posXNew, posYNew);
 
 		createBuilding();
 	}
 
-	public int getWidth() {
+	public float getWidth() {
 		return width;
 	}
 
@@ -104,14 +104,14 @@ public class Building extends MapObject {
 	 */
 	private void createBuilding() {
 		if (width > 0 && height > 0) {
-			image = new BufferedImage(width, height,
+			image = new BufferedImage((int)width, (int)height,
 					BufferedImage.TYPE_INT_ARGB);
 			if (!TestGorillas.debug) {
 				building = image.createGraphics();
 				building.setComposite(AlphaComposite
 						.getInstance(AlphaComposite.SRC));
 				building.setColor(this.color);
-				building.fillRect(0, 0, width, height);
+				building.fillRect(0, 0, (int)width, (int)height);
 			}
 		}
 	}
@@ -152,7 +152,7 @@ public class Building extends MapObject {
 		return new Vector2f(x, y);
 	}
 
-	public int getHeight() {
+	public float getHeight() {
 		return height;
 	}
 

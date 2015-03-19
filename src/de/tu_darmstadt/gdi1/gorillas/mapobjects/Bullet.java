@@ -30,6 +30,8 @@ public class Bullet extends MapObject {
 
 	protected GameplayState gameplayState = null;
 
+	protected int windSpeed = 0;
+	
 	// Radiant, nicht in Grad!
 	protected double angle;
 
@@ -192,7 +194,7 @@ public class Bullet extends MapObject {
 		double x = posX0
 				+ velocityX
 				* scaledTimeOfExistence
-				+ (0.5f *  GameplayState.wind
+				+ (0.5f *  windSpeed
 						* (scaledTimeOfExistence * scaledTimeOfExistence) * setWindSOnOff());
 		System.out.println("Windstärke: " + GameplayState.wind);
 		double y = posY0 - velocityY * scaledTimeOfExistence + 0.5
@@ -462,6 +464,14 @@ public class Bullet extends MapObject {
 			windS = 0;
 		}
 		return windS;
+	}
+
+	public int getWindSpeed() {
+		return windSpeed;
+	}
+
+	public void setWindSpeed(int windSpeed) {
+		this.windSpeed = windSpeed;
 	}
 }
 
