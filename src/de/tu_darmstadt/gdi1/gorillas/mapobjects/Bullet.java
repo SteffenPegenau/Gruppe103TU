@@ -149,22 +149,20 @@ public class Bullet extends MapObject {
 	 *            der zu treffende Spieler
 	 * @return den Abstand vom Aufprallort der Banane zum Spieler
 	 */
-	private int getDist(Player enemy) {
+	public int getDist(Player enemy) {
 		if (player.getArrayIndex() == 0) {
 			// Wenn der aktive Spieler gerade Spieler0 ist
 			enemy = gameplayState.getPlayer(1);
 			// ist der Gegner Spieler1
-			return (int) Math.sqrt(Math.pow(enemy.getPlayersFigure()
-					.getPosition().x - getPosition().x, 2)
-					+ Math.pow(enemy.getPlayersFigure().getPosition().y
-							- getPosition().y, 2));
+			return ((int) enemy.getPlayersFigure()
+					.getPosition().x - (int)calculateNewPosition().x);
+					
 			// das hier ist die Abstandsformel nach dem Satz des Pythagoras
 		} else {
 			enemy = gameplayState.getPlayer(0);
-			return (int) Math.sqrt(Math.pow(getPosition().x
-					- enemy.getPlayersFigure().getPosition().x, 2)
-					+ Math.pow(getPosition().y, 2 - enemy.getPlayersFigure()
-							.getPosition().y));
+			return ((int)calculateNewPosition().x
+					- (int)enemy.getPlayersFigure().getPosition().x);
+					
 		}
 	}
 
@@ -265,6 +263,12 @@ public class Bullet extends MapObject {
 				float x = position.x;
 				float y = position.y;
 				if (x < 0 || x > gc.getWidth() || y > gc.getHeight()) {
+				
+					if(!commentAlreadyVisible()) {
+						{	
+						gameplayState.farOff();
+					}
+				}
 					removeEntityFromState(sb, gameplayState, entity);
 					System.out.println("Removed " + entity.getID()
 							+ " at Position " + x + " | " + y);
@@ -314,6 +318,7 @@ public class Bullet extends MapObject {
 							enemyPlayer.getPlayersFigure().getID())) {
 						// Gegner getroffen!
 						// System.out.println("Gegner getroffen");
+						gameplayState.decideComment(0);
 						enemyPlayer.figureWasHit();
 						player.hitEnemyFigure();
 						if (enemyPlayer.getLifesLeft() > 0) {
@@ -328,6 +333,19 @@ public class Bullet extends MapObject {
 						destructible = (IDestructible) entity;
 						destructible.impactAt(event.getOwnerEntity()
 								.getPosition());
+						
+						if(gameplayState.getListOfBullets().size()>0) {
+			
+							
+							 
+						
+							if (!commentAlreadyVisible()) {
+								{
+								
+									gameplayState.decideComment(getDist(gameplayState.getNotCurrentPlayer()));
+							}
+						}
+						
 					} else {
 						return;
 					}
@@ -339,12 +357,21 @@ public class Bullet extends MapObject {
 				}
 			}
 		}
-
+		}
 		Action a = new collisionAction(this, gameplayState, player);
 		return a;
 	}
 
-	protected Event getCollisionEvent() {
+	public boolean commentAlreadyVisible() {
+	if(gameplayState.t.isRunning()) {
+		return true;
+		
+			}
+	else return false;
+	
+	}
+		
+		protected Event getCollisionEvent() {
 		Event collisionEvent = new CollisionEvent();
 		collisionEvent.addAction(collisionAction());
 		// collisionEvent.addAction(new DestroyEntityAction());

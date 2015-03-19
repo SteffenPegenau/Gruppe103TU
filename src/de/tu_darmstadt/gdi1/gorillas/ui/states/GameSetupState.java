@@ -69,6 +69,8 @@ public class GameSetupState extends ExtendedTWLState {
 		return s;
 	}
 
+	
+	
 	public Runnable startGame() {
 		class switcher implements Runnable {
 			private Player[] players = new Player[2];

@@ -1,7 +1,11 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -40,14 +44,25 @@ public class GameplayState extends ExtendedTWLState {
 	public static Random r = new Random();
 	public static int low = -15;
 	public static int high = 15;
-	public static int wind = r.nextInt(high - low) + low; // Wind zwischen -15
-															// bis 15
+	public static int wind = r.nextInt(high - low) + low; // Wind zwischen -15 -
+															// 15
+	Image layer_underneath = null;
 	boolean windOnOff;
+	public RootPane rp = super.createRootPane();
+	Label label;
+	ArrayList<Bullet> listOfBullets = new ArrayList<Bullet>();
+
+	public javax.swing.Timer t = new javax.swing.Timer(2000,
+			new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					label.setText(null);
+				}
+			});
 
 	/*
 	 * Setzt die Spieler ins Array
 	 */
-	// TODO: WINDPFEIL!!!
 	public GameplayState(int sid, Player[] players, int rounds, double gravity,
 			boolean wind) {
 		super(sid);
@@ -128,6 +143,42 @@ public class GameplayState extends ExtendedTWLState {
 		}
 	}
 
+	public void decideComment(int distance) {
+		de.tu_darmstadt.gdi1.gorillas.comments.EnumToString enumToString = new de.tu_darmstadt.gdi1.gorillas.comments.EnumToString();
+		if (listOfBullets.size() > 0) {
+			distance = listOfBullets.get(0).getDist(getNotCurrentPlayer());
+			if (distance == 0) {
+				label = new Label(enumToString.printHit());
+			}
+			if (distance <= 150 && distance >= -150) {
+				System.out.println("ich bin in der ersten if Abfrage");
+				label = new Label(enumToString.printClose());
+				label.setSize(200, 100);
+				label.setPosition(300, 30);
+				t.setRepeats(false);
+				t.start();
+				rp.add(label);
+			}
+			if (distance >= 150) {
+				System.out.println("ich bin in der zweiten if Abfrage");
+				label = new Label(enumToString.printToShort());
+				label.setSize(200, 100);
+				label.setPosition(300, 30);
+				t.setRepeats(false);
+				t.start();
+				rp.add(label);
+			} else if (distance < -150) {
+				System.out.println("ich bin in der dritten if Abfrage");
+				label = new Label(enumToString.printFarOff());
+				label.setSize(300, 100);
+				label.setPosition(150, 30);
+				t.setRepeats(false);
+				t.start();
+				rp.add(label);
+			}
+		}
+	}
+
 	/**
 	 * Erstellt eine neue Skyline mit Gorillas drauf
 	 */
@@ -165,12 +216,42 @@ public class GameplayState extends ExtendedTWLState {
 				gravity);
 	}
 
+	public void farOff() {
+		de.tu_darmstadt.gdi1.gorillas.comments.EnumToString enumToString = new de.tu_darmstadt.gdi1.gorillas.comments.EnumToString();
+		label = new Label(enumToString.printFarOff());
+		label.setSize(200, 100);
+		label.setPosition(300, 30);
+		t.setRepeats(false);
+		t.start();
+		rp.add(label);
+	}
+
+	public void addBullet(Bullet bullet) {
+		bullets.put(bullet.getID(), bullet);
+		System.out.println("Added bullet " + bullet.getID()
+				+ " to gameplaystate");
+		listOfBullets.add(bullet);
+		System.out.println("the size of this ListOfBullets is "
+				+ listOfBullets.size());
+	}
+
+	public void removeBullet(Bullet bullet) {
+		bullets.remove(bullet.getID());
+		listOfBullets.remove(0);
+		System.out
+				.println("the size of the ListOfBullets after removing the bullet is "
+						+ listOfBullets.size());
+	}
+
 	/**
 	 * In dieser Methode werden in einem BasicTWLGameSate alle GUI-Elemente dem
 	 * GameState mit Hilfe einer RootPane hinzugef�gt
 	 */
 	protected RootPane createRootPane() {
 		// erstelle die RootPane
+
+		// TODO
+
 		RootPane rp = super.createRootPane();
 		addAllWidgetsToRootPane(widgets);
 		return rp;
@@ -188,18 +269,25 @@ public class GameplayState extends ExtendedTWLState {
 		return players[currentPlayer];
 	}
 
-	public void addBullet(Bullet bullet) {
-		bullets.put(bullet.getID(), bullet);
-		System.out.println("Added bullet " + bullet.getID()
-				+ " to gameplaystate");
-	}
-
-	public void removeBullet(Bullet bullet) {
-		bullets.remove(bullet.getID());
-	}
+	
 
 	public HashMap<String, Bullet> getBullets() {
 		return bullets;
+	}
+	
+	public boolean commentAlreadyVisible() {
+		if (t.isRunning()) {
+			return true;
+		}
+		
+		else return false;
+	}
+	
+	public ArrayList<Bullet> getListOfBullets(){
+		return listOfBullets;
+		
+		 
+		
 	}
 
 	@Override
@@ -274,62 +362,46 @@ public class GameplayState extends ExtendedTWLState {
 		System.out.println("**********************************");
 		System.out.println("Spieler " + winner.getUsername() + " gewinnt!");
 		System.out.println("**********************************");
-		PopupWindow popup = new PopupWindow(widgets.get("DIALOG_OWNER"));
-		DialogLayout dialog = new DialogLayout();
-		DialogLayout.Group horizontalGroup = dialog.createSequentialGroup();
-		DialogLayout.Group verticalGroup = dialog.createSequentialGroup();
-		Label label = createLabel(
-				"Herzlichen Glückwunsch, " + winner.getUsername(), 0, 0, true);
-		Button button = createButton("OK", closeDialog(dialog), 120, 15);
-		button.adjustSize();
-		horizontalGroup.addWidgets(label, button);
-		verticalGroup.addWidgets(label, button);
-		dialog.setHorizontalGroup(horizontalGroup);
-		dialog.setVerticalGroup(verticalGroup);
-		popup.add(dialog);
-		popup.setSize(400, 200);
-		popup.setRequestCloseCallback(switchState(game, Gorillas.MAINMENUSTATE));
-		popup.setPosition(Gorillas.FRAME_WIDTH / 2 - popup.getWidth() / 2,
-				Gorillas.FRAME_HEIGHT / 2 - popup.getHeight() / 2);
-		popup.openPopup();
-		/*
-		 * // Erzeuge Dialog, in dem dem Sieger gratuliert wird SimpleDialog
-		 * dialog = new SimpleDialog(); dialog.setTitle("Spieler " +
-		 * winner.getUsername() + " gewinnt!");
-		 * dialog.setMessage("Herzlichen Glückwunsch!");
-		 * dialog.showDialog(widgets.get("DIALOG_OWNER")); // Was passiert bei
-		 * Click auf OK dialog.setOkCallback(new Runnable() {
-		 * 
-		 * @Override public void run() { System.out.println("Called!");
-		 * switchState(game, Gorillas.MAINMENUSTATE).run();
-		 * container.setPaused(false); } }); // Was passiert bei Click auf
-		 * Cancel? dialog.setCancelCallback(closeDialog());
-		 */
+
+		Entity winLayer = new Entity("WINLAYER");
+		winLayer.setPosition(new Vector2f(300, 400));
+		winLayer.setScale(0.5f);
+
+		if (layer_underneath == null) {
+			try {
+				layer_underneath = new Image(
+						"assets/gorillas/backgrounds/WhiteFrame.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+		winLayer.addComponent(new ImageRenderComponent(layer_underneath));
+		entityManager.addEntity(stateID, winLayer);
+		// widgets.put("QUITAFTERWINBTN", createButton("Leave Game",
+		// Gorillas.MAINMENUSTATE, BUTTON_LEFT_X + 150, 400));
+
 		// Pausiere das Spiel
 		container.pause();
 		// Formular unsichtbar
 		throwForm.setVisibility(false);
 	}
 
-	public Runnable closeDialog(DialogLayout dialog) {
-		class close implements Runnable {
-			DialogLayout dialog;
-
-			public close(DialogLayout dialog) {
-				this.dialog = dialog;
-			}
-
-			@Override
-			public void run() {
-				dialog.setEnabled(false);
-				dialog.removeAllChildren();
-				switchState(game, Gorillas.MAINMENUSTATE).run();
-				container.setPaused(false);
-			}
-		}
-		Runnable c = new close(dialog);
-		return c;
-	}
+	// public Runnable backToMainMenue(int state) {
+	// class changer implements Runnable {
+	// int mainMenueState
+	//
+	// public changer(int state) {
+	// this.mainMenueState = state;
+	// }
+	//
+	// @Override
+	// public void run() {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// }
+	// }
 
 	public void updatePlayersStaticInformation() {
 		Label labelName1 = (Label) widgets.get("Spielernamen1");
@@ -362,13 +434,51 @@ public class GameplayState extends ExtendedTWLState {
 		this.skyline = skyline;
 	}
 
-
 	public void setWindOnOff(boolean windOnOff) {
 		this.windOnOff = windOnOff;
 	}
-	
+
 	public boolean isWindOnOff() {
 		return windOnOff;
 	}
 
 }
+// PopupWindow popup = new PopupWindow(widgets.get("DIALOG_OWNER"));
+// DialogLayout dialog = new DialogLayout();
+// DialogLayout.Group horizontalGroup = dialog.createSequentialGroup();
+// DialogLayout.Group verticalGroup = dialog.createSequentialGroup();
+// Label label = createLabel(
+// "Herzlichen Glückwunsch, " + winner.getUsername(), 0, 0, true);
+// Button button = createButton("OK", closeDialog(dialog), 120, 15);
+// button.adjustSize();
+// horizontalGroup.addWidgets(label, button);
+// verticalGroup.addWidgets(label, button);
+// dialog.setHorizontalGroup(horizontalGroup);
+// dialog.setVerticalGroup(verticalGroup);
+// popup.add(dialog);
+// popup.setSize(400, 200);
+// popup.setRequestCloseCallback(switchState(game, Gorillas.MAINMENUSTATE));
+// popup.setPosition(Gorillas.FRAME_WIDTH / 2 - popup.getWidth() / 2,
+// Gorillas.FRAME_HEIGHT / 2 - popup.getHeight() / 2);
+// popup.openPopup();
+
+//
+// public Runnable closeDialog(DialogLayout dialog) {
+// class close implements Runnable {
+// DialogLayout dialog;
+//
+// public close(DialogLayout dialog) {
+// this.dialog = dialog;
+// }
+//
+// @Override
+// public void run() {
+// dialog.setEnabled(false);
+// dialog.removeAllChildren();
+// switchState(game, Gorillas.MAINMENUSTATE).run();
+// container.setPaused(false);
+// }
+// }
+// Runnable c = new close(dialog);
+// return c;
+// }

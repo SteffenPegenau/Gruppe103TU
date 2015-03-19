@@ -55,7 +55,7 @@ public class HighscoreState extends ExtendedTWLState {
 		
 
 		entityManager.addEntity(stateID, setBackground(DEFAULT_BACKGROUND));
-		
+		// "Hintergrund"
 		Entity layer = new Entity("LAYER");
 		layer.setPosition(new Vector2f(390, 285));
 		layer.setScale(1.2f);
