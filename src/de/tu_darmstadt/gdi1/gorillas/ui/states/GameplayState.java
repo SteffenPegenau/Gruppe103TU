@@ -45,7 +45,7 @@ public class GameplayState extends ExtendedTWLState {
 	
 	
 	/*
-	 * Setzt die Spieler
+	 * Setzt die Spieler ins Array
 	 */
 	// TODO: WINDPFEIL!!!
 	public GameplayState(int sid, Player[] players, int rounds, double gravity) {
@@ -85,13 +85,7 @@ public class GameplayState extends ExtendedTWLState {
 		entityManager.renderEntities(container, game, g);
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
-			for (int i = 0; i < players.length; i++) {
-				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
-				players[i].getPlayersFigure().getWeapon().setGravityInput(gravity);
-				players[i].getPlayersFigure().setPosition(
-						skyline.randomBuildingForPlayer(i));
-				entityManager.addEntity(stateID, players[i].getPlayersFigure());
-			}
+			positionPlayer();
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
@@ -100,6 +94,19 @@ public class GameplayState extends ExtendedTWLState {
 		}
 	}
 
+	/**
+	 * Setzt die Spieler auf die Gebäude
+	 */
+	public void positionPlayer(){
+		for (int i = 0; i < players.length; i++) {
+			players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
+			players[i].getPlayersFigure().getWeapon().setGravityInput(gravity);
+			players[i].getPlayersFigure().setPosition(
+					skyline.randomBuildingForPlayer(i));
+			entityManager.addEntity(stateID, players[i].getPlayersFigure());
+		}
+	}
+	
 	/**
 	 * Wechselt den aktuellen Spieler. Aus 0 wird 1, aus 1 (allem anderen) wird
 	 * 0;
