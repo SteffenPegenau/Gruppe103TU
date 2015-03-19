@@ -81,15 +81,18 @@ public class GameSetupState extends ExtendedTWLState {
 
 			@Override
 			public void run() {
-				if (players[0] != null && players[1] != null && PlayerList.usernamesOkay(players)) {
+				if (players[0] != null && players[1] != null
+						&& PlayerList.usernamesOkay(players)) {
 					int rounds = getEnteredNumberOfRounds();
 					double gravityInput = getEnteredGravity();
-					if (PlayerList.usernamesOkay(players) && rounds > 0 && gravityInput >= 0) {
+					if (PlayerList.usernamesOkay(players) && rounds > 0
+							&& gravityInput >= 0) {
 						players[0].addRoundPlayed();
 						players[1].addRoundPlayed();
-						
+
 						GameplayState gamePlayState = new GameplayState(
-								Gorillas.GAMEPLAYSTATE, players, rounds, gravityInput);
+								Gorillas.GAMEPLAYSTATE, players, rounds,
+								gravityInput);
 						game.addState(gamePlayState);
 						StateBasedEntityManager.getInstance().addState(
 								Gorillas.GAMEPLAYSTATE);
@@ -125,7 +128,7 @@ public class GameSetupState extends ExtendedTWLState {
 		}
 
 	}
-	
+
 	/**
 	 * Ermittelt die Eingabe bei Anzahl der Gravitation
 	 * 
@@ -187,13 +190,20 @@ public class GameSetupState extends ExtendedTWLState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		super.update(container, game, delta);
-		if(players[0] != null && players[1] != null) {
+		if (players[0] != null && players[1] != null) {
 			if (!PlayerList.usernamesOkay(players)) {
 				widgets.get("ERRMSGLABEL").setVisible(true);
 			} else {
 				widgets.get("ERRMSGLABEL").setVisible(false);
-
 			}
+			EditField windInput = (EditField) widgets.get("EDITWIND");
+			String windInputString = windInput.getText();
+			if (Integer.parseInt(windInputString) == 0) {
+				Bullet.setWindSOff();
+			} else {
+				Bullet.setWindSOn();
+			}
+
 		}
 		// drawPlayerSelectWidgets();
 	}
@@ -258,15 +268,26 @@ public class GameSetupState extends ExtendedTWLState {
 		addNumberInputCheck((EditField) widgets.get("EDIT_NR_OF_ROUNDS"), 10);
 		widgets.put("ERRMSGLABEL",
 				createLabel("Please Check Username", 200, 300, false));
-		widgets.put("GRAVITYLABEL", createLabel("Gravity: ", BUTTON_LEFT_X, 250, true));
-		widgets.put("EDITGRAVITY", createEditField(BUTTON_LEFT_X + 120, 250, true, "10"));
+		widgets.put("GRAVITYLABEL",
+				createLabel("Gravity: ", BUTTON_LEFT_X, 250, true));
+		widgets.put("EDITGRAVITY",
+				createEditField(BUTTON_LEFT_X + 120, 250, true, "10"));
 		addNumberInputCheck((EditField) widgets.get("EDITGRAVITY"), 30);
-		
+
 		// TODO: Wind ein aus
-		widgets.put("WINDLABEL", createLabel("Wind Off/0 On/1: ", BUTTON_LEFT_X, 400, true));
-		widgets.put("EDITWIND", createEditField(BUTTON_LEFT_X + 150, 400, true, "0"));
+		widgets.put("WINDLABEL",
+				createLabel("Wind Off/0 On/1: ", BUTTON_LEFT_X, 400, true));
+		widgets.put("EDITWIND",
+				createEditField(BUTTON_LEFT_X + 150, 400, true, "0"));
 		addNumberInputCheck((EditField) widgets.get("EDITWIND"), 1);
-		
+		// EditField windInput = (EditField) widgets.get("EDITWIND");
+		// String windInputString = windInput.getText();
+		// if (Integer.parseInt(windInputString) == 0) {
+		// Bullet.setWindSOff();
+		// } else {
+		// Bullet.setWindSOn();
+		// }
+
 		widgets.put(
 				"BUTTON_BACKTOMAINMENU",
 				createButton("Zurück",

@@ -1,7 +1,12 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.util.HashMap;
 import java.util.Random;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -159,9 +164,22 @@ public class GameplayState extends ExtendedTWLState {
 			if (winner != null) {
 				playerWins(winner);
 			}
+			// TODO WINDPFEIl
+			if (0 > wind && wind > -7) {
+			} else {
+				if (wind <= -7) {
+				} else {
+					if (0 < wind && wind < 7) {
+					} else {
+						if (wind > 7) {
+						}
+					}
+				}
+			}
 		}
 	}
-
+	
+	
 	public Player getPlayer(int arrayIndex) {
 		//System.out.println(players[arrayIndex]);
 		return players[arrayIndex];
