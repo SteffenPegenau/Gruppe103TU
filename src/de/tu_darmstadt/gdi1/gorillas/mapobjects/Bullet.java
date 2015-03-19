@@ -26,16 +26,16 @@ import eea.engine.interfaces.IDestructible;
 public class Bullet extends MapObject {
 
 	public final static double SCALING_FACTOR = (double) 1 / 100;
+	public final static float WIND_SCALING_FACTOR = (float) 1 / 10;
 	public double gravity = 10.0;
 
 	protected GameplayState gameplayState = null;
 
+	protected boolean windOn = false;
 	protected int windSpeed = 0;
 
 	// Radiant, nicht in Grad!
 	protected double angle;
-
-	public int windS;
 
 	protected float accelerationX;
 	protected float accelerationY;
@@ -193,13 +193,13 @@ public class Bullet extends MapObject {
 		// TODO wind an aus
 		double x = posX0
 				+ velocityX	* t
-				+ (0.5 * windSpeed * (t * t) * setWindSOnOff());
+				+ (0.5 * WIND_SCALING_FACTOR * windSpeed * (t * t) * getWindOnAsFactor());
 		//System.out.println("Windstärke: " + GameplayState.wind);
 		double y = posY0 - velocityY * t + 0.5
 				* getGravity() * Math.pow(t, 2);
 		//System.out.println("Gravitation: " + getGravity());
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
-		//System.out.println("New Position: " + newPosition + "\tVx=" + velocityX + "\tVy"+ velocityY + "\tg=" + gravity);
+		System.out.println("New Position: " + newPosition + "\tVx=" + velocityX + "\tVy"+ velocityY + "\tg=" + gravity + "\t Win");
 		// TODO: Umsetzen des Dotzen:
 		/*
 		 * Beispielcode: if (y == 600 && bullet.spped < 25) { alles auf null
@@ -207,6 +207,14 @@ public class Bullet extends MapObject {
 		 */
 
 		return newPosition;
+	}
+
+	private double getWindOnAsFactor() {
+		if(windOn) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -457,26 +465,19 @@ public class Bullet extends MapObject {
 		return gravity;
 	}
 
-	public int setWindSOnOff() {
-		if (TestGorillas.debug || gameplayState == null) {
-			return 0;
-		}
-
-		if (gameplayState.isWindOnOff() == true) {
-			System.out.println("setWindSOnOff in der Bullet Klasse, STATUS: "
-					+ gameplayState.isWindOnOff());
-			windS = 1;
-		} else {
-			windS = 0;
-		}
-		return windS;
-	}
-
 	public int getWindSpeed() {
 		return windSpeed;
 	}
 
 	public void setWindSpeed(int windSpeed) {
 		this.windSpeed = windSpeed;
+	}
+
+	public boolean isWindOn() {
+		return windOn;
+	}
+
+	public void setWindOn(boolean windOn) {
+		this.windOn = windOn;
 	}
 }

@@ -56,7 +56,7 @@ public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 		Bullet bullet = getNewTestBullet(startPosition, angle, speed, fromLeftToRight, deltaTime);
 		
 
-		bullet.windS = 1;
+		bullet.setWindOn(true);
 		bullet.setWindSpeed(wind);
 		
 		
@@ -71,7 +71,7 @@ public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 	 * @return the wind scaling factor for the parabolic flight calculation
 	 */
 	public float getWindScalingFactor() {
-		return getTimeScalingFactor();
+		return Bullet.WIND_SCALING_FACTOR;
 	}
 
 	/**
