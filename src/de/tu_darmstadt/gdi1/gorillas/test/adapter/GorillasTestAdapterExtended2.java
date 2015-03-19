@@ -2,6 +2,8 @@ package de.tu_darmstadt.gdi1.gorillas.test.adapter;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
+
 public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 
 	public GorillasTestAdapterExtended2() {
@@ -51,8 +53,14 @@ public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 	 */
 	public Vector2f getNextShotPosition(Vector2f startPosition, int angle,
 			int speed, int wind, boolean fromLeftToRight, int deltaTime) {
-		// TODO: Implement
-		return null;
+		Bullet bullet = getNewTestBullet(startPosition, angle, speed, fromLeftToRight, deltaTime);
+		
+		// TODO Setze Windstaerke (-15 bis 15)
+		// ungefaehr so:
+		// bullet.setWindSpeed(wind);
+		
+		
+		return bullet.calculateNewPosition();
 	}
 
 	/**
@@ -63,7 +71,7 @@ public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 	 * @return the wind scaling factor for the parabolic flight calculation
 	 */
 	public float getWindScalingFactor() {
-		return -1;
+		return getTimeScalingFactor();
 	}
 
 	/**
@@ -73,8 +81,7 @@ public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 	 *         otherwise false
 	 */
 	public boolean isSunAstonished() {
-		// TODO: Implement
-		return false;
+		return skyline.getSun().getAstonished();
 	}
 
 }

@@ -120,6 +120,27 @@ public class ThrowForm {
 		this.currentPlayer = currentPlayer;
 	}
 
+	private Runnable callThrowAction() {
+		class runner implements Runnable {
+			ThrowForm form;
+			/**
+			 * @param throwForm
+			 */
+			public runner(ThrowForm throwForm) {
+				form = throwForm;
+			}
+
+			@Override
+			public void run() {
+				if (gameplayState.getBullets().size() == 0) {
+					form.buttonThrowClicked(gameplayState).run();
+				}
+			}
+		}
+		Runnable r = new runner(this);
+		return r;
+	}
+	
 	/**
 	 * Erzeugt alle Formular-Elemente ohne Position
 	 */
@@ -128,7 +149,7 @@ public class ThrowForm {
 		angleField = gameplayState.createEditField(0, 0, true, "0");
 		velocityField = gameplayState.createEditField(0, 0, true, "0");
 		widgets.put("FORM_BUTTON_THROW",
-				gameplayState.createButton("Wurf!", buttonThrowClicked(gameplayState), 0, 0));
+				gameplayState.createButton("Wurf!", callThrowAction(), 0, 0));
 		widgets.put("FORM_LABEL_ANGLE",
 				gameplayState.createLabel("Winkel:", 0, 0, true));
 		widgets.put("FORM_EDIT_ANGLE",
