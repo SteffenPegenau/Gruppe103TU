@@ -102,6 +102,9 @@ public class ExtendedTWLState extends BasicTWLGameState {
 	protected void addKeyPressedEvent(int key, Action a) {
 		entityManager.addEntity(stateID, keyPressedEvent(key, a));
 	}
+	protected void addKeyESCPressedEvent(int sid, int key, Action a) {
+		entityManager.addEntity(sid, keyPressedEvent(key, a));
+	}
 
 	protected Entity setESCListener(int newState) {
 		Entity escListener = new Entity("ESC_Listener");

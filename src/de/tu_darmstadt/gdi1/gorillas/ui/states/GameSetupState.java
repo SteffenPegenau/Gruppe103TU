@@ -290,7 +290,7 @@ public class GameSetupState extends ExtendedTWLState {
 		widgets.put("EDITGRAVITY",
 				createEditField(BUTTON_LEFT_X + 120, 250, true, "10"));
 		addNumberInputCheck((EditField) widgets.get("EDITGRAVITY"), 30);
-
+		addESCListener(Gorillas.MAINMENUSTATE);
 		widgets.put("BTN_WINDON", createButton("Wind On", setWindOnOff(true), BUTTON_LEFT_X + 150, 400));
 		widgets.put("BTN_WINDOFF", createButton("wind Off", setWindOnOff(false), BUTTON_LEFT_X + 350, 400));
 		

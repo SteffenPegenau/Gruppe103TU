@@ -21,6 +21,7 @@ import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 
@@ -180,6 +181,7 @@ public class GameplayState extends ExtendedTWLState {
 		addESCListener(Gorillas.MAINMENUSTATE);
 		addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 		addKeyPressedEvent(Input.KEY_TAB, throwForm.tabController());
+		addKeyESCPressedEvent(Gorillas.MAINMENUSTATE, Input.KEY_ESCAPE, new ChangeStateAction(Gorillas.GAMEPLAYSTATE));
 	}
 
 	/**

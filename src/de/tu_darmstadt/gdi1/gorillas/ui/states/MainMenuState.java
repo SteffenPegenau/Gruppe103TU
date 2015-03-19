@@ -10,7 +10,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import de.matthiasmann.twl.Event;
+import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.dropofwater.Launch;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import eea.engine.action.Action;
 import eea.engine.action.basicactions.ChangeStateAction;
@@ -18,6 +21,7 @@ import eea.engine.action.basicactions.QuitAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.event.ANDEvent;
+import eea.engine.event.basicevents.KeyPressedEvent;
 import eea.engine.event.basicevents.MouseClickedEvent;
 import eea.engine.event.basicevents.MouseEnteredEvent;
 
@@ -83,7 +87,7 @@ public class MainMenuState extends ExtendedTWLState {
 			throws SlickException {
 		super.init(container, game);
 		addKeyPressedEvent(Input.KEY_N, new ChangeStateAction(Gorillas.GAMESETUPSTATE));
-		
+
 	}
 
 	@Override
@@ -114,14 +118,17 @@ public class MainMenuState extends ExtendedTWLState {
 		drawButtonLabels(g);
 		g.drawString("Exit", 500, 530);
 		addKeyPressedEvent(Input.KEY_N, new ChangeStateAction(Gorillas.GAMESETUPSTATE));
-		addKeyPressedEvent(Input.KEY_ESCAPE, new ChangeStateAction(Gorillas.GAMEPLAYSTATE));
-		
+//		Entity escListener = new Entity("ESC_Listener");
+//		KeyPressedEvent escPressed = new KeyPressedEvent(Input.KEY_ESCAPE);
+//		escPressed.addAction(new ChangeStateAction(Launch.GAMEPLAY_STATE));
+//		escListener.addComponent(escPressed);
+//		entityManager.addEntity(stateID, escListener);		
 	}
 	
 	@Override
 	protected RootPane createRootPane() {
 		RootPane rp = super.createRootPane();
-		//addKeyPressedEvent(Input.KEY_N, new ChangeStateAction(Gorillas.GAMESETUPSTATE));
+
 		return rp;
 	}
 
