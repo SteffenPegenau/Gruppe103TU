@@ -1,11 +1,10 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -15,10 +14,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import de.matthiasmann.twl.Button;
-import de.matthiasmann.twl.DialogLayout;
 import de.matthiasmann.twl.Label;
-import de.matthiasmann.twl.PopupWindow;
 import de.matthiasmann.twl.Widget;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
