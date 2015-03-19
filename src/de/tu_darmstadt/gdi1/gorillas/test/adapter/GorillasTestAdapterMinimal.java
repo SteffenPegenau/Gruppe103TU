@@ -258,7 +258,7 @@ public class GorillasTestAdapterMinimal {
 	public void shootButtonPressed() {
 		if(gorillas.getCurrentStateID() == Gorillas.GAMEPLAYSTATE) {
 			GameplayState state = (GameplayState) gorillas.getCurrentState();
-			state.throwForm.buttonThrowClicked();
+			state.throwForm.buttonThrowClicked(state).run();
 		}
 	}
 

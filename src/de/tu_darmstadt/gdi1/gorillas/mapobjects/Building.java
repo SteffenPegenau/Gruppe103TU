@@ -126,7 +126,12 @@ public class Building extends MapObject {
 	}
 
 	private int getRandomHeight() {
-		return randomInt(MIN_HEIGHT, MAX_HEIGHT);
+		int randomHeight = 1;
+		// Ungerade Hoehen sind doof (beim Teilen durch 2 kommt es zu cast-fehlern) => nur gerade gehen durch!
+		while(randomHeight % 2 != 0) {
+			randomHeight = randomInt(MIN_HEIGHT, MAX_HEIGHT);
+		}
+		return randomHeight;
 	}
 
 	public Vector2f getPosition() {
@@ -139,8 +144,11 @@ public class Building extends MapObject {
 	 */
 	public Vector2f getPositionLeftUpperCorner() {
 		Vector2f centerPosition = getPosition();
-		float x = centerPosition.x - ((float)getWidth() / 2);
-		float y = centerPosition.y - ((float) height / 2);
+		float width = getWidth();
+		float height = this.height;
+		float two = 2.0f;
+		float x = centerPosition.x - width / two;
+		float y = centerPosition.y - height / 2;
 		return new Vector2f(x, y);
 	}
 

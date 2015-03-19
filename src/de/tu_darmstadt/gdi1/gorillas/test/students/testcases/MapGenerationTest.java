@@ -109,7 +109,9 @@ public class MapGenerationTest {
 						.get(leftGorillaBuilding).y
 						- adapter.getGorillaHeight() / 2);
 		assertTrue(
-				"The right gorilla should really stand on a building.",
+				"The right gorilla should really stand on a building. Gorilla.y=" + rightGorillaCoordinate.y
+				+ " Building.y=" + buildingCoordinates.get(rightGorillaBuilding).y
+				+ " Gorilla.height/2=" + adapter.getGorillaHeight() / 2,
 				rightGorillaCoordinate.y == buildingCoordinates
 						.get(rightGorillaBuilding).y
 						- adapter.getGorillaHeight() / 2);
@@ -139,7 +141,10 @@ public class MapGenerationTest {
 				leftGorillaCoordinate.x == expectedLeftGorillaX);
 
 		assertTrue(
-				"The right gorilla should stand exactly in the middle of its building.",
+				"The right gorilla should stand exactly in the middle of its building."
+				+ " ExpectedX=" + expectedRightGorillaX
+				+ " X=" + rightGorillaCoordinate.x
+				,
 				rightGorillaCoordinate.x == expectedRightGorillaX);
 	}
 }

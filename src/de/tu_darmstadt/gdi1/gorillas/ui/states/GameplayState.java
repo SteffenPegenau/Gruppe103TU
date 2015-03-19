@@ -35,7 +35,7 @@ public class GameplayState extends ExtendedTWLState {
 	int numberOfHitsForVictory;
 	double windVelocityX;
 	double windVelocityY;
-	private int currentPlayer;
+	public int currentPlayer;
 	private Player winner = null;
 	public static Random r = new Random();
 	public static int low = -15;

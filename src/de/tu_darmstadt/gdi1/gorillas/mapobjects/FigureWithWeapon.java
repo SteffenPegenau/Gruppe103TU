@@ -6,6 +6,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import de.tu_darmstadt.gdi1.gorillas.weapons.BananaThrower;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
 
 
@@ -17,7 +18,7 @@ public class FigureWithWeapon extends MapObject {
 		//
 		// Fields
 		//
-		protected Weapon weapon;
+		protected Weapon weapon = null;
 		Player owner;
 		
 		public final static String DESTRUCTION_PATH = "gorillas/destruction.png";
@@ -97,7 +98,12 @@ public class FigureWithWeapon extends MapObject {
 		 * @return the value of weapon
 		 */
 		public Weapon getWeapon () {
+			if(weapon == null) {
+				setWeapon(new BananaThrower());
 				return weapon;
+			} else {
+				return weapon;
+			}
 		}
 
 		public Player getOwner() {
