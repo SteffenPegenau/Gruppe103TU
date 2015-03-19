@@ -102,29 +102,6 @@ public class Skyline {
 	}
 
 	/**
-	 * Löscht die Hochhäuser, erzeugt sie zufällig neu und platziert die Figuren
-	 * 
-	 */
-	public void rebuildSkyline() {
-		removeBuildingEntities();
-		createBuildings();
-	}
-
-	/**
-	 * Entfernt alle Gebäude aus dem EntityManager
-	 */
-	public void removeBuildingEntities() {
-		String entityName;
-		for (int i = 0; i < buildings.length; i++) {
-			entityName = buildings[i].getID();
-			// entityManager.getEntity(gameplayState.getID(),
-			// entityName).setVisible(false);
-			// entityManager.removeEntity(gameplayState.getID(), buildings[i]);
-			// buildings[i].render(container, game, g);
-		}
-	}
-
-	/**
 	 * Erzeugt zufällige Gebäude und fügt sie der Skyline hinzu
 	 */
 	public void createBuildings() {

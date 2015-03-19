@@ -94,7 +94,7 @@ public class GameplayState extends ExtendedTWLState {
 		entityManager.renderEntities(container, game, g);
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
-
+			positionPlayer();
 			for (int i = 0; i < players.length; i++) {
 				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
 				players[i].getPlayersFigure().getWeapon()
