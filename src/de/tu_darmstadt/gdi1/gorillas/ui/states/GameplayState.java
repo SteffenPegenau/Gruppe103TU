@@ -1,12 +1,7 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.HashMap;
 import java.util.Random;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -77,6 +72,10 @@ public class GameplayState extends ExtendedTWLState {
 			System.out.println("Wind an? " + wind);
 		}
 	}
+	
+	/**
+	 * Erstellt eine neue Skyline
+	 */
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -91,6 +90,7 @@ public class GameplayState extends ExtendedTWLState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		entityManager.renderEntities(container, game, g);
+<<<<<<< HEAD
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
 			for (int i = 0; i < players.length; i++) {
@@ -104,6 +104,10 @@ public class GameplayState extends ExtendedTWLState {
 
 			positionPlayer();
 
+=======
+		if (!skyline.isSkyline_built()) {
+			skyline.createSkyline();
+>>>>>>> 24e43d1d3427f5eac3f13a645d23223eb2c14296
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
@@ -123,6 +127,17 @@ public class GameplayState extends ExtendedTWLState {
 				entityManager.addEntity(this.stateID, arrow);
 			}
 		}
+	}
+	
+	/**
+	 * Erstellt eine neue Skyline mit Gorillas drauf
+	 */
+	public void createNewSkyline() {
+		entityManager.clearEntitiesFromState(stateID);
+		skyline.createSkyline();
+		positionPlayer();
+		addESCListener(Gorillas.MAINMENUSTATE);
+		addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 	}
 
 	/**

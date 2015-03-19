@@ -324,8 +324,7 @@ public class Bullet extends MapObject {
 						enemyPlayer.figureWasHit();
 						player.hitEnemyFigure();
 						if (enemyPlayer.getLifesLeft() > 0) {
-							gameplayState.getSkyline().createSkyline();
-							gameplayState.positionPlayer();
+							gameplayState.createNewSkyline();
 						}
 						System.out.println(enumToString.printHit());
 					} else if (entity.getID().contentEquals("sun")) {

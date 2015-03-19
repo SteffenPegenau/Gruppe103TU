@@ -77,7 +77,7 @@ public class Serializer {
 	        out.writeObject(o.getClass().cast(o));
 	        out.close();
 	        fileOut.close();
-	        System.out.println("Serialized object is saved in " + filename);
+	        //System.out.println("Serialized object is saved in " + filename);
 	      }catch(NotSerializableException e) {
 	    	  System.out.println("Object to be saved does not implement java.io.Serializable!");
 	    	  e.printStackTrace();

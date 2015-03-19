@@ -29,12 +29,22 @@ public class Skyline {
 	protected int frameWidth = 0;
 	protected int frameHeight = 0;
 
+	protected int yOffsetCity = 0;
+
+	public int getyOffsetCity() {
+		return yOffsetCity;
+	}
+
+	public void setyOffsetCity(int yOffsetCity) {
+		this.yOffsetCity = yOffsetCity;
+	}
+
 	protected Sun sun;
 	protected Player[] players;
 	protected FigureWithWeapon[] playerFigures = new FigureWithWeapon[2];
 	protected Building[] buildings;
 	protected boolean buildingsWithRandomWidth;
-	
+
 	protected int gorillaWidth;
 	protected int gorillaHeight;
 
@@ -75,53 +85,37 @@ public class Skyline {
 		// Sonne setzen
 		sun = new Sun("sun");
 		sun.setPosition(new Vector2f(400, 33));
-		
-		if(!TestGorillas.debug) {
+
+		if (!TestGorillas.debug) {
 			// Hintergrund setzen
 			entityManager.addEntity(stateID, getBackgroundEntity());
 			entityManager.addEntity(stateID, sun);
 		}
 
-		
-
 		// Hochhäuser erzeugen
 		createBuildings();
 	}
 
+	/**
+	 * Generiert die Skyline anhand vorgegebener Koordinaten, die die linken
+	 * oberen Ecken der Gebaeude beschreiben
+	 * 
+	 * @param buildingCoordinates
+	 *            ArrayList der linken, oberen Eck/Vektoren der Gebaeude
+	 */
 	public void createSkyline(ArrayList<Vector2f> buildingCoordinates) {
-		// Hintergrund setzen
-		entityManager.addEntity(stateID, getBackgroundEntity());
-
-		// Sonne setzen
+		// Sonne erzeugen
 		sun = new Sun("sun");
 		sun.setPosition(new Vector2f(400, 33));
-		entityManager.addEntity(stateID, sun);
+
+		// Entitaeten setzen (Sonne + Hintergrund)
+		if (!TestGorillas.debug) {
+			entityManager.addEntity(stateID, getBackgroundEntity());
+			entityManager.addEntity(stateID, sun);
+		}
 
 		// Hochhäuser erzeugen
 		createBuildings(buildingCoordinates);
-	}
-
-	/**
-	 * Löscht die Hochhäuser, erzeugt sie zufällig neu und platziert die Figuren
-	 * 
-	 */
-	public void rebuildSkyline() {
-		removeBuildingEntities();
-		createBuildings();
-	}
-
-	/**
-	 * Entfernt alle Gebäude aus dem EntityManager
-	 */
-	public void removeBuildingEntities() {
-		String entityName;
-		for (int i = 0; i < buildings.length; i++) {
-			entityName = buildings[i].getID();
-			// entityManager.getEntity(gameplayState.getID(),
-			// entityName).setVisible(false);
-			// entityManager.removeEntity(gameplayState.getID(), buildings[i]);
-			// buildings[i].render(container, game, g);
-		}
 	}
 
 	/**
@@ -131,20 +125,31 @@ public class Skyline {
 		if (frameWidth == 0) {
 			frameWidth = Gorillas.FRAME_WIDTH;
 		}
+
+		// Standard-Breite eines Gebaeudes
+		int widthOfBuilding = (int) ((double) frameWidth / buildings.length);
+
 		// alle Gebäude setzen
 		int widthUsedByBuildings = 0;
 		for (int i = 0; i < buildings.length; i++) {
-			buildings[i] = new Building("building" + i, widthUsedByBuildings,
-					-1, frameWidth / buildings.length, null);
+			String name = "building" + i;
+			buildings[i] = new Building(name, widthUsedByBuildings, -1,
+					widthOfBuilding, null);
 			widthUsedByBuildings += buildings[i].getWidth();
-			if(!TestGorillas.debug) {
+			if (!TestGorillas.debug) {
 				entityManager.addEntity(stateID,
 						buildings[i].asDestructibleImageEntity());
 			}
-			
+
 		}
 	}
 
+	/**
+	 * Erstellt Gebaeude anhand einer Liste von Vektoren, die die linke obere
+	 * Ecke der Gebaeude angeben
+	 * 
+	 * @param positions
+	 */
 	public void createBuildings(ArrayList<Vector2f> positions) {
 		if (frameWidth == 0) {
 			frameWidth = Gorillas.FRAME_WIDTH;
@@ -152,14 +157,29 @@ public class Skyline {
 		if (frameHeight == 0) {
 			frameHeight = Gorillas.FRAME_HEIGHT;
 		}
-		int counter = 0;
-		for (Vector2f pos : positions) {
-			buildings[counter] = new Building("building" + counter,
-					(int) pos.x, (int) ((frameHeight - pos.y) * 2), frameWidth
-							/ buildings.length, null);
-			entityManager.addEntity(stateID,
-					buildings[counter].asDestructibleImageEntity());
-			counter++;
+
+		for (int i = 0; i < positions.size(); i++) {
+			int width = 0;
+			int x = (int) positions.get(i).x;
+			if (i + 1 < positions.size()) {
+				// Die Breite des Gebauedes ist bis zum naechsten Gebaeude
+				width = (int) positions.get(i).x - x;
+			} else {
+				// Das letzte Gebaude => Breite bis zum Rand
+				width = (int) frameWidth - x;
+			}
+
+			Vector2f centerCoordinate = leftTopToCenterCoordinate(
+					positions.get(i), width);
+			int height = frameHeight - (int) positions.get(i).y;
+			int centerX = (int) centerCoordinate.x;
+
+			buildings[i] = new Building("building" + i, centerX, height, width,
+					null);
+			if (!TestGorillas.debug) {
+				entityManager.addEntity(stateID,
+						buildings[i].asDestructibleImageEntity());
+			}
 		}
 	}
 
@@ -225,9 +245,22 @@ public class Skyline {
 
 	public ArrayList<Vector2f> getBuildingCoordinate() {
 		ArrayList<Vector2f> coordinates = new ArrayList<Vector2f>();
-		
+
 		for (int i = 0; i < buildings.length; i++) {
 			coordinates.add(buildings[i].getPosition());
+		}
+		return coordinates;
+	}
+
+	public ArrayList<Vector2f> getBuildingLeftUpperCornerCoordinates() {
+		ArrayList<Vector2f> coordinates = new ArrayList<Vector2f>();
+		for (int i = 0; i < buildings.length; i++) {
+			Building b = buildings[i];
+			Vector2f centerCoord = b.getPosition();
+			System.out.println("Gebaeude i=" + i);
+			Vector2f leftUpperCorner = CenterToLeftTopCoordinate(centerCoord,
+					b.getWidth());
+			coordinates.add(leftUpperCorner);
 		}
 		return coordinates;
 	}
@@ -254,6 +287,40 @@ public class Skyline {
 
 	public void setGorillaHeight(int gorillaHeight) {
 		this.gorillaHeight = gorillaHeight;
+	}
+
+	/**
+	 * Rechnet die Gebaeude-Position linke, obere Ecke in den Mittelpunkt des
+	 * Gebaeudes um
+	 * 
+	 * ACHTUNG: frameHeight und frameWidth muss gesetzt sein!
+	 * 
+	 * @return Mittelpunkt des Gebaudes
+	 */
+	public Vector2f leftTopToCenterCoordinate(Vector2f leftTopCoordinate,
+			int width) {
+		float x = leftTopCoordinate.x + ((float) width / 2);
+		float y = ((float) frameHeight - leftTopCoordinate.y) / 2;
+		return new Vector2f(x, y);
+	}
+
+	/**
+	 * Rechnet die Gebaeude-Position (Mittelpunkt) des Gebaeudes um in linke,
+	 * obere Ecke
+	 * 
+	 * ACHTUNG: frameHeight und frameWidth muss gesetzt sein!
+	 * 
+	 * @return Linke, obere Ecke des Gebaudes
+	 */
+	public Vector2f CenterToLeftTopCoordinate(Vector2f centerCoordinate,
+			int width) {
+		float x = centerCoordinate.x - ((float) width / 2);
+		float y = frameHeight - 2 * (frameHeight - centerCoordinate.y);
+		System.out.println("CenterX=" + centerCoordinate.x + " CenterY="
+				+ centerCoordinate.y + "  =>  " + "CornerX=" + x + " CornerY="
+				+ y + "(mit width=" + width + ", frameHeight=" + frameHeight
+				+ ", yOffset=" + getyOffsetCity() + ")");
+		return new Vector2f(x, y);
 	}
 
 }

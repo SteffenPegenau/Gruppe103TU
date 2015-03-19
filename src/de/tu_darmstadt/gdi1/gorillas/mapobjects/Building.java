@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import eea.engine.entity.DestructibleImageEntity;
 
 /**
@@ -19,13 +20,14 @@ public class Building extends MapObject {
 	public final static int MIN_HEIGHT = 100;
 
 	public final static Color[] BASIC_COLORS = { new Color(143, 210, 90),
-			new Color(177, 115, 176), new Color(70, 70, 70), new Color(47, 183, 145),
-			new Color(240, 21, 25), new Color(10, 18, 36),
-			new Color(215, 190, 21), new Color(10, 131, 36) };
+			new Color(177, 115, 176), new Color(70, 70, 70),
+			new Color(47, 183, 145), new Color(240, 21, 25),
+			new Color(10, 18, 36), new Color(215, 190, 21),
+			new Color(10, 131, 36) };
 
 	public final static String DESTRUCTION_PATH = "gorillas/destruction.png";
 	public final static boolean DEBUG = Gorillas.debug;
-	
+
 	private Vector2f position;
 
 	private int height;
@@ -35,12 +37,13 @@ public class Building extends MapObject {
 
 	BufferedImage image;
 	Graphics2D building;
-	
+
 	/**
 	 * Erzeugt ein Hochhaus
 	 * 
 	 * @param entityID
-	 * @param posX linke Kante
+	 * @param posX
+	 *            linke Kante
 	 * @param height
 	 *            , wenn height < 0, wird zufällige Höhe g
 	 * @param width
@@ -69,11 +72,12 @@ public class Building extends MapObject {
 		} else {
 			this.color = randomColor();
 		}
-		
-		// Koordinatensystem des Vektors hat in der oberen, linken Ecke den Ursprung
+
+		// Koordinatensystem des Vektors hat in der oberen, linken Ecke den
+		// Ursprung
 		posX = posX + (int) (width / 2);
-		int posY = Gorillas.FRAME_HEIGHT - (int)(height / 2);
-		
+		int posY = Gorillas.FRAME_HEIGHT - (int) (height / 2);
+
 		position = new Vector2f(posX, posY);
 
 		createBuilding();
@@ -99,11 +103,17 @@ public class Building extends MapObject {
 	 * Erzeugt Gebäude
 	 */
 	private void createBuilding() {
-		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		building = image.createGraphics();
-		building.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-		building.setColor(this.color);
-		building.fillRect(0, 0, width, height);
+		if (width > 0 && height > 0) {
+			image = new BufferedImage(width, height,
+					BufferedImage.TYPE_INT_ARGB);
+			if (!TestGorillas.debug) {
+				building = image.createGraphics();
+				building.setComposite(AlphaComposite
+						.getInstance(AlphaComposite.SRC));
+				building.setColor(this.color);
+				building.fillRect(0, 0, width, height);
+			}
+		}
 	}
 
 	/**
@@ -118,8 +128,6 @@ public class Building extends MapObject {
 	private int getRandomHeight() {
 		return randomInt(MIN_HEIGHT, MAX_HEIGHT);
 	}
-	
-
 
 	public Vector2f getPosition() {
 		return position;
@@ -128,54 +136,37 @@ public class Building extends MapObject {
 	public int getHeight() {
 		return height;
 	}
-	
-	
 
 	/*
-	
-	public void imageSetter(int width, int height, int imageType) {
-		BufferedImages = new LinkedList<BufferedImage>();
-
-		imageX = new BufferedImage(width, height, imageType);
-		BufferedImage i = imageX;
-		BufferedImages.add(i);
-
-	}
-
-	public void buildingGraphicsSetter(List<BufferedImage> BuffImag, int x,
-			int y, int width, int height) {
-		for (BufferedImage image : BuffImag) {
-			buildingX = image.createGraphics();
-			buildingX.setComposite(AlphaComposite
-					.getInstance(AlphaComposite.SRC));
-			buildingX.setColor(BuildingColors.get((int) (10 * RandomNr))); // Müssen
-																			// 0
-																			// bis
-																			// 9
-																			// Farben
-																			// übergeben
-																			// werden
-																			// sonst
-																			// Laufzeitfehler!
-			buildingX.fillRect(x, y, width, height); // Richtig Ausfüllen!
-			Graphics2D building = buildingX;
-			BuildingList.add(building);
-		}
-	}
-
-	public void destructableImageEntityAdder(int index, float x, float y) {
-		DestructibleImageEntity skyScraper;
-		skyScraperX = new DestructibleImageEntity("obstracle",
-				BufferedImages.get(index), "gorillas/destruction.png", false);
-		skyScraperX.setPosition(new Vector2f(x, y)); // Position setzen
-		skyScraper = skyScraperX;
-		DestructerList.add(skyScraper);
-
-	}
-
-	public void colorAdder(Color c) {
-		BuildingColors.add(c);
-	}
-	*/
+	 * 
+	 * public void imageSetter(int width, int height, int imageType) {
+	 * BufferedImages = new LinkedList<BufferedImage>();
+	 * 
+	 * imageX = new BufferedImage(width, height, imageType); BufferedImage i =
+	 * imageX; BufferedImages.add(i);
+	 * 
+	 * }
+	 * 
+	 * public void buildingGraphicsSetter(List<BufferedImage> BuffImag, int x,
+	 * int y, int width, int height) { for (BufferedImage image : BuffImag) {
+	 * buildingX = image.createGraphics(); buildingX.setComposite(AlphaComposite
+	 * .getInstance(AlphaComposite.SRC));
+	 * buildingX.setColor(BuildingColors.get((int) (10 * RandomNr))); // Müssen
+	 * // 0 // bis // 9 // Farben // übergeben // werden // sonst //
+	 * Laufzeitfehler! buildingX.fillRect(x, y, width, height); // Richtig
+	 * Ausfüllen! Graphics2D building = buildingX; BuildingList.add(building); }
+	 * }
+	 * 
+	 * public void destructableImageEntityAdder(int index, float x, float y) {
+	 * DestructibleImageEntity skyScraper; skyScraperX = new
+	 * DestructibleImageEntity("obstracle", BufferedImages.get(index),
+	 * "gorillas/destruction.png", false); skyScraperX.setPosition(new
+	 * Vector2f(x, y)); // Position setzen skyScraper = skyScraperX;
+	 * DestructerList.add(skyScraper);
+	 * 
+	 * }
+	 * 
+	 * public void colorAdder(Color c) { BuildingColors.add(c); }
+	 */
 
 }

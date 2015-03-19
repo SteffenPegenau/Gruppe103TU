@@ -71,7 +71,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		skyline.setFrameHeight(frameHeight);
 		skyline.setFrameWidth(frameWidth);
 		skyline.setGorillaWidth(gorillaWidth);
-		skyline.setGorillaWidth(gorillaWidth);
+		skyline.setGorillaHeight(gorillaHeight);
 		
 		Gorilla g1 = new Gorilla("g1");
 		g1.setImageHeight(gorillaHeight);
@@ -115,7 +115,9 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		skyline = new Skyline(entityManager, Gorillas.GAMEPLAYSTATE, buildingCoordinates.size(), false);
 		skyline.setFrameHeight(paneHeight);
 		skyline.setFrameWidth(paneWidth);
+		skyline.setyOffsetCity(yOffsetCity);
 		skyline.createSkyline(buildingCoordinates);
+
 		
 		Gorilla g1 = new Gorilla("g1");
 		Gorilla g2 = new Gorilla("g2");
@@ -148,7 +150,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         current map, ordered from left to right
 	 */
 	public ArrayList<Vector2f> getBuildingCoordinates() {
-		return skyline.getBuildingCoordinate();
+		return skyline.getBuildingLeftUpperCornerCoordinates();
 	}
 
 	/**
