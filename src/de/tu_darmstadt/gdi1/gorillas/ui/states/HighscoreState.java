@@ -1,19 +1,27 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.PlayerList;
+import eea.engine.component.render.ImageRenderComponent;
+import eea.engine.entity.Entity;
 
 /**
  * @author Steffen Pegenau (steffen.pegenau@gmail.com)
  *
  */
 public class HighscoreState extends ExtendedTWLState {
+	
+	Image  layer_underneath = null;
 	
 	// Definiert die X-Positionen der einzelnen Spalten der Tabelle
 	private final static int COLUMN_RANKING = posX.A.get();
@@ -28,6 +36,15 @@ public class HighscoreState extends ExtendedTWLState {
 
 	public HighscoreState(int sid) {
 		super(sid);
+	}	@Override
+	public void render(GameContainer container, StateBasedGame game, Graphics g)
+			throws SlickException {
+		super.render(container, game, g);
+		
+		g.setColor(Color.red);
+		g.scale(1.5f, 1.5f);
+		g.drawString("Highscore", 220, 20);
+	
 	}
 	
 	protected RootPane createRootPane() {
@@ -36,6 +53,22 @@ public class HighscoreState extends ExtendedTWLState {
 		
 
 		entityManager.addEntity(stateID, setBackground(DEFAULT_BACKGROUND));
+		
+		Entity layer = new Entity("LAYER");
+		layer.setPosition(new Vector2f(390, 285));
+		layer.setScale(1.2f);
+		
+		if(layer_underneath == null) {
+			try {
+				layer_underneath = new Image("assets/gorillas/backgrounds/WhiteFrame.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+		layer.addComponent(new ImageRenderComponent(layer_underneath));
+		entityManager.addEntity(stateID, layer);		
+	
+
 		addESCListener(Gorillas.MAINMENUSTATE);
 		
 		createTableHeader();
@@ -47,18 +80,18 @@ public class HighscoreState extends ExtendedTWLState {
 
 	protected void createTableHeader() {
 		String prefix = "LABEL_CAPTION";
-		widgets.put(prefix + "_RANKING", createLabel("Platz", COLUMN_RANKING, posY.A.get(), true));
-		widgets.put(prefix + "_USERNAME", createLabel("Name", COLUMN_USERNAME, posY.A.get(), true));
-		widgets.put(prefix + "_ROUNDS_PLAYED", createLabel("Runden gespielt", COLUMN_ROUNDS_PLAYED, posY.A.get(), true));
-		widgets.put(prefix + "_ROUNDS_WON", createLabel("Runden gewonnen", COLUMN_ROUNDS_WON, posY.A.get(), true));
-		widgets.put(prefix + "_PLAYED_WON_RATIO", createLabel("Verhältnis", COLUMN_PLAYED_WON_RATIO, posY.A.get(), true));
-		widgets.put(prefix + "_THROWS_FOR_HIT", createLabel("Würfe/Treffer", COLUMN_ACCURACY, posY.A.get(), true));
+		widgets.put(prefix + "_RANKING", createLabel("Platz", COLUMN_RANKING, posY.D.get(), true));
+		widgets.put(prefix + "_USERNAME", createLabel("Name", COLUMN_USERNAME, posY.D.get(), true));
+		widgets.put(prefix + "_ROUNDS_PLAYED", createLabel("Runden gespielt", COLUMN_ROUNDS_PLAYED, posY.D.get(), true));
+		widgets.put(prefix + "_ROUNDS_WON", createLabel("Runden gewonnen", COLUMN_ROUNDS_WON, posY.D.get(), true));
+		widgets.put(prefix + "_PLAYED_WON_RATIO", createLabel("Verhältnis", COLUMN_PLAYED_WON_RATIO, posY.D.get(), true));
+		widgets.put(prefix + "_THROWS_FOR_HIT", createLabel("Würfe/Treffer", COLUMN_ACCURACY, posY.D.get(), true));
 	}
 	
 	protected void createTableContent() {
 		Player[] highscore = PlayerList.getHighscore();
 		
-		int y = posY.C.get();
+		int y = posY.F.get();
 		for (int i = 0; i < highscore.length; i++) {
 			Player p = highscore[i];
 			String rank = String.valueOf(i + 1);
