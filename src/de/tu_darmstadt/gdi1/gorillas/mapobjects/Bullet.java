@@ -31,7 +31,7 @@ public class Bullet extends MapObject {
 	protected GameplayState gameplayState = null;
 
 	protected int windSpeed = 0;
-	
+
 	// Radiant, nicht in Grad!
 	protected double angle;
 
@@ -116,7 +116,7 @@ public class Bullet extends MapObject {
 	 * @param velocity
 	 */
 	public void setVelocity(double angleInDegree, float velocity) {
-		
+
 		this.velocity = velocity;
 		if (player.getArrayIndex() == 1) {
 			// rechter Spieler
@@ -156,15 +156,14 @@ public class Bullet extends MapObject {
 			// Wenn der aktive Spieler gerade Spieler0 ist
 			enemy = gameplayState.getPlayer(1);
 			// ist der Gegner Spieler1
-			return ((int) enemy.getPlayersFigure()
-					.getPosition().x - (int)calculateNewPosition().x);
-					
+			return ((int) enemy.getPlayersFigure().getPosition().x - (int) calculateNewPosition().x);
+
 			// das hier ist die Abstandsformel nach dem Satz des Pythagoras
 		} else {
 			enemy = gameplayState.getPlayer(0);
-			return ((int)calculateNewPosition().x
-					- (int)enemy.getPlayersFigure().getPosition().x);
-					
+			return ((int) calculateNewPosition().x - (int) enemy
+					.getPlayersFigure().getPosition().x);
+
 		}
 	}
 
@@ -177,10 +176,11 @@ public class Bullet extends MapObject {
 	public String fittingComment() {
 		EnumToString enumToString = new EnumToString();
 		// System.out.println(getDist(player));
-		if (getDist(player) <= 150 && getDist(player) >= -150) {
+		if (getDist(gameplayState.getNotCurrentPlayer()) <= 150
+				&& getDist(gameplayState.getNotCurrentPlayer()) >= -150) {
 			return enumToString.printClose();
 		}
-		if (getDist(player) >= 150) {
+		if (getDist(gameplayState.getNotCurrentPlayer()) >= 150) {
 			return enumToString.printToShort();
 		} else {
 			return enumToString.printFarOff();
@@ -194,7 +194,7 @@ public class Bullet extends MapObject {
 		double x = posX0
 				+ velocityX
 				* scaledTimeOfExistence
-				+ (0.5f *  windSpeed
+				+ (0.5f * windSpeed
 						* (scaledTimeOfExistence * scaledTimeOfExistence) * setWindSOnOff());
 		System.out.println("Windstärke: " + GameplayState.wind);
 		double y = posY0 - velocityY * scaledTimeOfExistence + 0.5
@@ -265,16 +265,17 @@ public class Bullet extends MapObject {
 				float x = position.x;
 				float y = position.y;
 				if (x < 0 || x > gc.getWidth() || y > gc.getHeight()) {
-				
-					if(!commentAlreadyVisible()) {
-						{	
-						gameplayState.farOff();
+
+					if (!commentAlreadyVisible()) {
+						{
+							gameplayState.farOff();
+							System.out.println(enumToString.printFarOff());
+						}
 					}
-				}
 					removeEntityFromState(sb, gameplayState, entity);
 					System.out.println("Removed " + entity.getID()
 							+ " at Position " + x + " | " + y);
-					System.out.println(enumToString.printFarOff());
+					
 				}
 
 			}
@@ -335,45 +336,46 @@ public class Bullet extends MapObject {
 						destructible = (IDestructible) entity;
 						destructible.impactAt(event.getOwnerEntity()
 								.getPosition());
-						
-						if(gameplayState.getListOfBullets().size()>0) {
-			
-							
-							 
-						
+
+						if (gameplayState.getListOfBullets().size() > 0) {
+
 							if (!commentAlreadyVisible()) {
 								{
-								
-									gameplayState.decideComment(getDist(gameplayState.getNotCurrentPlayer()));
+
+									gameplayState
+											.decideComment(getDist(gameplayState
+													.getNotCurrentPlayer()));
+								}
 							}
+
 						}
 						
-					} else {
-						return;
-					}
-					removeEntityFromState(sb, gameplayState,
-							event.getOwnerEntity());
-					// zerst�re die Entit�t (dabei wird das der Entit�t
-					// zugewiese Zerst�rungs-Pattern benutzt)
+						else {
+							return;
+						}
+						removeEntityFromState(sb, gameplayState,
+								event.getOwnerEntity());
+						// zerst�re die Entit�t (dabei wird das der Entit�t
+						// zugewiese Zerst�rungs-Pattern benutzt)
 
+					}
 				}
 			}
-		}
 		}
 		Action a = new collisionAction(this, gameplayState, player);
 		return a;
 	}
 
 	public boolean commentAlreadyVisible() {
-	if(gameplayState.t.isRunning()) {
-		return true;
-		
-			}
-	else return false;
-	
+		if (gameplayState.t.isRunning()) {
+			return true;
+
+		} else
+			return false;
+
 	}
-		
-		protected Event getCollisionEvent() {
+
+	protected Event getCollisionEvent() {
 		Event collisionEvent = new CollisionEvent();
 		collisionEvent.addAction(collisionAction());
 		// collisionEvent.addAction(new DestroyEntityAction());
@@ -453,12 +455,13 @@ public class Bullet extends MapObject {
 	}
 
 	public int setWindSOnOff() {
-		if(TestGorillas.debug || gameplayState == null) {
+		if (TestGorillas.debug || gameplayState == null) {
 			return 0;
 		}
-		
+
 		if (gameplayState.isWindOnOff() == true) {
-			System.out.println("setWindSOnOff in der Bullet Klasse, STATUS: " + gameplayState.isWindOnOff());
+			System.out.println("setWindSOnOff in der Bullet Klasse, STATUS: "
+					+ gameplayState.isWindOnOff());
 			windS = 1;
 		} else {
 			windS = 0;
@@ -474,4 +477,3 @@ public class Bullet extends MapObject {
 		this.windSpeed = windSpeed;
 	}
 }
-

@@ -39,13 +39,13 @@ public class EnumToString {
 	public String printFarOff(){
 		switch (initFarOff()) {
 		case GALAXY:
-			return "Meine Kollegin in der Nachbargalaxy hatte Angst getroffen zu werden!";
+			return "Meine Kollegin in der Nachbargalaxy \n hatte Angst getroffen zu werden!";
 		case FLIEGER:
 			return "Flieger, grüß mir die Sonne...";
 		case HOMERUN:
-			return "HOMERUN! Ach Mist, andere Baustelle.";
+			return "HOMERUN! Ach Mist, andere \n Baustelle.";
 		case FEST:
-			return "Wenn nichts mehr geht, fest geht immer, nicht wahr?";
+			return "Wenn nichts mehr geht, \n fest geht immer, nicht wahr?";
 		}
 		return "";
 	}
@@ -53,9 +53,9 @@ public class EnumToString {
 	public String printClose(){
 		switch (initClose()) {
 		case ZIELWASSER:
-			return "Nimm 'nen Schluck Zielwasser, dann sitzt der nächste.";
+			return "Nimm 'nen Schluck Zielwasser,\n dann sitzt der nächste.";
 		case BRILLE:
-			return "Du solltest deine Brille richten, Kollege.";
+			return "Du solltest deine Brille richten, \n Kollege.";
 		case KNAPP:
 			return "Knapp vorbei ist auch daneben!";
 		case SCHIELEN:

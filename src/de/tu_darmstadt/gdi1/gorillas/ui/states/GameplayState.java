@@ -146,6 +146,7 @@ public class GameplayState extends ExtendedTWLState {
 	public void decideComment(int distance) {
 		de.tu_darmstadt.gdi1.gorillas.comments.EnumToString enumToString = new de.tu_darmstadt.gdi1.gorillas.comments.EnumToString();
 		if (listOfBullets.size() > 0) {
+			System.out.println("size der listOfBullets ist grösser als 0");
 			distance = listOfBullets.get(0).getDist(getNotCurrentPlayer());
 			if (distance == 0) {
 				label = new Label(enumToString.printHit());
@@ -252,7 +253,7 @@ public class GameplayState extends ExtendedTWLState {
 
 		// TODO
 
-		RootPane rp = super.createRootPane();
+		
 		addAllWidgetsToRootPane(widgets);
 		return rp;
 	}
