@@ -289,11 +289,24 @@ public class GameplayState extends ExtendedTWLState {
 		}
 		winLayer.addComponent(new ImageRenderComponent(layer_underneath));
 		entityManager.addEntity(stateID, winLayer);
+		widgets.put("QUITAFTERWINBTN", createButton("Leave Game", Gorillas.MAINMENUSTATE, BUTTON_LEFT_X + 150, 400));
 		
 		// Pausiere das Spiel
 		container.pause();
 		// Formular unsichtbar
 		throwForm.setVisibility(false);
+	}
+	
+	public Runnable backToMainMenue() {
+		class changer implements Runnable {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+			}	
+			
+		}
 	}
 
 
