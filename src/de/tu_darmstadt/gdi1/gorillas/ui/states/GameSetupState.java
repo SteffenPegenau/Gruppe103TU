@@ -131,13 +131,7 @@ public class GameSetupState extends ExtendedTWLState {
 			return Integer.valueOf(input);
 		}
 	}
-// TODO : 
-	public boolean windOn() {
-		return true;
-	}
-	public boolean windOff() {
-		return false;
-	}
+
 	/**
 	 * Ermittelt die Eingabe bei Anzahl der Gravitation
 	 * 
@@ -321,10 +315,6 @@ public class GameSetupState extends ExtendedTWLState {
 						BUTTON_LAST_LINE_Y));
 		addAllWidgetsToRootPane(widgets);
 		return rp;
-	}
-
-	public boolean isWindOn() {
-		return windOn;
 	}
 
 	public void setWindOn(boolean windState) {

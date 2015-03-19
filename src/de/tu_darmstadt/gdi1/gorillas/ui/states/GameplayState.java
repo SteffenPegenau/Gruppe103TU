@@ -43,11 +43,13 @@ public class GameplayState extends ExtendedTWLState {
 	public static int wind = r.nextInt(high - low) + low; // Wind zwischen -15
 															// bis 15
 	boolean windOnOff;
+
 	/*
 	 * Setzt die Spieler ins Array
 	 */
 	// TODO: WINDPFEIL!!!
-	public GameplayState(int sid, Player[] players, int rounds, double gravity, boolean wind) {
+	public GameplayState(int sid, Player[] players, int rounds, double gravity,
+			boolean wind) {
 		super(sid);
 		if (players.length != 2) {
 			System.err.println("Bad number of players: " + players.length);
@@ -72,7 +74,7 @@ public class GameplayState extends ExtendedTWLState {
 			System.out.println("Wind an? " + wind);
 		}
 	}
-	
+
 	/**
 	 * Erstellt eine neue Skyline
 	 */
@@ -90,7 +92,6 @@ public class GameplayState extends ExtendedTWLState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		entityManager.renderEntities(container, game, g);
-<<<<<<< HEAD
 
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
@@ -104,38 +105,30 @@ public class GameplayState extends ExtendedTWLState {
 			}
 
 			positionPlayer();
-// AKTUELL?!
-//		if (!skyline.isSkyline_built()) {
-//			skyline.createSkyline();
-//			addESCListener(Gorillas.MAINMENUSTATE);
-//			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
-//			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
-//			// addAllWidgetsToRootPane(widgets);
-//			skyline.setSkyline_built(true);
-//			
-=======
-		if (!skyline.isSkyline_built()) {
-			createNewSkyline();
-			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
-			// addAllWidgetsToRootPane(widgets);
-			skyline.setSkyline_built(true);
-			
->>>>>>> 21cb8ed827ac04d8996921ef2cabbf6fc75481f3
-			if (windOnOff) {
-				Entity arrow = new Entity("arrow");
-				arrow.addComponent(new ImageRenderComponent(new Image("assets/gorillas/button/arrow.png")));
-				arrow.setPosition(new Vector2f(350, 100));
-				if (wind < 0) {
-					arrow.setRotation(180.0f);
-				} else {
-					arrow.setRotation(0.0f);
+
+			if (!skyline.isSkyline_built()) {
+				createNewSkyline();
+				// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
+				// addAllWidgetsToRootPane(widgets);
+				skyline.setSkyline_built(true);
+
+				if (windOnOff) {
+					Entity arrow = new Entity("arrow");
+					arrow.addComponent(new ImageRenderComponent(new Image(
+							"assets/gorillas/button/arrow.png")));
+					arrow.setPosition(new Vector2f(350, 100));
+					if (wind < 0) {
+						arrow.setRotation(180.0f);
+					} else {
+						arrow.setRotation(0.0f);
+					}
+					arrow.setScale((1.0f / 5) * (float) Math.abs(wind));
+					entityManager.addEntity(this.stateID, arrow);
 				}
-				arrow.setScale((1.0f / 5) * (float) Math.abs(wind));
-				entityManager.addEntity(this.stateID, arrow);
 			}
 		}
 	}
-	
+
 	/**
 	 * Erstellt eine neue Skyline mit Gorillas drauf
 	 */
@@ -150,7 +143,7 @@ public class GameplayState extends ExtendedTWLState {
 	/**
 	 * Setzt die Spieler auf die Gebäude
 	 */
-	public void positionPlayer(){
+	public void positionPlayer() {
 		for (int i = 0; i < players.length; i++) {
 			players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
 			players[i].getPlayersFigure().getWeapon().setGravityInput(gravity);
@@ -159,7 +152,7 @@ public class GameplayState extends ExtendedTWLState {
 			entityManager.addEntity(stateID, players[i].getPlayersFigure());
 		}
 	}
-	
+
 	/**
 	 * Wechselt den aktuellen Spieler. Aus 0 wird 1, aus 1 (allem anderen) wird
 	 * 0;
@@ -225,15 +218,16 @@ public class GameplayState extends ExtendedTWLState {
 			if (winner != null) {
 				playerWins(winner);
 			}
-//			
-//			if (wind != 0) {
-//				Entity arrow = new Entity("arrow");
-//				arrow.addComponent(new ImageRenderComponent(new Image("assets/gorillas/button/arrow.png")));
-//				
-//				arrow.setPosition(new Vector2f(350, 100));
-//				arrow.setScale((1 / 15) * wind);
-//				entityManager.addEntity(this.stateID, arrow);
-//			}
+			//
+			// if (wind != 0) {
+			// Entity arrow = new Entity("arrow");
+			// arrow.addComponent(new ImageRenderComponent(new
+			// Image("assets/gorillas/button/arrow.png")));
+			//
+			// arrow.setPosition(new Vector2f(350, 100));
+			// arrow.setScale((1 / 15) * wind);
+			// entityManager.addEntity(this.stateID, arrow);
+			// }
 		}
 
 	}
