@@ -74,6 +74,10 @@ public class GameplayState extends ExtendedTWLState {
 			this.windOnOff = wind;
 		}
 	}
+	
+	/**
+	 * Erstellt eine neue Skyline
+	 */
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -90,7 +94,7 @@ public class GameplayState extends ExtendedTWLState {
 		entityManager.renderEntities(container, game, g);
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
-<<<<<<< HEAD
+
 			for (int i = 0; i < players.length; i++) {
 				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
 				players[i].getPlayersFigure().getWeapon()
@@ -99,9 +103,8 @@ public class GameplayState extends ExtendedTWLState {
 						skyline.randomBuildingForPlayer(i));
 				entityManager.addEntity(stateID, players[i].getPlayersFigure());
 			}
-=======
+			createNewSkyline();
 			positionPlayer();
->>>>>>> c61648e4f7195019f7e4fa89307b99f66c4e8595
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
@@ -121,6 +124,17 @@ public class GameplayState extends ExtendedTWLState {
 				entityManager.addEntity(this.stateID, arrow);
 			}
 		}
+	}
+	
+	/**
+	 * Erstellt eine neue Skyline mit Gorillas drauf
+	 */
+	public void createNewSkyline() {
+		entityManager.clearEntitiesFromState(stateID);
+		skyline.createSkyline();
+		positionPlayer();
+		addESCListener(Gorillas.MAINMENUSTATE);
+		addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 	}
 
 	/**
