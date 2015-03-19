@@ -104,7 +104,6 @@ public class GameplayState extends ExtendedTWLState {
 				entityManager.addEntity(stateID, players[i].getPlayersFigure());
 			}
 			createNewSkyline();
-			positionPlayer();
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
