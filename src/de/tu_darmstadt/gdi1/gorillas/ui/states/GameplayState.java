@@ -136,6 +136,7 @@ public class GameplayState extends ExtendedTWLState {
 		positionPlayer();
 		addESCListener(Gorillas.MAINMENUSTATE);
 		addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
+		addKeyPressedEvent(Input.KEY_TAB, throwForm.tabController());
 	}
 
 	/**
