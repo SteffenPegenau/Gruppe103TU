@@ -54,7 +54,7 @@ public class Bullet extends MapObject {
 
 	public Bullet(String entityID) {
 		super(entityID);
-
+		System.out.println("===== NEW BULLET");
 	}
 
 	public void setThrowSettings(double angle, float velocity) {
@@ -116,7 +116,7 @@ public class Bullet extends MapObject {
 	 * @param velocity
 	 */
 	public void setVelocity(double angleInDegree, float velocity) {
-
+		
 		this.velocity = velocity;
 		if (player.getArrayIndex() == 1) {
 			// rechter Spieler
@@ -189,19 +189,18 @@ public class Bullet extends MapObject {
 
 	public Vector2f calculateNewPosition() {
 
-		double scaledTimeOfExistence = SCALING_FACTOR * existenceTimeInms;
+		// scaledTimeOfExistence
+		double t = SCALING_FACTOR * existenceTimeInms;
 		// TODO wind an aus
 		double x = posX0
-				+ velocityX
-				* scaledTimeOfExistence
-				+ (0.5f * windSpeed
-						* (scaledTimeOfExistence * scaledTimeOfExistence) * setWindSOnOff());
-		System.out.println("Windstärke: " + GameplayState.wind);
-		double y = posY0 - velocityY * scaledTimeOfExistence + 0.5
-				* getGravity() * Math.pow(scaledTimeOfExistence, 2);
-		System.out.println("Gravitation: " + getGravity());
+				+ velocityX	* t
+				+ (0.5 * windSpeed * (t * t) * setWindSOnOff());
+		//System.out.println("Windstärke: " + GameplayState.wind);
+		double y = posY0 - velocityY * t + 0.5
+				* getGravity() * Math.pow(t, 2);
+		//System.out.println("Gravitation: " + getGravity());
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
-		// System.out.println("New Position: " + newPosition);
+		System.out.println("New Position: " + newPosition + "\tVx=" + velocityX + "\tVy"+ velocityY + "\tg=" + gravity);
 		// TODO: Umsetzen des Dotzen:
 		/*
 		 * Beispielcode: if (y == 600 && bullet.spped < 25) { alles auf null
@@ -223,10 +222,12 @@ public class Bullet extends MapObject {
 	}
 
 	public void setPosX0(float posX0) {
+		log("posX0=" + posX0);
 		this.posX0 = posX0;
 	}
 
 	public float getPosY0() {
+		log("posY0=" + posY0);
 		return posY0;
 	}
 
@@ -250,6 +251,7 @@ public class Bullet extends MapObject {
 		gameplayState.removeBullet((Bullet) entity);
 		StateBasedEntityManager.getInstance().removeEntity(
 				sb.getCurrentStateID(), entity);
+		log("Removed entity at " + entity.getPosition());
 
 	}
 
@@ -447,6 +449,7 @@ public class Bullet extends MapObject {
 	}
 
 	public void setGravity(double g) {
+		log("set gravity to " + g);
 		gravity = g;
 	}
 

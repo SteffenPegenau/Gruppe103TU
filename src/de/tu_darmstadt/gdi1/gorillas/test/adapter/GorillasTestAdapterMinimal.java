@@ -143,7 +143,9 @@ public class GorillasTestAdapterMinimal {
 		if(gorillas.getCurrentStateID() == Gorillas.GAMESETUPSTATE) {
 			GameSetupState state = (GameSetupState) gorillas.getCurrentState();
 			Player one = new Player(player1Name);
+			one.setArrayIndex(0);
 			Player two = new Player(player2Name);
+			two.setArrayIndex(1);
 			state.setPlayer(one, 0);
 			state.setPlayer(two, 1);
 		}
@@ -258,7 +260,8 @@ public class GorillasTestAdapterMinimal {
 	public void shootButtonPressed() {
 		if(gorillas.getCurrentStateID() == Gorillas.GAMEPLAYSTATE) {
 			GameplayState state = (GameplayState) gorillas.getCurrentState();
-			state.throwForm.buttonThrowClicked(state).run();
+			Runnable shootButtonPressedRunnable = state.throwForm.buttonThrowClicked(state);
+			shootButtonPressedRunnable.run();
 		}
 	}
 	

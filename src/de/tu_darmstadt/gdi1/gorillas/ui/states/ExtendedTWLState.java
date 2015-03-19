@@ -17,14 +17,13 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.EditField;
+import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.Widget;
-import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import eea.engine.action.Action;
 import eea.engine.action.basicactions.ChangeStateAction;
-import eea.engine.component.Component;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;

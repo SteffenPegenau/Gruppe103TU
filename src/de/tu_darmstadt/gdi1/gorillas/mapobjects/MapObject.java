@@ -19,6 +19,10 @@ public class MapObject extends Entity {
 	public MapObject(String entityID) {
 		super(entityID);
 	}
+	
+	public void log(String msg) {
+		System.out.println(this.getClass().getSimpleName() + ": " + msg);
+	}
 
 	
 	public void setFigureImage(String pathToImage) {

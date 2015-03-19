@@ -11,6 +11,7 @@ import de.matthiasmann.twl.EditField.Callback;
 import de.matthiasmann.twl.Widget;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.FigureWithWeapon;
+import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
 import eea.engine.action.Action;
@@ -250,15 +251,15 @@ public class ThrowForm {
 			GameplayState gameplayState;
 			StateBasedEntityManager entityManager;
 			ThrowForm throwForm;
+			Skyline skyline;
 			double angle;
 			float velocity;
-			/**
-			 * @param p
-			 */
+			
 			public event(GameplayState gameplayState) {
 				this.gameplayState = gameplayState;
 				entityManager = gameplayState.entityManager;
 				throwForm = gameplayState.throwForm;
+				skyline = gameplayState.getSkyline();
 			}
 
 			@Override
@@ -267,8 +268,23 @@ public class ThrowForm {
 				velocity = throwForm.getVelocity();
 				if(angle >= 0 && velocity >= 0) {
 					Player player = gameplayState.getCurrentPlayer();
+					
+					if(skyline.getFigureWithWeapon(player.getArrayIndex()) != null) {
+						int index = player.getArrayIndex();
+						FigureWithWeapon figure1SavedInSkyline = skyline.getFigureWithWeapon(index);
+						figure1SavedInSkyline.setOwner(player);
+						player.setPlayersFigure(figure1SavedInSkyline);
+						
+						Player otherPlayer = gameplayState.getNotCurrentPlayer();
+						index = otherPlayer.getArrayIndex();
+						FigureWithWeapon figure2SavedInSkyline = skyline.getFigureWithWeapon(index);
+						figure2SavedInSkyline.setOwner(gameplayState.getNotCurrentPlayer());
+						gameplayState.getNotCurrentPlayer().setPlayersFigure(figure2SavedInSkyline);
+					}
 					FigureWithWeapon fig = player.getPlayersFigure();
 					Weapon weapon = fig.getWeapon();
+					
+					System.out.println(this.getClass().getSimpleName() + ": Fig: " + fig);
 					Bullet bullet = weapon
 							.shot(player, fig, angle, velocity, state);
 					entityManager.addEntity(state.getID(), bullet);

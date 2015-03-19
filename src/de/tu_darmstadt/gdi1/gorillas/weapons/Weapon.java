@@ -76,12 +76,12 @@ public abstract class Weapon {
 			player.countANewShot();
 			Bullet projectile = newBulletAsEntity(player, fig);
 			//projectile.setPosition(fig.getPosition());
-			projectile.setGravity(getGravityInput());
+			projectile.setGravity(state.gravity);
 			projectile.setGameplayState(state);
 			projectile.addEvents();
 			projectile.setPosX0(fig.getPosition().x);
 			projectile.setPosY0(fig.getPosition().y);
-			System.out.println("Shot with Angle " + angle + " and velocity " + velocity);
+			System.out.println("Shot with Angle " + angle + " and velocity " + velocity + "from x0=" + fig.getPosition().x + " and y0=" + fig.getPosition().y);
 			projectile.setVelocity(angle, velocity);
 			
 			
