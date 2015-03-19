@@ -106,4 +106,11 @@ public class FigureWithWeapon extends MapObject {
 		public void setImageWidth(int imageWidth) {
 			this.imageWidth = imageWidth;
 		}
+
+		@Override
+		public String toString() {
+			return "Figure of " + owner + " at pos " + this.getPosition();
+		}
+		
+		
 }

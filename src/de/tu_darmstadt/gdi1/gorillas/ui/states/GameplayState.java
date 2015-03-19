@@ -34,7 +34,7 @@ public class GameplayState extends ExtendedTWLState {
 	public ThrowForm throwForm;
 	private Player[] players = new Player[2];
 	private HashMap<String, Bullet> bullets = new HashMap<String, Bullet>();
-	double gravity;
+	public double gravity = 10.0;
 	int numberOfRounds;
 	int numberOfHitsForVictory;
 	double windVelocityX;
@@ -66,6 +66,7 @@ public class GameplayState extends ExtendedTWLState {
 	public GameplayState(int sid, Player[] players, int rounds, double gravity,
 			boolean wind) {
 		super(sid);
+		System.out.println("GRAVITY=" +  gravity);
 		if (players.length != 2) {
 			System.err.println("Bad number of players: " + players.length);
 		} else {
