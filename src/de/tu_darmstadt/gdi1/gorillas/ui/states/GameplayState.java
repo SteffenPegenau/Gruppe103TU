@@ -300,6 +300,8 @@ public class GameplayState extends ExtendedTWLState {
 			if (winner != null) {
 				playerWins(winner);
 			
+	/////////////////hier könnte man dancing gorilla aufrufen und positionieren probably
+			
 			}
 			//
 			// if (wind != 0) {
