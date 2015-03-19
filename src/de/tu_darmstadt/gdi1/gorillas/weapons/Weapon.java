@@ -53,7 +53,7 @@ public abstract class Weapon {
 		// Other methods
 		//
 		
-		private Bullet newBulletAsEntity(Player player, FigureWithWeapon fig) {
+		private Bullet newBulletAsEntity(Player player) {
 			Constructor<? extends Bullet> con = null;
 			Bullet projectile = null;
 			try {
@@ -74,7 +74,7 @@ public abstract class Weapon {
 
 		public Bullet shot(Player player, FigureWithWeapon fig, double angle, float velocity, GameplayState state) {
 			player.countANewShot();
-			Bullet projectile = newBulletAsEntity(player, fig);
+			Bullet projectile = newBulletAsEntity(player);
 			//projectile.setPosition(fig.getPosition());
 			projectile.setGravity(state.gravity);
 			projectile.setGameplayState(state);

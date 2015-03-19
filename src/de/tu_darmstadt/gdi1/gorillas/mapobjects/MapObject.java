@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import eea.engine.component.render.ImageRenderComponent;
+import eea.engine.entity.DestructibleImageEntity;
 import eea.engine.entity.Entity;
 
 /**
