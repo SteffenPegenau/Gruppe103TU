@@ -132,41 +132,20 @@ public class Building extends MapObject {
 	public Vector2f getPosition() {
 		return position;
 	}
+	
+	/**
+	 * Gibt Vektor auf obere linke Ecke zurueck
+	 * @return Vector2f
+	 */
+	public Vector2f getPositionLeftUpperCorner() {
+		Vector2f centerPosition = getPosition();
+		float x = centerPosition.x - ((float)getWidth() / 2);
+		float y = centerPosition.y - ((float) height / 2);
+		return new Vector2f(x, y);
+	}
 
 	public int getHeight() {
 		return height;
 	}
-
-	/*
-	 * 
-	 * public void imageSetter(int width, int height, int imageType) {
-	 * BufferedImages = new LinkedList<BufferedImage>();
-	 * 
-	 * imageX = new BufferedImage(width, height, imageType); BufferedImage i =
-	 * imageX; BufferedImages.add(i);
-	 * 
-	 * }
-	 * 
-	 * public void buildingGraphicsSetter(List<BufferedImage> BuffImag, int x,
-	 * int y, int width, int height) { for (BufferedImage image : BuffImag) {
-	 * buildingX = image.createGraphics(); buildingX.setComposite(AlphaComposite
-	 * .getInstance(AlphaComposite.SRC));
-	 * buildingX.setColor(BuildingColors.get((int) (10 * RandomNr))); // Müssen
-	 * // 0 // bis // 9 // Farben // übergeben // werden // sonst //
-	 * Laufzeitfehler! buildingX.fillRect(x, y, width, height); // Richtig
-	 * Ausfüllen! Graphics2D building = buildingX; BuildingList.add(building); }
-	 * }
-	 * 
-	 * public void destructableImageEntityAdder(int index, float x, float y) {
-	 * DestructibleImageEntity skyScraper; skyScraperX = new
-	 * DestructibleImageEntity("obstracle", BufferedImages.get(index),
-	 * "gorillas/destruction.png", false); skyScraperX.setPosition(new
-	 * Vector2f(x, y)); // Position setzen skyScraper = skyScraperX;
-	 * DestructerList.add(skyScraper);
-	 * 
-	 * }
-	 * 
-	 * public void colorAdder(Color c) { BuildingColors.add(c); }
-	 */
 
 }

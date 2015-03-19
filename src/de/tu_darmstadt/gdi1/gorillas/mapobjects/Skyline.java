@@ -256,11 +256,7 @@ public class Skyline {
 		ArrayList<Vector2f> coordinates = new ArrayList<Vector2f>();
 		for (int i = 0; i < buildings.length; i++) {
 			Building b = buildings[i];
-			Vector2f centerCoord = b.getPosition();
-			System.out.println("Gebaeude i=" + i);
-			Vector2f leftUpperCorner = CenterToLeftTopCoordinate(centerCoord,
-					b.getWidth());
-			coordinates.add(leftUpperCorner);
+			coordinates.add(b.getPositionLeftUpperCorner());
 		}
 		return coordinates;
 	}
