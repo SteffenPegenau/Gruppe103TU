@@ -69,6 +69,10 @@ public class GameplayState extends ExtendedTWLState {
 			this.windOnOff = wind;
 		}
 	}
+	
+	/**
+	 * Erstellt eine neue Skyline
+	 */
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -85,7 +89,6 @@ public class GameplayState extends ExtendedTWLState {
 		entityManager.renderEntities(container, game, g);
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
-			positionPlayer();
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
@@ -105,6 +108,17 @@ public class GameplayState extends ExtendedTWLState {
 				entityManager.addEntity(this.stateID, arrow);
 			}
 		}
+	}
+	
+	/**
+	 * Erstellt eine neue Skyline mit Gorillas drauf
+	 */
+	public void createNewSkyline() {
+		entityManager.clearEntitiesFromState(stateID);
+		skyline.createSkyline();
+		positionPlayer();
+		addESCListener(Gorillas.MAINMENUSTATE);
+		addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 	}
 
 	/**
