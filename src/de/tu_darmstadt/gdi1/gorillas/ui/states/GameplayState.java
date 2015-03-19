@@ -154,30 +154,23 @@ public class GameplayState extends ExtendedTWLState {
 			if (distance <= 150 && distance >= -150) {
 				System.out.println("ich bin in der ersten if Abfrage");
 				label = new Label(enumToString.printClose());
-				label.setSize(200, 100);
-				label.setPosition(300, 30);
-				t.setRepeats(false);
-				t.start();
-				rp.add(label);
+				
 			}
 			if (distance >= 150) {
 				System.out.println("ich bin in der zweiten if Abfrage");
 				label = new Label(enumToString.printToShort());
-				label.setSize(200, 100);
-				label.setPosition(300, 30);
-				t.setRepeats(false);
-				t.start();
-				rp.add(label);
+				
 			} else if (distance < -150) {
 				System.out.println("ich bin in der dritten if Abfrage");
 				label = new Label(enumToString.printFarOff());
-				label.setSize(300, 100);
-				label.setPosition(150, 30);
-				t.setRepeats(false);
-				t.start();
-				rp.add(label);
+				
 			}
-		}
+			
+			label.setSize(300, 100);
+			label.setPosition(300, 30);
+			t.setRepeats(false);
+			t.start();
+			rp.add(label);}
 	}
 
 	/**
@@ -306,6 +299,9 @@ public class GameplayState extends ExtendedTWLState {
 			winner = getWinner();
 			if (winner != null) {
 				playerWins(winner);
+			
+	/////////////////hier könnte man dancing gorilla aufrufen und positionieren probably
+			
 			}
 			//
 			// if (wind != 0) {
