@@ -84,6 +84,7 @@ public class GameSetupState extends ExtendedTWLState {
 				if (players[0] != null && players[1] != null
 						&& PlayerList.usernamesOkay(players)) {
 					int rounds = getEnteredNumberOfRounds();
+					boolean windOnOff = getWindOnOffInput();
 					double gravityInput = getEnteredGravity();
 					if (PlayerList.usernamesOkay(players) && rounds > 0
 							&& gravityInput >= 0) {
@@ -92,7 +93,7 @@ public class GameSetupState extends ExtendedTWLState {
 
 						GameplayState gamePlayState = new GameplayState(
 								Gorillas.GAMEPLAYSTATE, players, rounds,
-								gravityInput);
+								gravityInput, windOnOff);
 						game.addState(gamePlayState);
 						StateBasedEntityManager.getInstance().addState(
 								Gorillas.GAMEPLAYSTATE);
@@ -126,7 +127,20 @@ public class GameSetupState extends ExtendedTWLState {
 		} else {
 			return Integer.valueOf(input);
 		}
+	}
 
+	public boolean getWindOnOffInput() {
+		EditField windEdit = (EditField) widgets.get("EDITWIND");
+		String windInput = windEdit.getText();
+		if (windInput.isEmpty()) {
+			return false;
+		} else {
+			if (Integer.valueOf(windInput) == 0) {
+				return false;
+			} else {
+				return true;
+			}
+		}
 	}
 
 	/**

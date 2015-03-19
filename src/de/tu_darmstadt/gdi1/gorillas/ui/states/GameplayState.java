@@ -10,8 +10,10 @@ import javax.swing.JFrame;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Button;
@@ -24,10 +26,12 @@ import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Bullet;
 import de.tu_darmstadt.gdi1.gorillas.mapobjects.Skyline;
 import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
+import eea.engine.component.render.ImageRenderComponent;
+import eea.engine.entity.Entity;
 
 public class GameplayState extends ExtendedTWLState {
 	private static final int NUMBER_OF_BUILDINGS = 8;
-	public Skyline skyline;
+	private Skyline skyline;
 	public ThrowForm throwForm;
 	private Player[] players = new Player[2];
 	private HashMap<String, Bullet> bullets = new HashMap<String, Bullet>();
@@ -41,14 +45,14 @@ public class GameplayState extends ExtendedTWLState {
 	public static Random r = new Random();
 	public static int low = -15;
 	public static int high = 15;
-	public static int wind = r.nextInt(high - low) + low; // Wind zwischen -15 bis 15
-	
-	
+	public static int wind = r.nextInt(high - low) + low; // Wind zwischen -15
+															// bis 15
+	boolean windOnOff;
 	/*
 	 * Setzt die Spieler ins Array
 	 */
 	// TODO: WINDPFEIL!!!
-	public GameplayState(int sid, Player[] players, int rounds, double gravity) {
+	public GameplayState(int sid, Player[] players, int rounds, double gravity, boolean wind) {
 		super(sid);
 		if (players.length != 2) {
 			System.err.println("Bad number of players: " + players.length);
@@ -67,6 +71,7 @@ public class GameplayState extends ExtendedTWLState {
 			widgets.put("DIALOG_OWNER", new Widget());
 			throwForm = new ThrowForm(this, currentPlayer);
 			this.gravity = gravity;
+			this.windOnOff = wind;
 		}
 	}
 
@@ -85,12 +90,36 @@ public class GameplayState extends ExtendedTWLState {
 		entityManager.renderEntities(container, game, g);
 		if (!skyline.isSkyline_built()) {
 			skyline.createSkyline();
+<<<<<<< HEAD
+			for (int i = 0; i < players.length; i++) {
+				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
+				players[i].getPlayersFigure().getWeapon()
+						.setGravityInput(gravity);
+				players[i].getPlayersFigure().setPosition(
+						skyline.randomBuildingForPlayer(i));
+				entityManager.addEntity(stateID, players[i].getPlayersFigure());
+			}
+=======
 			positionPlayer();
+>>>>>>> c61648e4f7195019f7e4fa89307b99f66c4e8595
 			addESCListener(Gorillas.MAINMENUSTATE);
 			addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 			// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
 			// addAllWidgetsToRootPane(widgets);
 			skyline.setSkyline_built(true);
+			
+			if (windOnOff) {
+				Entity arrow = new Entity("arrow");
+				arrow.addComponent(new ImageRenderComponent(new Image("assets/gorillas/button/arrow.png")));
+				arrow.setPosition(new Vector2f(350, 100));
+				if (wind < 0) {
+					arrow.setRotation(180.0f);
+				} else {
+					arrow.setRotation(0.0f);
+				}
+				arrow.setScale((1.0f / 5) * (float) Math.abs(wind));
+				entityManager.addEntity(this.stateID, arrow);
+			}
 		}
 	}
 
@@ -115,7 +144,8 @@ public class GameplayState extends ExtendedTWLState {
 		currentPlayer = (currentPlayer == 0) ? 1 : 0;
 		throwForm.setCurrentPlayer(currentPlayer);
 		System.out.println("Aktiver Spieler ist nun: " + currentPlayer);
-		Bullet.perfectDegreeShot(80, getCurrentPlayer(), getNotCurrentPlayer(), gravity);
+		Bullet.perfectDegreeShot(80, getCurrentPlayer(), getNotCurrentPlayer(),
+				gravity);
 	}
 
 	/**
@@ -171,24 +201,21 @@ public class GameplayState extends ExtendedTWLState {
 			if (winner != null) {
 				playerWins(winner);
 			}
-			// TODO WINDPFEIl
-			if (0 > wind && wind > -7) {
-			} else {
-				if (wind <= -7) {
-				} else {
-					if (0 < wind && wind < 7) {
-					} else {
-						if (wind > 7) {
-						}
-					}
-				}
-			}
+//			
+//			if (wind != 0) {
+//				Entity arrow = new Entity("arrow");
+//				arrow.addComponent(new ImageRenderComponent(new Image("assets/gorillas/button/arrow.png")));
+//				
+//				arrow.setPosition(new Vector2f(350, 100));
+//				arrow.setScale((1 / 15) * wind);
+//				entityManager.addEntity(this.stateID, arrow);
+//			}
 		}
+
 	}
-	
-	
+
 	public Player getPlayer(int arrayIndex) {
-		//System.out.println(players[arrayIndex]);
+		// System.out.println(players[arrayIndex]);
 		return players[arrayIndex];
 	}
 
