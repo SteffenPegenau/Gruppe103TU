@@ -1,5 +1,7 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 
+import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
+
 
 /**
  * Class Sun
@@ -10,8 +12,8 @@ public class Sun extends MapObject{
 		// Fields
 		//
 
-	protected final static String FIGURE_IMAGE = "/assets/gorillas/sun/sun_smiling.png";
-	protected final static String COLLISION_IMAGE = "/assets/gorillas/sun/sun_astonished.png";
+	protected String figure_image = "/assets/gorillas/sun/sun_smiling.png";
+	protected String collision_image = "/assets/gorillas/sun/sun_astonished.png";
 	boolean astonished = false;
 
 		
@@ -21,7 +23,14 @@ public class Sun extends MapObject{
 	
 	public Sun(String entityID) {
 		super(entityID);
-		setFigureImage(FIGURE_IMAGE);
+		setFigureImage(figure_image);
+		
+		// Fuer Tests notwendig (die gehen von einer 100x100 Sonne aus)
+		if(TestGorillas.debug) {
+			String sunImageForTests = "/assets/gorillas/sun/sun_tests.png";
+			figure_image = sunImageForTests;
+			collision_image = sunImageForTests;
+		}
 	}
 		
 		//
@@ -29,7 +38,7 @@ public class Sun extends MapObject{
 		//
 	
 	public void changeImage(){
-			setFigureImage(COLLISION_IMAGE);
+			setFigureImage(collision_image);
 			astonished = true;
 		}
 	
@@ -39,7 +48,7 @@ public class Sun extends MapObject{
 		//
 	
 	public void changeBackImage() {
-		setFigureImage(FIGURE_IMAGE);
+		setFigureImage(figure_image);
 		astonished = false;
 	}
 

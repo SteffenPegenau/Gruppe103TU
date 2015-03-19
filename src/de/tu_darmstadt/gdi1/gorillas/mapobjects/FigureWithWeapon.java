@@ -61,29 +61,6 @@ public class FigureWithWeapon extends MapObject {
 		public void setPostion(Vector2f position) {
 			super.setPosition(position);
 		}
-		//
-		// Methods
-		//
-		/*
-		public DestructibleImageEntity asDestructibleImageEntity() {
-			DestructibleImageEntity entity = new DestructibleImageEntity(
-					this.getID(), image, DESTRUCTION_PATH, DEBUG);
-			entity.setPosition(this.getPosition());
-			return entity;
-			/*
-			
-			int width = 42;
-			int height = 35;
-			image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-			DestructibleImageEntity entity = new DestructibleImageEntity(this.getID(), image, DESTRUCTION_PATH, DEBUG);
-			entity.setPosition(this.getPosition());
-			return entity;
-			
-		}
-		*/
-		//
-		// Accessor methods
-		//
 
 		/**
 		 * Set the value of weapon

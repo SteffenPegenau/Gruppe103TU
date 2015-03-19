@@ -167,14 +167,14 @@ public class Skyline {
 		}
 
 		for (int i = 0; i < positions.size(); i++) {
-			int width = 0;
-			int x = (int) positions.get(i).x;
+			float width = 0;
+			float x = positions.get(i).x;
 			if (i + 1 < positions.size()) {
 				// Die Breite des Gebauedes ist bis zum naechsten Gebaeude
-				width = (int) positions.get(i).x - x;
+				width = positions.get(i).x - x;
 			} else {
 				// Das letzte Gebaude => Breite bis zum Rand
-				width = (int) frameWidth - x;
+				width = frameWidth - x;
 			}
 
 			Vector2f centerCoordinate = leftTopToCenterCoordinate(
@@ -302,9 +302,9 @@ public class Skyline {
 	 * @return Mittelpunkt des Gebaudes
 	 */
 	public Vector2f leftTopToCenterCoordinate(Vector2f leftTopCoordinate,
-			int width) {
-		float x = leftTopCoordinate.x + ((float) width / 2);
-		float y = ((float) frameHeight - leftTopCoordinate.y) / 2;
+			float width) {
+		float x = leftTopCoordinate.x + width / 2;
+		float y = (frameHeight - leftTopCoordinate.y) / 2;
 		return new Vector2f(x, y);
 	}
 
