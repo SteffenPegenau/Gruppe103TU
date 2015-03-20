@@ -292,7 +292,7 @@ public class Bullet extends MapObject {
 		return leftScreen;
 	}
 
-	/*
+	
 	protected Action collisionAction() {
 		class collisionAction implements Action {
 			private GameplayState gameplayState;
@@ -377,8 +377,8 @@ public class Bullet extends MapObject {
 		Action a = new collisionAction(this, gameplayState, player);
 		return a;
 	}
-	*/
 	
+	/*
 	protected Action collisionAction() {
 		class collisionAction implements Action {
 			private Player enemyPlayer;
@@ -416,7 +416,7 @@ public class Bullet extends MapObject {
 					if (entity.getID().contentEquals(
 							enemyPlayer.getPlayersFigure().getID())) {
 						//Gegner getroffen!
-						//System.out.println("Gegner getroffen");
+						System.out.println("Gegner getroffen");
 						enemyPlayer.figureWasHit();
 						player.hitEnemyFigure();
 						if(enemyPlayer.getLifesLeft() > 0) {
@@ -449,6 +449,7 @@ public class Bullet extends MapObject {
 		Action a = new collisionAction(this, gameplayState, player);
 		return a;
 	}
+	*/
 
 	public boolean commentAlreadyVisible() {
 		if (gameplayState.t.isRunning()) {
