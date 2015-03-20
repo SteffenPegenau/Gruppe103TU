@@ -63,7 +63,7 @@ public class GameplayState extends ExtendedTWLState {
 	public GameplayState(int sid, Player[] players, int rounds, double gravity,
 			boolean wind) {
 		super(sid);
-		System.out.println("GRAVITY=" +  gravity);
+		System.out.println("GRAVITY=" + gravity);
 		if (players.length != 2) {
 			System.err.println("Bad number of players: " + players.length);
 		} else {
@@ -107,27 +107,26 @@ public class GameplayState extends ExtendedTWLState {
 
 		if (!skyline.isSkyline_built()) {
 			createNewSkyline();
-				skyline.setSkyline_built(true);
+			skyline.setSkyline_built(true);
 
-				if (windOnOff) {
-					Entity arrow = new Entity("arrow");
-					arrow.addComponent(new ImageRenderComponent(new Image(
-							"assets/gorillas/button/arrow.png")));
-					arrow.setPosition(new Vector2f(350, 100));
-					if (wind < 0) {
-						arrow.setRotation(180.0f);
-					} else {
-						arrow.setRotation(0.0f);
-					}
-					arrow.setScale((1.0f / 5) * (float) Math.abs(wind));
-					entityManager.addEntity(this.stateID, arrow);
+			if (windOnOff) {
+				Entity arrow = new Entity("arrow");
+				arrow.addComponent(new ImageRenderComponent(new Image(
+						"assets/gorillas/button/arrow.png")));
+				arrow.setPosition(new Vector2f(350, 100));
+				if (wind < 0) {
+					arrow.setRotation(180.0f);
+				} else {
+					arrow.setRotation(0.0f);
 				}
+				arrow.setScale((1.0f / 5) * (float) Math.abs(wind));
+				entityManager.addEntity(this.stateID, arrow);
 			}
 		}
+	}
 
-public RootPane removeAllWidgetsFromRootPane(){
-		
-		
+	public RootPane removeAllWidgetsFromRootPane() {
+
 		rp.removeAllChildren();
 		return rp;
 	}
@@ -139,28 +138,27 @@ public RootPane removeAllWidgetsFromRootPane(){
 			distance = listOfBullets.get(0).getDist(getNotCurrentPlayer());
 			if (Math.abs(distance) <= 20) {
 				label = new Label(enumToString.printHit());
-			System.out.println("distance =" + distance );
-			}
-			else if (distance < 150 && distance > -150) {
+				System.out.println("distance =" + distance);
+			} else if (distance < 150 && distance > -150) {
 				System.out.println("ich bin in der ersten if Abfrage");
 				label = new Label(enumToString.printClose());
-			//	System.out.println("distance =" + distance );
-			}
-			else if (distance >= 150) {
+				// System.out.println("distance =" + distance );
+			} else if (distance >= 150) {
 				System.out.println("ich bin in der zweiten if Abfrage");
 				label = new Label(enumToString.printToShort());
-				
+
 			} else if (distance < -150) {
 				System.out.println("ich bin in der dritten if Abfrage");
 				label = new Label(enumToString.printFarOff());
-				
+
 			}
-			
+
 			label.setSize(300, 100);
 			label.setPosition(300, 30);
 			t.setRepeats(false);
 			t.start();
-			rp.add(label);}
+			rp.add(label);
+		}
 	}
 
 	/**
@@ -173,7 +171,8 @@ public RootPane removeAllWidgetsFromRootPane(){
 		addESCListener(Gorillas.MAINMENUSTATE);
 		addKeyPressedEvent(Input.KEY_ENTER, throwForm.getThrowAction());
 		addKeyPressedEvent(Input.KEY_TAB, throwForm.tabController());
-		addKeyESCPressedEvent(Gorillas.MAINMENUSTATE, Input.KEY_ESCAPE, new ChangeStateAction(Gorillas.GAMEPLAYSTATE));
+		addKeyESCPressedEvent(Gorillas.MAINMENUSTATE, Input.KEY_ESCAPE,
+				new ChangeStateAction(Gorillas.GAMEPLAYSTATE));
 	}
 
 	/**
@@ -197,8 +196,9 @@ public RootPane removeAllWidgetsFromRootPane(){
 		currentPlayer = (currentPlayer == 0) ? 1 : 0;
 		throwForm.setCurrentPlayer(currentPlayer);
 		System.out.println("Aktiver Spieler ist nun: " + currentPlayer);
-		//Bullet.perfectDegreeShot(80, getCurrentPlayer(), getNotCurrentPlayer(),
-		//		gravity);
+		// Bullet.perfectDegreeShot(80, getCurrentPlayer(),
+		// getNotCurrentPlayer(),
+		// gravity);
 	}
 
 	public void farOff() {
@@ -223,7 +223,7 @@ public RootPane removeAllWidgetsFromRootPane(){
 	public void nextRound() {
 		throwForm.setVisibility(true);
 	}
-	
+
 	public void removeBullet(Bullet bullet) {
 		bullets.remove(bullet.getID());
 		listOfBullets.remove(0);
@@ -238,7 +238,6 @@ public RootPane removeAllWidgetsFromRootPane(){
 
 		// TODO
 
-		
 		addAllWidgetsToRootPane(widgets);
 		return rp;
 	}
@@ -255,25 +254,22 @@ public RootPane removeAllWidgetsFromRootPane(){
 		return players[currentPlayer];
 	}
 
-	
-
 	public HashMap<String, Bullet> getBullets() {
 		return bullets;
 	}
-	
+
 	public boolean commentAlreadyVisible() {
 		if (t.isRunning()) {
 			return true;
 		}
-		
-		else return false;
+
+		else
+			return false;
 	}
-	
-	public ArrayList<Bullet> getListOfBullets(){
+
+	public ArrayList<Bullet> getListOfBullets() {
 		return listOfBullets;
-		
-		 
-		
+
 	}
 
 	@Override
@@ -291,9 +287,10 @@ public RootPane removeAllWidgetsFromRootPane(){
 			winner = getWinner();
 			if (winner != null) {
 				playerWins(winner);
-			
-	/////////////////hier könnte man dancing gorilla aufrufen und positionieren probably
-			
+				
+				// ///////////////hier könnte man dancing gorilla aufrufen und
+				// positionieren probably
+
 			}
 			//
 			// if (wind != 0) {
@@ -328,16 +325,12 @@ public RootPane removeAllWidgetsFromRootPane(){
 	}
 
 	public Player getWinner() {
-		int lifesLeft;
-		for (int i = 0; i < players.length; i++) {
-			lifesLeft = players[i].getLifesLeft();
-			// System.out.println("Player " + players[i].getUsername() +
-			// " hat noch " + lifesLeft + " Leben");
-			if (lifesLeft <= 0) {
-				return players[Player.getOtherPlayersArrayIndex(players[i])];
-			}
+		Player winner = null;
+		Player looser = getCurrentPlayer();
+		if (looser.getLifesLeft() == 0) {
+			winner = getNotCurrentPlayer();
 		}
-		return null;
+		return winner;
 	}
 
 	/**
@@ -351,51 +344,22 @@ public RootPane removeAllWidgetsFromRootPane(){
 		System.out.println("**********************************");
 		System.out.println("Spieler " + winner.getUsername() + " gewinnt!");
 		System.out.println("**********************************");
-
-		
-		Entity winLayer = new Entity("WINLAYER");
-		winLayer.setPosition(new Vector2f(300, 400));
-		winLayer.setScale(0.5f);
-		Graphics g = new Graphics();
-		g.drawString("Herzlichen Glücklwunsch zum Sieg! \n Sie können jetzt ins Hauptmenü gelangen", 300, 400);
-		
-		if (layer_underneath == null) {
-			try {
-				layer_underneath = new Image(
-						"assets/gorillas/backgrounds/WhiteFrame.png");
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		winLayer.addComponent(new ImageRenderComponent(layer_underneath));
-		entityManager.addEntity(stateID, winLayer);
-		// widgets.put("QUITAFTERWINBTN", createButton("Leave Game",
-		// Gorillas.MAINMENUSTATE, BUTTON_LEFT_X + 150, 400));
-
-		// Pausiere das Spiel
-		container.pause();
-		// Formular unsichtbar
-		throwForm.setVisibility(false);
+		//container.pause();
+		winFormular();
+	}
+	
+	public void winFormular() {
+		createButton("newGame", "OK", new ChangeStateAction(Gorillas.MAINMENUSTATE) , 300 , 400);
 	}
 
-	// public Runnable backToMainMenue(int state) {
-	// class changer implements Runnable {
-	// int mainMenueState
-	//
-	// public changer(int state) {
-	// this.mainMenueState = state;
-	// }
-	//
-	// @Override
-	// public void run() {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// }
-	// }
-
+	private void drawButtonLabels(Graphics g) {
+		int counter = 0;
+		
+			g.drawString("OK", 300, 400);
+		
+	}
+	
+	
 	public void updatePlayersStaticInformation() {
 		Label labelName1 = (Label) widgets.get("Spielernamen1");
 		labelName1.setText(players[0].getUsername());
