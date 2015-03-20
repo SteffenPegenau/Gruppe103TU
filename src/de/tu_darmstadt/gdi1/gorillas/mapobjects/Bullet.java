@@ -418,6 +418,7 @@ public class Bullet extends MapObject {
 						}
 						System.out.println(enumToString.printHit());
 					} else if (entity.getID().contentEquals("sun")) {
+						log("HIER KOMMT DIE SONNE!");
 						gameplayState.getSkyline().sun.changeImage();
 						return;
 					} else if (entity instanceof IDestructible) {

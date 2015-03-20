@@ -28,7 +28,8 @@ public class FigureWithWeapon extends DestructibleImageEntity {
 		Graphics2D building;
 		
 
-		protected static BufferedImage image = new BufferedImage(37, 42, BufferedImage.TYPE_INT_ARGB);
+		//protected static BufferedImage image = new BufferedImage(37, 42, BufferedImage.TYPE_INT_ARGB);
+		protected static BufferedImage image =new BufferedImage(37, 42, BufferedImage.TYPE_INT_ARGB);
 		protected Graphics2D gorilla;
 		protected Vector2f position;
 		
