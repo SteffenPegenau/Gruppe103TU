@@ -92,7 +92,12 @@ public class Skyline {
 	public void createSkyline() {
 		// Sonne setzen
 		sun = new Sun("sun");
-		sun.setPosition(new Vector2f(400, 33));
+		
+		if(frameWidth == 0) {
+			frameWidth = Gorillas.FRAME_WIDTH;
+		}
+		
+		sun.setPosition(frameWidth);
 
 		if (!TestGorillas.debug) {
 			// Hintergrund setzen

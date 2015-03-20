@@ -73,7 +73,7 @@ public class MainMenuState extends ExtendedTWLState {
 		
 		counter++;
 		action = new ChangeStateAction(Gorillas.OPTIONSTATE);
-		createButton("options", "Optionen", action, 220, startPosition + counter * distance);
+		createButton("about", "About", action, 220, startPosition + counter * distance);
 		
 		counter++;
 		action = new ChangeStateAction(Gorillas.INSTRUCTIONSSTATE);

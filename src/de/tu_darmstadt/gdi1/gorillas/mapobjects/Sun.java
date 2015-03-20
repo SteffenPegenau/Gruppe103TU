@@ -1,5 +1,7 @@
 package de.tu_darmstadt.gdi1.gorillas.mapobjects;
 
+import org.newdawn.slick.geom.Vector2f;
+
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 
 
@@ -15,12 +17,31 @@ public class Sun extends MapObject{
 	protected String figure_image = "/assets/gorillas/sun/sun_smiling.png";
 	protected String collision_image = "/assets/gorillas/sun/sun_astonished.png";
 	boolean astonished = false;
+	
+	protected int height = 48;
+	protected int width = 48;
 
 		
 		//
 		// Constructors
 		//	
 	
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
 	public Sun(String entityID) {
 		super(entityID);
 		setFigureImage(figure_image);
@@ -58,6 +79,11 @@ public class Sun extends MapObject{
 	
 	public Boolean getAstonished() {
 		return astonished;
+	}
+	
+	public void setPosition(int frameWidth) {
+		float posY = getHeight() / 2 + 5;
+		super.setPosition(new Vector2f(frameWidth / 2, posY));
 	}
 
 }

@@ -117,6 +117,10 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		skyline.setFrameWidth(paneWidth);
 		skyline.setyOffsetCity(yOffsetCity);
 		skyline.createSkyline(buildingCoordinates);
+		
+		skyline.getSun().setWidth(100);
+		skyline.getSun().setHeight(100);
+		skyline.getSun().setPosition(paneWidth);
 
 		
 		Gorilla g1 = new Gorilla("g1");

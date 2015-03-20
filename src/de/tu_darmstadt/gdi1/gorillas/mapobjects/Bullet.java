@@ -264,6 +264,119 @@ public class Bullet extends MapObject {
 
 	}
 
+	/**
+	 * Prueft auf Collision anhand der Position, falls das der Collision
+	 * Pruefung durch die Lappen ging
+	 * 
+	 * @return
+	 */
+	protected Event FallbackEventSunHit() {
+		Event collision = new LoopEvent();
+		collision.addAction(new Action() {
+			@Override
+			public void update(GameContainer gc, StateBasedGame sb, int delta,
+					Component event) {
+				if (TestGorillas.debug) {
+					Bullet entity = (Bullet) event.getOwnerEntity();
+					float x = entity.getPosition().x;
+					float y = entity.getPosition().y;
+					
+					Sun sun = gameplayState.getSkyline().getSun();
+					
+					float sunX = sun.getPosition().x;
+					float sunY = sun.getPosition().y;
+					log("sunX=" + sunX + "\tsunY=" + sunY);
+					
+					float width = 100;
+					float height = 100;
+
+					float distanceX = Math.abs(sunX - x);
+					float distanceY = Math.abs(sunY - y);
+					/*
+					 * log("X=" + x + "\tY=" + y + "\tenemyX=" + enemyX +
+					 * "\tenemyY=" + enemyY + "\tdistanceX=" + distanceX +
+					 * "\tdistanceY=" + distanceY + "\twidth=" + enemyWidth +
+					 * "\theight=" + enemyHeight );
+					 */
+					if (distanceX <= (width / 2)
+							&& distanceY <= (height / 2)) {
+
+
+						log("FALLBACK: SUN ASTONISHED!");
+						gameplayState.getSkyline().sun.changeImage();
+
+
+					}
+
+				}
+			}
+
+		});
+		return collision;
+	}
+
+	/**
+	 * Prueft auf Collision anhand der Position, falls das der Collision
+	 * Pruefung durch die Lappen ging
+	 * 
+	 * @return
+	 */
+	protected Event FallbackEventGorillaHit() {
+		Event collision = new LoopEvent();
+		collision.addAction(new Action() {
+			@Override
+			public void update(GameContainer gc, StateBasedGame sb, int delta,
+					Component event) {
+				Bullet entity = (Bullet) event.getOwnerEntity();
+				float x = entity.getPosition().x;
+				float y = entity.getPosition().y;
+				Player enemy = gameplayState.getNotCurrentPlayer();
+				FigureWithWeapon enemyFig = enemy.getPlayersFigure();
+
+				float enemyX = enemyFig.getPosition().x;
+				float enemyY = enemyFig.getPosition().y;
+
+				float enemyWidth = enemyFig.getImageWidth();
+				float enemyHeight = enemyFig.getImageHeight();
+
+				float distanceX = Math.abs(enemyX - x);
+				float distanceY = Math.abs(enemyY - y);
+				/*
+				 * log("X=" + x + "\tY=" + y + "\tenemyX=" + enemyX +
+				 * "\tenemyY=" + enemyY + "\tdistanceX=" + distanceX +
+				 * "\tdistanceY=" + distanceY + "\twidth=" + enemyWidth +
+				 * "\theight=" + enemyHeight );
+				 */
+				//log("Player: " + player + "\tEnemy:" + enemy);
+				boolean sameUsernames = player.getUsername().contentEquals(
+						enemy.getUsername());
+				if (distanceX <= (enemyWidth / 2)
+						&& distanceY <= (enemyHeight / 2) && !sameUsernames) {
+					// removeEntityFromState(sb, gameplayState, entity);
+					// System.out.println("Removed " + entity.getID()
+					// + " at Position " + x + " | " + y);
+
+					System.out.println(">>>>>>>>>>>>>>>>FALLBACK: Player: "
+							+ player.getUsername() + ": Gegner ("
+							+ enemy.getUsername() + ") getroffen");
+					gameplayState.decideComment(0);
+
+					enemy.figureWasHit();
+					player.hitEnemyFigure();
+					if (enemy.getLifesLeft() > 0) {
+						gameplayState.createNewSkyline();
+					}
+					// System.out.println(enumToString.printHit());
+					removeEntityFromState(sb, gameplayState,
+							event.getOwnerEntity());
+
+				}
+
+			}
+		});
+		return collision;
+	}
+
 	protected Event leftScreenLeftRightBottom() {
 		Event leftScreen = new LoopEvent();
 		leftScreen.addAction(new Action() {
@@ -332,6 +445,11 @@ public class Bullet extends MapObject {
 					if (entity.getID().contentEquals(
 							enemyPlayer.getPlayersFigure().getID())) {
 						// Gegner getroffen!
+						//
+						// ACHTUNG WENN HIER WAS GEAENDERT WIRD AUCH IN DER
+						// FALLBACK COLLISION AENDERN!
+						// (ich weiss, ist uncool...)
+						//
 						System.out.println("Gegner getroffen");
 						gameplayState.decideComment(0);
 						enemyPlayer.figureWasHit();
@@ -353,10 +471,10 @@ public class Bullet extends MapObject {
 								.getPosition());
 						if (gameplayState.getListOfBullets().size() > 0) {
 							if (!commentAlreadyVisible()) {
-								gameplayState.decideComment(getDist(enemyPlayer));
+								gameplayState
+										.decideComment(getDist(enemyPlayer));
 							}
-						}
-						else {
+						} else {
 							return;
 						}
 						// zerst�re die Entit�t (dabei wird das der Entit�t
@@ -365,9 +483,7 @@ public class Bullet extends MapObject {
 						removeEntityFromState(sb, gameplayState,
 								event.getOwnerEntity());
 
-
 					}
-
 
 				}
 			}
@@ -448,6 +564,8 @@ public class Bullet extends MapObject {
 	public void addEvents() {
 		this.addComponent(leftScreenLeftRightBottom());
 		this.addComponent(getCollisionEvent());
+		this.addComponent(FallbackEventGorillaHit());
+		this.addComponent(FallbackEventSunHit());
 	}
 
 	public Player getPlayer() {
