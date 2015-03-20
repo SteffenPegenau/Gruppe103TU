@@ -24,6 +24,9 @@ import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
+import eea.engine.event.ANDEvent;
+import eea.engine.event.basicevents.MouseClickedEvent;
+import eea.engine.event.basicevents.MouseEnteredEvent;
 
 public class GameplayState extends ExtendedTWLState {
 	private static final int NUMBER_OF_BUILDINGS = 8;
@@ -349,16 +352,47 @@ public class GameplayState extends ExtendedTWLState {
 	}
 	
 	public void winFormular() {
-		createButton("newGame", "OK", new ChangeStateAction(Gorillas.MAINMENUSTATE) , 300 , 400);
-	}
+		
+		throwForm.setVisibility(false);
+		Image letters = null;
+		Image menu_entry_background = null;
+		
+		Entity dialog = new Entity("NewGame");
+		dialog.setPosition(new Vector2f(400, 150));
+		
+		if(letters == null) {
+			try {
+				letters = new Image("assets/gorillas/button/winner.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+		dialog.addComponent(new ImageRenderComponent(letters));
+		
+		entityManager.addEntity(stateID, dialog);
 
-	private void drawButtonLabels(Graphics g) {
-		int counter = 0;
 		
-			g.drawString("OK", 300, 400);
+		Entity button = new Entity("NewGame");
+		button.setPosition(new Vector2f(400, 300));
+		button.setScale(0.28f);
 		
+		if(menu_entry_background == null) {
+			try {
+				menu_entry_background = new Image("assets/gorillas/button/newGame.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+		button.addComponent(new ImageRenderComponent(menu_entry_background));
+
+		// Erstelle das Ausloese-Event und die zugehoerige Action
+		ANDEvent mainEventsQ = new ANDEvent(new MouseEnteredEvent(),
+				new MouseClickedEvent());
+		mainEventsQ.addAction(new ChangeStateAction(Gorillas.MAINMENUSTATE));
+		button.addComponent(mainEventsQ);
+		entityManager.addEntity(stateID, button);
+
 	}
-	
 	
 	public void updatePlayersStaticInformation() {
 		Label labelName1 = (Label) widgets.get("Spielernamen1");
