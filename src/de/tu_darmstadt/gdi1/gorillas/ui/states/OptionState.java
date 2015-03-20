@@ -84,7 +84,10 @@ public class OptionState extends ExtendedTWLState {
 		g.scale(1.5f, 1.5f);
 		g.drawString("Die Mitglieder der Gruppe 103 sind: \n Steffen, Sabina, Len und Adam!\n"
 				+ "    Viel Spaß beim Spielen!", 100, 100);
-		
+		g.drawString("Quellen: - http://www.vectorstock.com/royalty-\nfree-vector/crossed-arm-gorilla-vector-1436262"
+				      , 30, 165);
+		g.drawString("         - Wikipedia/Gorillas", 30, 210);
+		g.setColor(Color.white);
 		
 		g.scale(1.0f / 1.5f, 1.0f / 1.5f);
 		
