@@ -106,23 +106,7 @@ public class GameplayState extends ExtendedTWLState {
 		entityManager.renderEntities(container, game, g);
 
 		if (!skyline.isSkyline_built()) {
-			skyline.createSkyline();
-			for (int i = 0; i < players.length; i++) {
-				players[i].setPlayersFigureToDefaultGorilla("gorilla" + i);
-				players[i].getPlayersFigure().getWeapon()
-						.setGravityInput(gravity);
-				players[i].getPlayersFigure().setPosition(
-						skyline.randomBuildingForPlayer(i));
-				entityManager.addEntity(stateID, players[i].getPlayersFigure());
-			}
-
-			positionPlayer();
-
-			if (!skyline.isSkyline_built()) {
-				createNewSkyline();
-				//removeAllWidgetsFromRootPane();
-				//addAllWidgetsToRootPane(widgets);
-				
+			createNewSkyline();
 				skyline.setSkyline_built(true);
 
 				if (windOnOff) {
@@ -140,7 +124,6 @@ public class GameplayState extends ExtendedTWLState {
 				}
 			}
 		}
-	}
 
 public RootPane removeAllWidgetsFromRootPane(){
 		
