@@ -352,10 +352,10 @@ public class GameplayState extends ExtendedTWLState {
 	}
 	
 	public void winFormular() {
-		
 		throwForm.setVisibility(false);
 		Image letters = null;
 		Image menu_entry_background = null;
+		
 		
 		Entity dialog = new Entity("NewGame");
 		dialog.setPosition(new Vector2f(400, 150));

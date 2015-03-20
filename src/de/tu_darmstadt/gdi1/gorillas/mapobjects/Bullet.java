@@ -454,6 +454,8 @@ public class Bullet extends MapObject {
 						gameplayState.decideComment(0);
 						enemyPlayer.figureWasHit();
 						player.hitEnemyFigure();
+						StateBasedEntityManager.getInstance().removeEntity(
+							    sb.getCurrentStateID(), entity);
 						if (enemyPlayer.getLifesLeft() > 0) {
 							gameplayState.createNewSkyline();
 						}
