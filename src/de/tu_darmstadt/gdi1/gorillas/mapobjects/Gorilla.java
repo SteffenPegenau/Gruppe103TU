@@ -12,6 +12,9 @@ public class Gorilla extends FigureWithWeapon {
 		setFigureImage(FIGURE_IMAGE);
 		setWeapon(new BananaThrower());
 		this.setPassable(false);
+		
+		setImageHeight(42);
+		setImageWidth(37);
 	}
 //	
 //	public DestructibleImageEntity asDestructibleImageEntity() {
