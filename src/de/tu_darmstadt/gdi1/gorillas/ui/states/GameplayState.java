@@ -120,6 +120,9 @@ public class GameplayState extends ExtendedTWLState {
 
 			if (!skyline.isSkyline_built()) {
 				createNewSkyline();
+				//removeAllWidgetsFromRootPane();
+				//addAllWidgetsToRootPane(widgets);
+				
 				skyline.setSkyline_built(true);
 
 				if (windOnOff) {
@@ -139,20 +142,28 @@ public class GameplayState extends ExtendedTWLState {
 		}
 	}
 
+public RootPane removeAllWidgetsFromRootPane(){
+		
+		
+		rp.removeAllChildren();
+		return rp;
+	}
+
 	public void decideComment(int distance) {
 		de.tu_darmstadt.gdi1.gorillas.comments.EnumToString enumToString = new de.tu_darmstadt.gdi1.gorillas.comments.EnumToString();
 		if (listOfBullets.size() > 0) {
 			System.out.println("size der listOfBullets ist grösser als 0");
 			distance = listOfBullets.get(0).getDist(getNotCurrentPlayer());
-			if (distance == 0) {
+			if (distance <= 30 && distance >= -30) {
 				label = new Label(enumToString.printHit());
+			System.out.println("distance =" + distance );
 			}
-			if (distance <= 150 && distance >= -150) {
+			else if (distance < 150 && distance > -150) {
 				System.out.println("ich bin in der ersten if Abfrage");
 				label = new Label(enumToString.printClose());
-				
+			//	System.out.println("distance =" + distance );
 			}
-			if (distance >= 150) {
+			else if (distance >= 150) {
 				System.out.println("ich bin in der zweiten if Abfrage");
 				label = new Label(enumToString.printToShort());
 				
@@ -357,6 +368,7 @@ public class GameplayState extends ExtendedTWLState {
 		System.out.println("Spieler " + winner.getUsername() + " gewinnt!");
 		System.out.println("**********************************");
 
+		
 		Entity winLayer = new Entity("WINLAYER");
 		winLayer.setPosition(new Vector2f(300, 400));
 		winLayer.setScale(0.5f);
@@ -371,6 +383,7 @@ public class GameplayState extends ExtendedTWLState {
 				e.printStackTrace();
 			}
 		}
+		
 		winLayer.addComponent(new ImageRenderComponent(layer_underneath));
 		entityManager.addEntity(stateID, winLayer);
 		// widgets.put("QUITAFTERWINBTN", createButton("Leave Game",
