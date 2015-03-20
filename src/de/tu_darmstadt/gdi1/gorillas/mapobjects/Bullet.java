@@ -116,7 +116,7 @@ public class Bullet extends MapObject {
 	 * @param velocity
 	 */
 	public void setVelocity(double angleInDegree, float velocity) {
-		
+
 		this.velocity = velocity;
 		if (player.getArrayIndex() == 1) {
 			// rechter Spieler
@@ -192,14 +192,15 @@ public class Bullet extends MapObject {
 		double t = SCALING_FACTOR * existenceTimeInms;
 		// TODO wind an aus
 		double x = posX0
-				+ velocityX	* t
+				+ velocityX
+				* t
 				+ (0.5 * WIND_SCALING_FACTOR * windSpeed * (t * t) * getWindOnAsFactor());
-		//System.out.println("Windstärke: " + GameplayState.wind);
-		double y = posY0 - velocityY * t + 0.5
-				* getGravity() * Math.pow(t, 2);
-		//System.out.println("Gravitation: " + getGravity());
+		// System.out.println("Windstärke: " + GameplayState.wind);
+		double y = posY0 - velocityY * t + 0.5 * getGravity() * Math.pow(t, 2);
+		// System.out.println("Gravitation: " + getGravity());
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
-		//System.out.println("New Position: " + newPosition + "\tVx=" + velocityX + "\tVy"+ velocityY + "\tg=" + gravity + "\t Win");
+		// System.out.println("New Position: " + newPosition + "\tVx=" +
+		// velocityX + "\tVy"+ velocityY + "\tg=" + gravity + "\t Win");
 		// TODO: Umsetzen des Dotzen:
 		/*
 		 * Beispielcode: if (y == 600 && bullet.spped < 25) { alles auf null
@@ -210,7 +211,7 @@ public class Bullet extends MapObject {
 	}
 
 	private double getWindOnAsFactor() {
-		if(windOn) {
+		if (windOn) {
 			return 1;
 		} else {
 			return 0;
@@ -258,6 +259,7 @@ public class Bullet extends MapObject {
 		gameplayState.removeBullet((Bullet) entity);
 		StateBasedEntityManager.getInstance().removeEntity(
 				sb.getCurrentStateID(), entity);
+		gameplayState.nextRound();
 		log("Removed entity at " + entity.getPosition());
 
 	}
@@ -284,7 +286,7 @@ public class Bullet extends MapObject {
 					removeEntityFromState(sb, gameplayState, entity);
 					System.out.println("Removed " + entity.getID()
 							+ " at Position " + x + " | " + y);
-					
+
 				}
 
 			}
@@ -292,7 +294,6 @@ public class Bullet extends MapObject {
 		return leftScreen;
 	}
 
-	
 	protected Action collisionAction() {
 		class collisionAction implements Action {
 			private GameplayState gameplayState;
@@ -331,7 +332,7 @@ public class Bullet extends MapObject {
 					if (entity.getID().contentEquals(
 							enemyPlayer.getPlayersFigure().getID())) {
 						// Gegner getroffen!
-						// System.out.println("Gegner getroffen");
+						System.out.println("Gegner getroffen");
 						gameplayState.decideComment(0);
 						enemyPlayer.figureWasHit();
 						player.hitEnemyFigure();
@@ -339,6 +340,8 @@ public class Bullet extends MapObject {
 							gameplayState.createNewSkyline();
 						}
 						System.out.println(enumToString.printHit());
+						removeEntityFromState(sb, gameplayState,
+								event.getOwnerEntity());
 					} else if (entity.getID().contentEquals("sun")) {
 						log("SUN ASTONISHED!");
 						gameplayState.getSkyline().sun.changeImage();
@@ -348,108 +351,80 @@ public class Bullet extends MapObject {
 						destructible = (IDestructible) entity;
 						destructible.impactAt(event.getOwnerEntity()
 								.getPosition());
-
 						if (gameplayState.getListOfBullets().size() > 0) {
-
 							if (!commentAlreadyVisible()) {
-								{
-
-									gameplayState
-											.decideComment(getDist(gameplayState
-													.getNotCurrentPlayer()));
-								}
+								gameplayState.decideComment(getDist(enemyPlayer));
 							}
-
 						}
-						
 						else {
 							return;
 						}
-						removeEntityFromState(sb, gameplayState,
-								event.getOwnerEntity());
 						// zerst�re die Entit�t (dabei wird das der Entit�t
 						// zugewiese Zerst�rungs-Pattern benutzt)
 
+						removeEntityFromState(sb, gameplayState,
+								event.getOwnerEntity());
+
+
 					}
+
+
 				}
 			}
 		}
 		Action a = new collisionAction(this, gameplayState, player);
 		return a;
 	}
-	
+
 	/*
-	protected Action collisionAction() {
-		class collisionAction implements Action {
-			private Player enemyPlayer;
-			
-			public collisionAction(Bullet bullet, GameplayState gameplayState,
-					Player player) {
-				int PlayerIndex = player.getArrayIndex();
-				int enemyPlayerInd = (PlayerIndex == 0) ? 1	: 0;
-				this.enemyPlayer = gameplayState.getPlayer(enemyPlayerInd);
-			}
-
-			@Override
-			public void update(GameContainer gc, StateBasedGame sb, int delta,
-					Component event) {
-				
-				/////////////////////////////////////////////////////////////////////////
-				
-				gameplayState.getSkyline().sun.changeBackImage();
-				
-				/////////////////////////////////////////////////////////////////////////
-				
-				// hole die Entity, mit der kollidiert wurde
-				CollisionEvent collider = (CollisionEvent) event;
-				Entity entity = collider.getCollidedEntity();
-				EnumToString enumToString = new EnumToString();
-				System.out.println("COLLIDED WITH " + entity.getID());
-				if (!entity.getID().contentEquals("background")) {
-					// wenn diese durch ein Pattern zerst�rt werden kann, dann
-					// caste
-					// zu IDestructible
-					// ansonsten passiert bei der Kollision nichts
-
-					IDestructible destructible = null;
-					System.out.println(fittingComment());
-					if (entity.getID().contentEquals(
-							enemyPlayer.getPlayersFigure().getID())) {
-						//Gegner getroffen!
-						System.out.println("Gegner getroffen");
-						enemyPlayer.figureWasHit();
-						player.hitEnemyFigure();
-						if(enemyPlayer.getLifesLeft() > 0) {
-							gameplayState.createNewSkyline();
-						}
-						System.out.println(enumToString.printHit());
-					} else if (entity.getID().contentEquals("sun")) {
-						log("HIER KOMMT DIE SONNE!");
-						gameplayState.getSkyline().sun.changeImage();
-						return;
-					} else if (entity instanceof IDestructible) {
-						// Etwas anderes getroffen, zB Gebäude
-						destructible = (IDestructible) entity;
-						destructible.impactAt(event.getOwnerEntity()
-								.getPosition());
-					} else {
-						return;
-					}
-					
-					
-					removeEntityFromState(sb, gameplayState,
-							event.getOwnerEntity());
-					// zerst�re die Entit�t (dabei wird das der Entit�t
-					// zugewiese Zerst�rungs-Pattern benutzt)
-
-				}
-			}
-		}
-
-		Action a = new collisionAction(this, gameplayState, player);
-		return a;
-	}
-	*/
+	 * protected Action collisionAction() { class collisionAction implements
+	 * Action { private Player enemyPlayer;
+	 * 
+	 * public collisionAction(Bullet bullet, GameplayState gameplayState, Player
+	 * player) { int PlayerIndex = player.getArrayIndex(); int enemyPlayerInd =
+	 * (PlayerIndex == 0) ? 1 : 0; this.enemyPlayer =
+	 * gameplayState.getPlayer(enemyPlayerInd); }
+	 * 
+	 * @Override public void update(GameContainer gc, StateBasedGame sb, int
+	 * delta, Component event) {
+	 * 
+	 * /////////////////////////////////////////////////////////////////////////
+	 * 
+	 * gameplayState.getSkyline().sun.changeBackImage();
+	 * 
+	 * /////////////////////////////////////////////////////////////////////////
+	 * 
+	 * // hole die Entity, mit der kollidiert wurde CollisionEvent collider =
+	 * (CollisionEvent) event; Entity entity = collider.getCollidedEntity();
+	 * EnumToString enumToString = new EnumToString();
+	 * System.out.println("COLLIDED WITH " + entity.getID()); if
+	 * (!entity.getID().contentEquals("background")) { // wenn diese durch ein
+	 * Pattern zerst�rt werden kann, dann // caste // zu IDestructible //
+	 * ansonsten passiert bei der Kollision nichts
+	 * 
+	 * IDestructible destructible = null; System.out.println(fittingComment());
+	 * if (entity.getID().contentEquals(
+	 * enemyPlayer.getPlayersFigure().getID())) { //Gegner getroffen!
+	 * System.out.println("Gegner getroffen"); enemyPlayer.figureWasHit();
+	 * player.hitEnemyFigure(); if(enemyPlayer.getLifesLeft() > 0) {
+	 * gameplayState.createNewSkyline(); }
+	 * System.out.println(enumToString.printHit()); } else if
+	 * (entity.getID().contentEquals("sun")) { log("HIER KOMMT DIE SONNE!");
+	 * gameplayState.getSkyline().sun.changeImage(); return; } else if (entity
+	 * instanceof IDestructible) { // Etwas anderes getroffen, zB Gebäude
+	 * destructible = (IDestructible) entity;
+	 * destructible.impactAt(event.getOwnerEntity() .getPosition()); } else {
+	 * return; }
+	 * 
+	 * 
+	 * removeEntityFromState(sb, gameplayState, event.getOwnerEntity()); //
+	 * zerst�re die Entit�t (dabei wird das der Entit�t // zugewiese
+	 * Zerst�rungs-Pattern benutzt)
+	 * 
+	 * } } }
+	 * 
+	 * Action a = new collisionAction(this, gameplayState, player); return a; }
+	 */
 
 	public boolean commentAlreadyVisible() {
 		if (gameplayState.t.isRunning()) {

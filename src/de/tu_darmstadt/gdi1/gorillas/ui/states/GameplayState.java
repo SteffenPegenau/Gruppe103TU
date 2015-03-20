@@ -147,12 +147,12 @@ public class GameplayState extends ExtendedTWLState {
 			if (distance == 0) {
 				label = new Label(enumToString.printHit());
 			}
-			if (distance <= 150 && distance >= -150) {
+			else if (distance <= 150 && distance >= -150) {
 				System.out.println("ich bin in der ersten if Abfrage");
 				label = new Label(enumToString.printClose());
 				
 			}
-			if (distance >= 150) {
+			else if (distance >= 150) {
 				System.out.println("ich bin in der zweiten if Abfrage");
 				label = new Label(enumToString.printToShort());
 				
@@ -226,12 +226,13 @@ public class GameplayState extends ExtendedTWLState {
 				+ listOfBullets.size());
 	}
 
+	public void nextRound() {
+		throwForm.setVisibility(true);
+	}
+	
 	public void removeBullet(Bullet bullet) {
 		bullets.remove(bullet.getID());
 		listOfBullets.remove(0);
-		System.out
-				.println("the size of the ListOfBullets after removing the bullet is "
-						+ listOfBullets.size());
 	}
 
 	/**
