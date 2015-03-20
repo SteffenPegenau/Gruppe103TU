@@ -154,7 +154,7 @@ public RootPane removeAllWidgetsFromRootPane(){
 		if (listOfBullets.size() > 0) {
 			System.out.println("size der listOfBullets ist grösser als 0");
 			distance = listOfBullets.get(0).getDist(getNotCurrentPlayer());
-			if (distance <= 30 && distance >= -30) {
+			if (Math.abs(distance) <= 20) {
 				label = new Label(enumToString.printHit());
 			System.out.println("distance =" + distance );
 			}
