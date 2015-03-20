@@ -52,6 +52,7 @@ public class HighscoreState extends ExtendedTWLState {
 		g.setColor(Color.red);
 		g.scale(1.5f, 1.5f);
 		g.drawString("Highscore", 220, 20);
+		g.setColor(Color.white);
 	
 	}
 	
