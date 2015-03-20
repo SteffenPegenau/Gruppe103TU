@@ -12,11 +12,8 @@ import de.tu_darmstadt.gdi1.gorillas.mapobjectsowners.Player;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import de.tu_darmstadt.gdi1.gorillas.weapons.BananaThrower;
 import de.tu_darmstadt.gdi1.gorillas.weapons.Weapon;
-import eea.engine.component.render.DestructionRenderComponent;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.DestructibleImageEntity;
-
-import org.newdawn.slick.Image;
 
 
 /**

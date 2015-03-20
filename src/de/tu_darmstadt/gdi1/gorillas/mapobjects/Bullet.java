@@ -199,7 +199,7 @@ public class Bullet extends MapObject {
 				* getGravity() * Math.pow(t, 2);
 		//System.out.println("Gravitation: " + getGravity());
 		Vector2f newPosition = new Vector2f((float) x, (float) y);
-		System.out.println("New Position: " + newPosition + "\tVx=" + velocityX + "\tVy"+ velocityY + "\tg=" + gravity + "\t Win");
+		//System.out.println("New Position: " + newPosition + "\tVx=" + velocityX + "\tVy"+ velocityY + "\tg=" + gravity + "\t Win");
 		// TODO: Umsetzen des Dotzen:
 		/*
 		 * Beispielcode: if (y == 600 && bullet.spped < 25) { alles auf null
@@ -274,7 +274,7 @@ public class Bullet extends MapObject {
 				float x = position.x;
 				float y = position.y;
 				if (x < 0 || x > gc.getWidth() || y > gc.getHeight()) {
-
+					log("ENDE DES BILDSCHIRMS ERREICHT");
 					if (!commentAlreadyVisible()) {
 						{
 							gameplayState.farOff();
@@ -292,6 +292,7 @@ public class Bullet extends MapObject {
 		return leftScreen;
 	}
 
+	/*
 	protected Action collisionAction() {
 		class collisionAction implements Action {
 			private GameplayState gameplayState;
@@ -339,6 +340,7 @@ public class Bullet extends MapObject {
 						}
 						System.out.println(enumToString.printHit());
 					} else if (entity.getID().contentEquals("sun")) {
+						log("SUN ASTONISHED!");
 						gameplayState.getSkyline().sun.changeImage();
 						return;
 					} else if (entity instanceof IDestructible) {
@@ -372,6 +374,69 @@ public class Bullet extends MapObject {
 				}
 			}
 		}
+		Action a = new collisionAction(this, gameplayState, player);
+		return a;
+	}
+	*/
+	
+	protected Action collisionAction() {
+		class collisionAction implements Action {
+			private Player enemyPlayer;
+
+			public collisionAction(Bullet bullet, GameplayState gameplayState,
+					Player player) {
+				int PlayerIndex = player.getArrayIndex();
+				int enemyPlayerInd = (PlayerIndex == 0) ? 1	: 0;
+				this.enemyPlayer = gameplayState.getPlayer(enemyPlayerInd);
+			}
+
+			@Override
+			public void update(GameContainer gc, StateBasedGame sb, int delta,
+					Component event) {
+
+				// hole die Entity, mit der kollidiert wurde
+				CollisionEvent collider = (CollisionEvent) event;
+				Entity entity = collider.getCollidedEntity();
+				EnumToString enumToString = new EnumToString();
+				System.out.println("COLLIDED WITH " + entity.getID());
+				if (!entity.getID().contentEquals("background")) {
+					// wenn diese durch ein Pattern zerst�rt werden kann, dann
+					// caste
+					// zu IDestructible
+					// ansonsten passiert bei der Kollision nichts
+
+					IDestructible destructible = null;
+					System.out.println(fittingComment());
+					if (entity.getID().contentEquals(
+							enemyPlayer.getPlayersFigure().getID())) {
+						// Gegner getroffen!
+						//System.out.println("Gegner getroffen");
+						enemyPlayer.figureWasHit();
+						player.hitEnemyFigure();
+						if(enemyPlayer.getLifesLeft() > 0) {
+							gameplayState.createNewSkyline();
+						}
+						System.out.println(enumToString.printHit());
+					} else if (entity.getID().contentEquals("sun")) {
+						gameplayState.getSkyline().sun.changeImage();
+						return;
+					} else if (entity instanceof IDestructible) {
+						// Etwas anderes getroffen, zB Gebäude
+						destructible = (IDestructible) entity;
+						destructible.impactAt(event.getOwnerEntity()
+								.getPosition());
+					} else {
+						return;
+					}
+					removeEntityFromState(sb, gameplayState,
+							event.getOwnerEntity());
+					// zerst�re die Entit�t (dabei wird das der Entit�t
+					// zugewiese Zerst�rungs-Pattern benutzt)
+
+				}
+			}
+		}
+
 		Action a = new collisionAction(this, gameplayState, player);
 		return a;
 	}
