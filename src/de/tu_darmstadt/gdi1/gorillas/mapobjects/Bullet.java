@@ -382,7 +382,7 @@ public class Bullet extends MapObject {
 	protected Action collisionAction() {
 		class collisionAction implements Action {
 			private Player enemyPlayer;
-
+			
 			public collisionAction(Bullet bullet, GameplayState gameplayState,
 					Player player) {
 				int PlayerIndex = player.getArrayIndex();
@@ -393,7 +393,13 @@ public class Bullet extends MapObject {
 			@Override
 			public void update(GameContainer gc, StateBasedGame sb, int delta,
 					Component event) {
-
+				
+				/////////////////////////////////////////////////////////////////////////
+				
+				gameplayState.getSkyline().sun.changeBackImage();
+				
+				/////////////////////////////////////////////////////////////////////////
+				
 				// hole die Entity, mit der kollidiert wurde
 				CollisionEvent collider = (CollisionEvent) event;
 				Entity entity = collider.getCollidedEntity();
@@ -409,7 +415,7 @@ public class Bullet extends MapObject {
 					System.out.println(fittingComment());
 					if (entity.getID().contentEquals(
 							enemyPlayer.getPlayersFigure().getID())) {
-						// Gegner getroffen!
+						//Gegner getroffen!
 						//System.out.println("Gegner getroffen");
 						enemyPlayer.figureWasHit();
 						player.hitEnemyFigure();
@@ -429,6 +435,8 @@ public class Bullet extends MapObject {
 					} else {
 						return;
 					}
+					
+					
 					removeEntityFromState(sb, gameplayState,
 							event.getOwnerEntity());
 					// zerst�re die Entit�t (dabei wird das der Entit�t

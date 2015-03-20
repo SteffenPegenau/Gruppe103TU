@@ -120,8 +120,6 @@ public class GameplayState extends ExtendedTWLState {
 
 			if (!skyline.isSkyline_built()) {
 				createNewSkyline();
-				// TODO addKeyPressedEvent(Input.KEY_TAB, throwForm.);
-				// addAllWidgetsToRootPane(widgets);
 				skyline.setSkyline_built(true);
 
 				if (windOnOff) {
@@ -362,7 +360,9 @@ public class GameplayState extends ExtendedTWLState {
 		Entity winLayer = new Entity("WINLAYER");
 		winLayer.setPosition(new Vector2f(300, 400));
 		winLayer.setScale(0.5f);
-
+		Graphics g = new Graphics();
+		g.drawString("Herzlichen Glücklwunsch zum Sieg! \n Sie können jetzt ins Hauptmenü gelangen", 300, 400);
+		
 		if (layer_underneath == null) {
 			try {
 				layer_underneath = new Image(
